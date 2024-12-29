@@ -1,9 +1,13 @@
+import json
 import math
+import os
+from dotenv import load_dotenv
 import streamlit as st
 import pandas as pd
 from splitwise import Splitwise
 from splitwise.expense import Expense, ExpenseUser
-
+import PIL.Image
+import google.generativeai as genai
 
 # Display API Key Input Section
 st.sidebar.header("API Keys")
@@ -14,7 +18,8 @@ if 'api_keys_initialized' not in st.session_state:
     st.session_state.api_keys = {
         "SPLITWISE_CONSUMER_KEY": "",
         "SPLITWISE_SECRET_KEY": "",
-        "SPLITWISE_API_KEY": ""
+        "SPLITWISE_API_KEY": "",
+        "GEMINI_API_KEY": ""
     }
 
 # Handle API key inputs
@@ -40,25 +45,27 @@ if st.sidebar.button("Reset API Keys"):
     st.rerun()
 
 # load_dotenv()
-
 # execute app only if all keys are present
 if not all(st.session_state.api_keys.values()):
     st.warning("Please enter all API keys to proceed.")
     st.stop()
     st.error("Please enter all API keys to proceed.")
 
+st.session_state.api_keys_initialized = True
 
 # Initialize Splitwise object using API keys from session_state
 consumer_key = st.session_state.api_keys.get("SPLITWISE_CONSUMER_KEY")
 secret_key = st.session_state.api_keys.get("SPLITWISE_SECRET_KEY")
 splitwise_api_key = st.session_state.api_keys.get("SPLITWISE_API_KEY")
-
+gemini_key = st.session_state.api_keys.get("GEMINI_API_KEY")
 
 # Initialize Splitwise object
 # load_dotenv()
 # consumer_key = os.getenv("SPLITWISE_CONSUMER_KEY")
 # secret_key = os.getenv("SPLITWISE_SECRET_KEY")
 # splitwise_api_key = os.getenv("SPLITWISE_API_KEY")
+# gemini_key = os.getenv("GEMINI_API_KEY")
+
 sObj = Splitwise(consumer_key, secret_key, api_key=splitwise_api_key)
 user = sObj.getCurrentUser()
 
@@ -95,21 +102,110 @@ st.markdown(generate_chips(members_list), unsafe_allow_html=True)
 
 st.write(f"Members: {members_list}")
 
-groups = sObj.getGroups()
-groups_obj = {} 
-for i in range(len(groups)):
-    groups_obj[groups[i].name] = groups[i].id
 
-
-# Group selection
-group_id = st.selectbox("Select the group to add expense", options=list(groups_obj.keys()), index=0)
-
-
-paid_user = st.selectbox("Select the User who paid full amount for transaction", options=list(mem_to_id.keys()), index=0)
-st.write(f"Paid User: {paid_user}")
 if not members_list:
     st.warning("Please add at least one member to proceed.")
     st.stop()
+
+groups = sObj.getGroups()
+groups_to_ids = {} 
+for i in range(len(groups)):
+    groups_to_ids[groups[i].name] = groups[i].id
+
+# Group selection
+group_id = st.selectbox("Select the group to add expense", options=list(groups_to_ids.keys()), index=0)
+paid_user = st.selectbox("Select the User who paid full amount for transaction", options=list(mem_to_id.keys()), index=0)
+st.write(f"Paid User: {paid_user}")
+
+
+# Upload Bill Images
+uploaded_files = st.file_uploader(
+    "Upload bill images (JPG, JPEG, PNG)", 
+    accept_multiple_files=True,
+    type=['jpg', 'jpeg', 'png']
+)
+
+if uploaded_files:
+    # Initialize Gemini API if not already done
+    # if 'GEMINI_API_KEY' not in st.session_state:
+    #     gemini_key = st.text_input('Enter Gemini API Key:', type='password')
+    #     if gemini_key:
+    #         st.session_state['GEMINI_API_KEY'] = gemini_key
+    #         genai.configure(api_key=gemini_key)
+    
+    genai.configure(api_key=gemini_key)
+
+    if 'GEMINI_API_KEY' in st.session_state.api_keys:
+        cols = st.columns(len(uploaded_files))
+        
+        for idx, uploaded_file in enumerate(uploaded_files):
+            with cols[idx % 3]:
+                # Resize image for display
+                image = PIL.Image.open(uploaded_file)
+                image.thumbnail((200, 200))  # Resize to thumbnail
+                st.image(image, caption=f"Bill {idx + 1}")
+                
+                # Delete button for each image
+                if st.button(f"Delete Image {idx + 1}", key=f"del_{idx}"):
+                    uploaded_files.pop(idx)
+                    st.rerun()
+
+        if st.button("Analyze Bills"):
+            try:
+                with st.spinner("Analyzing bills..."):
+                    model = genai.GenerativeModel("gemini-1.5-flash")
+                    images = [PIL.Image.open(file) for file in uploaded_files]
+                    
+                    prompt = """Extract only item names (max 5 chars) and prices from these bills. 
+                Format as JSON array like: [{"name": "item", "price": 10.00}]. 
+                Include only items with clear prices."""
+                
+                    response = model.generate_content([prompt, *images])
+                    
+                    try:
+                        if not response.text.strip():
+                            st.error("Empty response received from the model")
+                            st.stop()
+
+                        def clean_json_response(response_text):
+                            # Remove backticks, 'json' tag, and clean newline characters
+                            cleaned_text = response_text.strip('`json\n')  # Remove json code block markers
+                            cleaned_text = cleaned_text.replace('\\n', '')  # Remove literal \n characters
+                            return cleaned_text
+
+                    
+                        # Clean the response text
+                        cleaned_response = clean_json_response(response.text)
+                        # Parse and validate JSON
+                        items_json = json.loads(cleaned_response)
+
+                        if isinstance(items_json, list):
+                            # Update session state with extracted items
+                            st.session_state["items"] = []
+
+                            for item in items_json:
+                                if "name" not in item or "price" not in item:
+                                    st.error("Invalid item format: missing name or price")
+                                    continue
+                                 
+                                if len(item.get("name", "")):
+                                    st.session_state["items"].append({
+                                        "name": str(item["name"])[:6],
+                                        "price": float(item["price"]),
+                                        "split_price": 0.0,
+                                        "members": {member: False for member in members_list}
+                                    })
+                            st.rerun()
+
+                    except Exception as e:
+                        st.error(f"Failed to parse bill data. Please try again. {str(e)}")
+                    
+                    st.markdown("### Bill Analysis")
+                    # st.write(response.text)
+            
+            except Exception as e:
+                st.error(f"Error analyzing bills: {str(e)}")
+
 
 # Initialize session state for items
 if "items" not in st.session_state:
@@ -131,8 +227,9 @@ def handle_checkbox(item_idx, member_name):
 
 # Editable Item List
 st.header("Step 2: Edit Items and Assign Members")
+items_to_delete = []  # Track items to delete
 for idx, item in enumerate(st.session_state["items"]):
-    cols = st.columns([3, 2, 2, 3])
+    cols = st.columns([3, 2, 2, 3, 1])
     
     # Item Name
     new_name = cols[0].text_input(f"Item Name {idx+1}", value=item["name"], key=f"name_{idx}")
@@ -166,6 +263,16 @@ for idx, item in enumerate(st.session_state["items"]):
     st.session_state["items"][idx]["split_price"] = split_price
     cols[2].write(f"Split Price: ${split_price:.2f}")
 
+    # Delete button
+    if cols[4].button("🗑️", key=f"delete_{idx}"):
+        items_to_delete.append(idx)
+
+# Remove items marked for deletion
+if items_to_delete:
+    st.session_state["items"] = [item for idx, item in enumerate(st.session_state["items"]) 
+                                if idx not in items_to_delete]
+    st.rerun()
+
 # Add item button
 if st.button("Add Item"):
     st.session_state["items"].append({
@@ -177,13 +284,23 @@ if st.button("Add Item"):
     st.rerun()
 
 # Function to create expenses in Splitwise
-def update_expenses(splits, paid_user, total_amt, mem_to_id, group_id):
+def update_expenses(splits, paid_user, total_amt, mem_to_id, group_id, description):
     try:
+
+        # Round total amount and all split amounts to 2 decimal places
+        total_amt = round(total_amt, 2)
+        splits = {member: round(amount, 2) for member, amount in splits.items()}
+        
+        # Calculate the difference and add it to payer's split
+        splits_sum = sum(splits.values())
+        rounding_difference = total_amt - splits_sum
+        if paid_user in splits:
+            splits[paid_user] = round(splits[paid_user] + rounding_difference, 2)
         # Initialize the expense object
         expense = Expense()
         expense.setCost(str(total_amt))
-        expense.setDescription("Test Bill Split")
-        expense.setGroupId(group_id)
+        expense.setDescription(description)
+        expense.setGroupId(groups_to_ids[group_id])
 
         # Create the payer object
         payer = ExpenseUser()
@@ -234,6 +351,7 @@ if st.button("Calculate Splits"):
     splits = {member: 0 for member in members_list}
     splits_per_item = {member: "" for member in members_list}  # Track splits per item as a string
     total_bill = 0
+    
     for item in st.session_state["items"]:
         selected_members = [member for member, selected in item["members"].items() if selected]
         split_price = item["price"] / max(1, len(selected_members))
@@ -256,7 +374,16 @@ if st.button("Calculate Splits"):
     st.subheader("Final Splits")
     st.table(df)
 
+    splits_sum = sum(splits.values())
+    if abs(splits_sum - total_bill) > 0.01:  # Using 0.01 to handle floating point precision
+        st.error(f"Split amounts ({splits_sum:.2f}) do not match total amount ({total_bill:.2f})")
 
+    # Generate description for the expense
+    description = ""
+    for item in st.session_state["items"]:
+        item_name = item["name"]
+        item_price = item["price"]
+        description += f"{item_name} : {item_price} \n"
     # add splits to splitwise
     ########################################
     ##### create expense obj ###############
@@ -265,7 +392,8 @@ if st.button("Calculate Splits"):
                     paid_user=paid_user, \
                     total_amt=total_bill, \
                         mem_to_id=mem_to_id, \
-                            group_id = group_id)
+                            group_id = group_id,
+                            description = description)
 
 
 # Reset Button
