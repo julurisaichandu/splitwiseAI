@@ -1,7 +1,6 @@
 pandas
 streamlit
 splitwise
-json
 dotenv
 google-generativeai
 pillow
