@@ -356,7 +356,7 @@ if st.button("Calculate Splits"):
         total_bill += item["price"]
         for member in selected_members:
             splits[member] += split_price
-            splits_per_item[member] += f"{item["name"]}=${split_price:.2f}, "  # Append each item's split as a string
+            splits_per_item[member] += f"{item['name']}=${split_price:.2f}, "  # Append each item's split as a string
 
 
     # Prepare final data for table
