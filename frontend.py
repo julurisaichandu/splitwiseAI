@@ -1,7 +1,5 @@
 import json
 import math
-import os
-from dotenv import load_dotenv
 import streamlit as st
 import pandas as pd
 from splitwise import Splitwise
