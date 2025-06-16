@@ -5,6 +5,8 @@ interface ApiKeys {
   SPLITWISE_SECRET_KEY: string;
   SPLITWISE_API_KEY: string;
   GEMINI_API_KEY: string;
+  GROQ_API_KEY: string; 
+
 }
 
 interface Preview {
@@ -28,6 +30,7 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
   const [files, setFiles] = useState<File[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [previews, setPreviews] = useState<Preview[]>([]);
+  const [pastedImages, setPastedImages] = useState<File[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -43,6 +46,36 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
     
     setPreviews(newPreviews);
   };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+  const items = e.clipboardData.items;
+  const imageFiles: File[] = [];
+  
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].type.indexOf('image') !== -1) {
+      const blob = items[i].getAsFile();
+      if (blob) {
+        // Convert blob to File with proper name
+        const file = new File([blob], `pasted-image-${Date.now()}.png`, {
+          type: blob.type,
+        });
+        imageFiles.push(file);
+      }
+    }
+  }
+  
+  if (imageFiles.length > 0) {
+    const allFiles = [...files, ...imageFiles];
+    setFiles(allFiles);
+    
+    // Generate previews for pasted images
+    const newPreviews = imageFiles.map(file => ({
+      file,
+      url: URL.createObjectURL(file)
+    }));
+    setPreviews([...previews, ...newPreviews]);
+  }
+};
 
   const removeFile = (index: number) => {
     const newFiles = [...files];
@@ -68,7 +101,7 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
       files.forEach(file => {
         formData.append('files', file);
       });
-      formData.append('gemini_key', apiKeys.GEMINI_API_KEY);
+      formData.append('groq_key', apiKeys.GROQ_API_KEY); // Changed from gemini_key
       
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`+'/api/analyze-bills', {
         method: 'POST',
@@ -105,6 +138,16 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
           onChange={handleFileChange}
           className="w-full"
         />
+        <div 
+          onPaste={handlePaste}
+          className="border-2 border-dashed border-blue-300 p-4 rounded-lg mt-4 bg-blue-50 cursor-pointer"
+          tabIndex={0}
+        >
+          <p className="text-center text-blue-600">
+            Click here and paste screenshot (Ctrl+V / Cmd+V)
+          </p>
+        </div>
+
         <p className="text-sm text-gray-500 mt-2">
           Upload bill images (JPG, JPEG, PNG)
         </p>

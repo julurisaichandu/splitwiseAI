@@ -7,3 +7,8 @@ google-generativeai
 pillow
 # dotenv
 python-multipart
+groq
+python_dotenv
+beanie
+motor
+pymongo
