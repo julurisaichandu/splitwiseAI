@@ -6,8 +6,9 @@ import ItemList from "./ItemList";
 import BillUploader from "./BillUploader";
 import PDFUploader from "./PDFUploader";
 import SplitSummary from "./SplitSummary";
-
 import ExpenseEditor from "./ExpenseEditor";
+import Spinner from "./Spinner";
+import { useToast } from "./Toast";
 
 interface ReceiptMetadata {
   store: string | null;
@@ -71,6 +72,7 @@ function getApiKeys(): ApiKeys {
 
 export default function BillSplitter() {
   // const router = useRouter();
+  const { showToast } = useToast();
   const [apiKeys, setApiKeys] = useState<ApiKeys | null>(null);
   const [members, setMembers] = useState<string[]>([]);
   const [memToId, setMemToId] = useState<{ [key: string]: string }>({});
@@ -157,8 +159,9 @@ export default function BillSplitter() {
       );
     } catch (error) {
       console.error(error);
-      alert(
-        `Error: ${error instanceof Error ? error.message : "Unknown error"}`
+      showToast(
+        error instanceof Error ? error.message : "Failed to fetch members",
+        "error"
       );
     } finally {
       setIsLoading(false);
@@ -183,8 +186,9 @@ export default function BillSplitter() {
       }
     } catch (error) {
       console.error(error);
-      alert(
-        `Error: ${error instanceof Error ? error.message : "Unknown error"}`
+      showToast(
+        error instanceof Error ? error.message : "Failed to fetch groups",
+        "error"
       );
     }
   };
@@ -319,7 +323,7 @@ const finalData = allMembers.map((member) => ({
 
   const createExpense = async () => {
     if (!finalSplits) {
-      alert("Please calculate splits first");
+      showToast("Please calculate splits first", "warning");
       return;
     }
 
@@ -371,14 +375,15 @@ const finalData = allMembers.map((member) => ({
       if (!response.ok) throw new Error("Failed to create expense");
 
       await response.json();
-      alert("Expense created successfully!");
+      showToast("Expense created successfully!", "success");
 
       setItems([createDefaultItem(1), createDefaultItem(2)]);
       setFinalSplits(null);
     } catch (error) {
       console.error(error);
-      alert(
-        `Error: ${error instanceof Error ? error.message : "Unknown error"}`
+      showToast(
+        error instanceof Error ? error.message : "Failed to create expense",
+        "error"
       );
     } finally {
       setIsLoading(false);
@@ -387,8 +392,16 @@ const finalData = allMembers.map((member) => ({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
+      <div className="flex flex-col gap-4 justify-center items-center h-screen">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 flex flex-col items-center gap-4">
+          <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center">
+            <Spinner size="lg" />
+          </div>
+          <div className="text-center">
+            <h2 className="text-lg font-semibold text-slate-800">SplitWise AI</h2>
+            <p className="text-slate-500">Loading your groups...</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -479,7 +492,7 @@ const finalData = allMembers.map((member) => ({
 
   const updateExpense = async () => {
     if (!finalSplits || !expenseId) {
-      alert("Please calculate splits first and ensure you have an expense ID");
+      showToast("Please calculate splits first", "warning");
       return;
     }
 
@@ -525,7 +538,7 @@ const finalData = allMembers.map((member) => ({
       if (!response.ok) throw new Error("Failed to update expense");
 
       await response.json();
-      alert("Expense updated successfully!");
+      showToast("Expense updated successfully!", "success");
 
       // Reset form
       setItems([createDefaultItem(1), createDefaultItem(2)]);
@@ -534,8 +547,9 @@ const finalData = allMembers.map((member) => ({
       setExpenseId("");
     } catch (error) {
       console.error(error);
-      alert(
-        `Error: ${error instanceof Error ? error.message : "Unknown error"}`
+      showToast(
+        error instanceof Error ? error.message : "Failed to update expense",
+        "error"
       );
     } finally {
       setIsLoading(false);
@@ -631,17 +645,23 @@ const finalData = allMembers.map((member) => ({
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 relative">
       <Head>
         <title>Bill Splitter</title>
         <meta name="description" content="Split bills with friends" />
       </Head>
 
-      <main className="max-w-4xl mx-auto">
-        {/* <h1 className="text-3xl font-bold text-center mb-8">Itemized Bill Splitter</h1> */}
+      <main className="max-w-4xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-white/20">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">
+            SplitWise AI
+          </h1>
+          <p className="text-slate-500">Split bills effortlessly with AI-powered receipt analysis</p>
+        </div>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-lg font-semibold text-slate-800 mb-4">
             Step 1: Select Group and Payer
           </h2>
           <MemberSelection
@@ -656,7 +676,7 @@ const finalData = allMembers.map((member) => ({
         </div>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-lg font-semibold text-slate-800 mb-4">
             Step 2: Add Items
           </h2>
 
@@ -664,23 +684,23 @@ const finalData = allMembers.map((member) => ({
           <div className="flex gap-2 mb-4">
             <button
               onClick={() => setInputMode('image')}
-              className={`px-4 py-2 rounded ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 inputMode === 'image'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-200 hover:bg-gray-300'
+                  ? 'bg-indigo-500 text-white focus:ring-indigo-500'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-400'
               }`}
             >
-              📷 Image
+              Image
             </button>
             <button
               onClick={() => setInputMode('pdf')}
-              className={`px-4 py-2 rounded ${
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 inputMode === 'pdf'
-                  ? 'bg-green-500 text-white'
-                  : 'bg-gray-200 hover:bg-gray-300'
+                  ? 'bg-emerald-500 text-white focus:ring-emerald-500'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-400'
               }`}
             >
-              📄 PDF
+              PDF
             </button>
           </div>
 
@@ -701,32 +721,37 @@ const finalData = allMembers.map((member) => ({
 
           {/* Receipt Metadata Display */}
           {receiptMetadata && (
-            <div className="mt-4 p-4 bg-gray-50 border rounded-lg">
+            <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl">
               <div className="flex justify-between items-start">
                 <div>
                   {receiptMetadata.store && (
-                    <p className="font-semibold text-lg">{receiptMetadata.store}</p>
+                    <p className="font-semibold text-lg text-slate-900">{receiptMetadata.store}</p>
                   )}
                   {receiptMetadata.delivery_date && receiptMetadata.delivery_time && (
-                    <p className="text-gray-600">
+                    <p className="text-slate-600">
                       Delivered: {receiptMetadata.delivery_date} at {receiptMetadata.delivery_time}
                     </p>
                   )}
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-gray-500">Subtotal: ${receiptMetadata.subtotal.toFixed(2)}</p>
-                  <p className="font-semibold">Total: ${receiptMetadata.total.toFixed(2)}</p>
+                  <p className="text-sm text-slate-500">Subtotal: ${receiptMetadata.subtotal.toFixed(2)}</p>
+                  <p className="font-semibold text-slate-900">Total: ${receiptMetadata.total.toFixed(2)}</p>
                 </div>
               </div>
               {!receiptMetadata.validation_passed && (
-                <div className="mt-2 p-2 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded text-sm">
-                  ⚠️ Validation warning: Calculated subtotal (${receiptMetadata.calculated_subtotal.toFixed(2)})
-                  doesn't match expected (${receiptMetadata.subtotal.toFixed(2)})
+                <div className="flex items-start gap-2 mt-3 p-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-lg text-sm">
+                  <svg className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <span>Validation warning: Calculated subtotal (${receiptMetadata.calculated_subtotal.toFixed(2)}) doesn&apos;t match expected (${receiptMetadata.subtotal.toFixed(2)})</span>
                 </div>
               )}
               {receiptMetadata.validation_passed && (
-                <div className="mt-2 p-2 bg-green-100 border border-green-400 text-green-700 rounded text-sm">
-                  ✓ All items verified - totals match
+                <div className="flex items-center gap-2 mt-3 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-sm">
+                  <svg className="w-5 h-5 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>All items verified - totals match</span>
                 </div>
               )}
             </div>
@@ -734,38 +759,50 @@ const finalData = allMembers.map((member) => ({
         </div>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Select members to show</h2>
+          <h2 className="text-lg font-semibold text-slate-800 mb-4">Select members to show</h2>
           {getHiddenMembersWithSplits().length > 0 && (
-            <div className="mt-4 p-3 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
-              <p className="font-semibold">
-                Warning: Hidden members with assigned splits
-              </p>
-              <p>
-                The following hidden members still have items assigned to them:
-              </p>
-              <ul className="list-disc pl-5">
-                {getHiddenMembersWithSplits().map((member) => (
-                  <li key={member}>{member}</li>
-                ))}
-              </ul>
-              <p className="mt-2">
-                These members will still be included in the final bill split
-                even though they're hidden from view.
-              </p>
-              <button
-                className="mt-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                onClick={() => {
-                  const hiddenWithSplits = getHiddenMembersWithSplits();
-                  setVisibleMembers([...visibleMembers, ...hiddenWithSplits]);
-                }}
-              >
-                Show these members
-              </button>
+            <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div>
+                  <p className="font-medium text-amber-800">
+                    Hidden members with assigned splits
+                  </p>
+                  <p className="text-sm text-amber-700 mt-1">
+                    The following hidden members still have items assigned:
+                  </p>
+                  <ul className="list-disc pl-5 mt-1 text-sm text-amber-700">
+                    {getHiddenMembersWithSplits().map((member) => (
+                      <li key={member}>{member}</li>
+                    ))}
+                  </ul>
+                  <button
+                    className="mt-3 px-4 py-2 bg-indigo-500 text-white rounded-lg font-medium hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-150"
+                    onClick={() => {
+                      const hiddenWithSplits = getHiddenMembersWithSplits();
+                      setVisibleMembers([...visibleMembers, ...hiddenWithSplits]);
+                    }}
+                  >
+                    Show these members
+                  </button>
+                </div>
+              </div>
             </div>
           )}
-          <div className="flex flex-row flex-wrap gap-4">
+          <div className="flex flex-row flex-wrap gap-3">
             {allMembers.map((member, index) => (
-              <div key={index} className="flex items-center">
+              <label
+                key={index}
+                className={`
+                  flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-all duration-150
+                  ${visibleMembers.includes(member)
+                    ? 'bg-indigo-100 text-indigo-800 ring-2 ring-indigo-500'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }
+                `}
+              >
                 <input
                   type="checkbox"
                   id={`member-${index}`}
@@ -776,17 +813,21 @@ const finalData = allMembers.map((member) => ({
                       : [...visibleMembers, member];
                     setVisibleMembers(newVisibleMembers);
                   }}
+                  className="sr-only"
                 />
-                <label htmlFor={`member-${index}`} className="ml-2">
-                  {member}
-                </label>
-              </div>
+                {visibleMembers.includes(member) && (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                )}
+                <span className="text-sm font-medium">{member}</span>
+              </label>
             ))}
           </div>
         </div>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-lg font-semibold text-slate-800 mb-4">
             Step 3: Edit Items and Assign Members
           </h2>
           <ItemList
@@ -796,21 +837,24 @@ const finalData = allMembers.map((member) => ({
           />
         </div>
         <div className="mb-4">
+          <label className="block text-sm font-medium text-slate-700 mb-2">
+            Expense Title
+          </label>
           <div className="flex gap-2">
             <input
               type="text"
               value={expenseDescription}
               onChange={(e) => setExpenseDescription(e.target.value)}
               placeholder="Enter expense title"
-              className={`flex-1 p-2 border rounded ${
-                isDescriptionLocked ? 'bg-gray-100' : ''
+              className={`flex-1 px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-150 ${
+                isDescriptionLocked ? 'bg-slate-50' : 'bg-white'
               }`}
               readOnly={isDescriptionLocked}
             />
             {isDescriptionLocked && (
               <button
                 onClick={() => setIsDescriptionLocked(false)}
-                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition-all duration-150"
                 title="Edit description"
               >
                 Edit
@@ -819,7 +863,7 @@ const finalData = allMembers.map((member) => ({
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="expenseComment" className="block text-gray-700 mb-2">
+          <label htmlFor="expenseComment" className="block text-sm font-medium text-slate-700 mb-2">
             Expense Comment
           </label>
           <textarea
@@ -827,38 +871,45 @@ const finalData = allMembers.map((member) => ({
             value={expenseComment}
             onChange={(e) => setExpenseComment(e.target.value)}
             placeholder="Enter expense comment or view AI processing results"
-            className="w-full p-2 border rounded min-h-[100px]"
+            className="w-full px-4 py-3 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-150 min-h-[120px] font-mono text-sm"
             rows={5}
           />
         </div>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">
+          <h2 className="text-lg font-semibold text-slate-800 mb-4">
             Step 4: Calculate and Submit
           </h2>
 
           {/* Validation Error Display */}
           {getItemsWithoutMembers().length > 0 && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-              <p className="font-semibold">Missing member selection:</p>
-              <ul className="list-disc pl-5 mt-1">
-                {getItemsWithoutMembers().map((item, idx) => (
-                  <li key={idx}>{item.name} (${item.price.toFixed(2)})</li>
-                ))}
-              </ul>
-              <p className="mt-2 text-sm">Please select at least one member for each item.</p>
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <p className="font-medium text-red-800">Missing member selection</p>
+                  <ul className="list-disc pl-5 mt-1 text-sm text-red-700">
+                    {getItemsWithoutMembers().map((item, idx) => (
+                      <li key={idx}>{item.name} (${item.price.toFixed(2)})</li>
+                    ))}
+                  </ul>
+                  <p className="mt-2 text-sm text-red-600">Please select at least one member for each item.</p>
+                </div>
+              </div>
             </div>
           )}
 
-          <div className="flex space-x-4">
+          <div className="flex flex-wrap gap-3">
             <button
               onClick={calculateSplits}
               disabled={!hasValidMemberSelection()}
               className={`${
                 hasValidMemberSelection()
-                  ? 'bg-blue-500 hover:bg-blue-600'
-                  : 'bg-gray-400 cursor-not-allowed'
-              } text-white py-2 px-4 rounded`}
+                  ? 'bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500'
+                  : 'bg-slate-300 cursor-not-allowed'
+              } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
             >
               Calculate Splits
             </button>
@@ -869,11 +920,11 @@ const finalData = allMembers.map((member) => ({
                 disabled={!finalSplits || !hasValidMemberSelection()}
                 className={`${
                   finalSplits && hasValidMemberSelection()
-                    ? "bg-yellow-500 hover:bg-yellow-600"
-                    : "bg-gray-400 cursor-not-allowed"
-                } text-white py-2 px-4 rounded`}
+                    ? "bg-amber-500 hover:bg-amber-600 focus:ring-amber-500"
+                    : "bg-slate-300 cursor-not-allowed"
+                } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
               >
-                Update Expense in Splitwise
+                Update Expense
               </button>
             ) : (
               <button
@@ -881,11 +932,11 @@ const finalData = allMembers.map((member) => ({
                 disabled={!finalSplits || !hasValidMemberSelection()}
                 className={`${
                   finalSplits && hasValidMemberSelection()
-                    ? "bg-green-500 hover:bg-green-600"
-                    : "bg-gray-400 cursor-not-allowed"
-                } text-white py-2 px-4 rounded`}
+                    ? "bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-500"
+                    : "bg-slate-300 cursor-not-allowed"
+                } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
               >
-                Create Expense in Splitwise
+                Create Expense
               </button>
             )}
             {isUpdateMode && (
@@ -894,9 +945,9 @@ const finalData = allMembers.map((member) => ({
                   setIsUpdateMode(false);
                   setExpenseId("");
                 }}
-                className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded"
+                className="bg-slate-500 hover:bg-slate-600 text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-150 active:scale-95"
               >
-                Cancel Update
+                Cancel
               </button>
             )}
           </div>
