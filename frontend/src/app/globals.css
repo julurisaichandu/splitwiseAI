@@ -71,7 +71,12 @@
 }
 
 body {
-  background-color: #1a1a1a;
+
+  background-color: #f5f0e8;
+  background-image: url("/background.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
   color: var(--foreground);
   font-family: var(--font-lexend), Arial, Helvetica, sans-serif;
   min-height: 100vh;
