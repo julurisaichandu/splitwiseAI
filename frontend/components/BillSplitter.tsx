@@ -394,12 +394,12 @@ const finalData = allMembers.map((member) => ({
     return (
       <div className="flex flex-col gap-4 justify-center items-center h-screen">
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 flex flex-col items-center gap-4">
-          <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center">
+          <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
             <Spinner size="lg" />
           </div>
           <div className="text-center">
-            <h2 className="text-lg font-semibold text-slate-800">SplitWise AI</h2>
-            <p className="text-slate-500">Loading your groups...</p>
+            <h2 className="text-lg font-semibold text-stone-800">SplitWise AI</h2>
+            <p className="text-stone-500">Loading your groups...</p>
           </div>
         </div>
       </div>
@@ -651,17 +651,36 @@ const finalData = allMembers.map((member) => ({
         <meta name="description" content="Split bills with friends" />
       </Head>
 
-      <main className="max-w-4xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 border border-white/20">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">
-            SplitWise AI
-          </h1>
-          <p className="text-slate-500">Split bills effortlessly with AI-powered receipt analysis</p>
-        </div>
+      {/* Header - Outside main card, on the background */}
+      <div className="text-center mb-8">
+        <svg
+          viewBox="0 0 700 140"
+          className="w-full max-w-4xl mx-auto h-auto"
+          aria-label="Split Splitter"
+        >
+          <text
+            x="50%"
+            y="95"
+            textAnchor="middle"
+            className="handwriting-text font-[family-name:var(--font-playwrite-co)]"
+            style={{
+              fontSize: '85px',
+              fill: 'transparent',
+              stroke: 'white',
+              strokeWidth: '2',
+              strokeDasharray: '1500',
+              strokeDashoffset: '1500',
+              animation: 'handwriting 3s ease forwards, fillIn 1s ease forwards 2.5s',
+            }}
+          >
+            Split Splitter
+          </text>
+        </svg>
+      </div>
 
+      <main className="max-w-6xl mx-auto bg-amber-50/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 md:p-12 border border-amber-200/40">
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-slate-800 mb-4">
+          <h2 className="text-lg font-semibold text-stone-800 mb-4">
             Step 1: Select Group and Payer
           </h2>
           <MemberSelection
@@ -676,7 +695,7 @@ const finalData = allMembers.map((member) => ({
         </div>
 
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-slate-800 mb-4">
+          <h2 className="text-lg font-semibold text-stone-800 mb-4">
             Step 2: Add Items
           </h2>
 
@@ -686,8 +705,8 @@ const finalData = allMembers.map((member) => ({
               onClick={() => setInputMode('image')}
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 inputMode === 'image'
-                  ? 'bg-indigo-500 text-white focus:ring-indigo-500'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-400'
+                  ? 'bg-amber-600 text-white focus:ring-amber-500'
+                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200 focus:ring-stone-400'
               }`}
             >
               Image
@@ -697,7 +716,7 @@ const finalData = allMembers.map((member) => ({
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 inputMode === 'pdf'
                   ? 'bg-emerald-500 text-white focus:ring-emerald-500'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 focus:ring-slate-400'
+                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200 focus:ring-stone-400'
               }`}
             >
               PDF
@@ -721,20 +740,20 @@ const finalData = allMembers.map((member) => ({
 
           {/* Receipt Metadata Display */}
           {receiptMetadata && (
-            <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl">
+            <div className="mt-4 p-4 bg-stone-50 border border-slate-200 rounded-xl">
               <div className="flex justify-between items-start">
                 <div>
                   {receiptMetadata.store && (
                     <p className="font-semibold text-lg text-slate-900">{receiptMetadata.store}</p>
                   )}
                   {receiptMetadata.delivery_date && receiptMetadata.delivery_time && (
-                    <p className="text-slate-600">
+                    <p className="text-stone-600">
                       Delivered: {receiptMetadata.delivery_date} at {receiptMetadata.delivery_time}
                     </p>
                   )}
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-slate-500">Subtotal: ${receiptMetadata.subtotal.toFixed(2)}</p>
+                  <p className="text-sm text-stone-500">Subtotal: ${receiptMetadata.subtotal.toFixed(2)}</p>
                   <p className="font-semibold text-slate-900">Total: ${receiptMetadata.total.toFixed(2)}</p>
                 </div>
               </div>
@@ -759,7 +778,7 @@ const finalData = allMembers.map((member) => ({
         </div>
 
         <div className="mb-8">
-          <h2 className="text-lg font-semibold text-slate-800 mb-4">Select members to show</h2>
+          <h2 className="text-lg font-semibold text-stone-800 mb-4">Select members to show</h2>
           {getHiddenMembersWithSplits().length > 0 && (
             <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
               <div className="flex items-start gap-3">
@@ -779,7 +798,7 @@ const finalData = allMembers.map((member) => ({
                     ))}
                   </ul>
                   <button
-                    className="mt-3 px-4 py-2 bg-indigo-500 text-white rounded-lg font-medium hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-150"
+                    className="mt-3 px-4 py-2 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-all duration-150"
                     onClick={() => {
                       const hiddenWithSplits = getHiddenMembersWithSplits();
                       setVisibleMembers([...visibleMembers, ...hiddenWithSplits]);
@@ -798,8 +817,8 @@ const finalData = allMembers.map((member) => ({
                 className={`
                   flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer transition-all duration-150
                   ${visibleMembers.includes(member)
-                    ? 'bg-indigo-100 text-indigo-800 ring-2 ring-indigo-500'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-amber-100 text-amber-800 ring-2 ring-amber-500'
+                    : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                   }
                 `}
               >
@@ -826,142 +845,153 @@ const finalData = allMembers.map((member) => ({
           </div>
         </div>
 
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-slate-800 mb-4">
-            Step 3: Edit Items and Assign Members
-          </h2>
-          <ItemList
-            items={items}
-            members={visibleMembers} // Pass only visible members for UI
-            onItemsChange={handleItemsUpdate}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-slate-700 mb-2">
-            Expense Title
-          </label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={expenseDescription}
-              onChange={(e) => setExpenseDescription(e.target.value)}
-              placeholder="Enter expense title"
-              className={`flex-1 px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-150 ${
-                isDescriptionLocked ? 'bg-slate-50' : 'bg-white'
-              }`}
-              readOnly={isDescriptionLocked}
-            />
-            {isDescriptionLocked && (
-              <button
-                onClick={() => setIsDescriptionLocked(false)}
-                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition-all duration-150"
-                title="Edit description"
-              >
-                Edit
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="expenseComment" className="block text-sm font-medium text-slate-700 mb-2">
-            Expense Comment
-          </label>
-          <textarea
-            id="expenseComment"
-            value={expenseComment}
-            onChange={(e) => setExpenseComment(e.target.value)}
-            placeholder="Enter expense comment or view AI processing results"
-            className="w-full px-4 py-3 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-150 min-h-[120px] font-mono text-sm"
-            rows={5}
-          />
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-slate-800 mb-4">
-            Step 4: Calculate and Submit
-          </h2>
-
-          {/* Validation Error Display */}
-          {getItemsWithoutMembers().length > 0 && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
-              <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <div>
-                  <p className="font-medium text-red-800">Missing member selection</p>
-                  <ul className="list-disc pl-5 mt-1 text-sm text-red-700">
-                    {getItemsWithoutMembers().map((item, idx) => (
-                      <li key={idx}>{item.name} (${item.price.toFixed(2)})</li>
-                    ))}
-                  </ul>
-                  <p className="mt-2 text-sm text-red-600">Please select at least one member for each item.</p>
-                </div>
+        {/* Two-column layout for Step 3+ */}
+        <div className="md:grid md:grid-cols-[40%_60%] md:gap-6">
+          {/* Left Column - Sticky */}
+          <div className="md:sticky md:top-8 md:self-start space-y-4 order-2 md:order-1 mb-8 md:mb-0">
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-2">
+                Expense Title
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={expenseDescription}
+                  onChange={(e) => setExpenseDescription(e.target.value)}
+                  placeholder="Enter expense title"
+                  className={`flex-1 px-4 py-2.5 border border-stone-300 rounded-lg text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-all duration-150 ${
+                    isDescriptionLocked ? 'bg-stone-50' : 'bg-white'
+                  }`}
+                  readOnly={isDescriptionLocked}
+                />
+                {isDescriptionLocked && (
+                  <button
+                    onClick={() => setIsDescriptionLocked(false)}
+                    className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 transition-all duration-150"
+                    title="Edit description"
+                  >
+                    Edit
+                  </button>
+                )}
               </div>
             </div>
-          )}
 
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={calculateSplits}
-              disabled={!hasValidMemberSelection()}
-              className={`${
-                hasValidMemberSelection()
-                  ? 'bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500'
-                  : 'bg-slate-300 cursor-not-allowed'
-              } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
-            >
-              Calculate Splits
-            </button>
+            <div>
+              <label htmlFor="expenseComment" className="block text-sm font-medium text-stone-700 mb-2">
+                Expense Comment
+              </label>
+              <textarea
+                id="expenseComment"
+                value={expenseComment}
+                onChange={(e) => setExpenseComment(e.target.value)}
+                placeholder="Enter expense comment or view AI processing results"
+                className="w-full px-4 py-3 border border-stone-300 rounded-lg text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-all duration-150 min-h-[120px] font-mono text-sm"
+                rows={5}
+              />
+            </div>
 
-            {isUpdateMode ? (
-              <button
-                onClick={updateExpense}
-                disabled={!finalSplits || !hasValidMemberSelection()}
-                className={`${
-                  finalSplits && hasValidMemberSelection()
-                    ? "bg-amber-500 hover:bg-amber-600 focus:ring-amber-500"
-                    : "bg-slate-300 cursor-not-allowed"
-                } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
-              >
-                Update Expense
-              </button>
-            ) : (
-              <button
-                onClick={createExpense}
-                disabled={!finalSplits || !hasValidMemberSelection()}
-                className={`${
-                  finalSplits && hasValidMemberSelection()
-                    ? "bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-500"
-                    : "bg-slate-300 cursor-not-allowed"
-                } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
-              >
-                Create Expense
-              </button>
+            <div>
+              <h2 className="text-lg font-semibold text-stone-800 mb-4">
+                Calculate and Submit
+              </h2>
+
+              {/* Validation Error Display */}
+              {getItemsWithoutMembers().length > 0 && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-medium text-red-800">Missing member selection</p>
+                      <ul className="list-disc pl-5 mt-1 text-sm text-red-700">
+                        {getItemsWithoutMembers().map((item, idx) => (
+                          <li key={idx}>{item.name} (${item.price.toFixed(2)})</li>
+                        ))}
+                      </ul>
+                      <p className="mt-2 text-sm text-red-600">Please select at least one member for each item.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-3">
+                <button
+                  onClick={calculateSplits}
+                  disabled={!hasValidMemberSelection()}
+                  className={`${
+                    hasValidMemberSelection()
+                      ? 'bg-amber-600 hover:bg-amber-700 focus:ring-amber-500'
+                      : 'bg-slate-300 cursor-not-allowed'
+                  } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
+                >
+                  Calculate Splits
+                </button>
+
+                {isUpdateMode ? (
+                  <button
+                    onClick={updateExpense}
+                    disabled={!finalSplits || !hasValidMemberSelection()}
+                    className={`${
+                      finalSplits && hasValidMemberSelection()
+                        ? "bg-amber-500 hover:bg-amber-600 focus:ring-amber-500"
+                        : "bg-slate-300 cursor-not-allowed"
+                    } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
+                  >
+                    Update Expense
+                  </button>
+                ) : (
+                  <button
+                    onClick={createExpense}
+                    disabled={!finalSplits || !hasValidMemberSelection()}
+                    className={`${
+                      finalSplits && hasValidMemberSelection()
+                        ? "bg-emerald-500 hover:bg-emerald-600 focus:ring-emerald-500"
+                        : "bg-slate-300 cursor-not-allowed"
+                    } text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 active:scale-95`}
+                  >
+                    Create Expense
+                  </button>
+                )}
+                {isUpdateMode && (
+                  <button
+                    onClick={() => {
+                      setIsUpdateMode(false);
+                      setExpenseId("");
+                    }}
+                    className="bg-stone-500 hover:bg-slate-600 text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-150 active:scale-95"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Items and Results */}
+          <div className="space-y-6 order-1 md:order-2">
+            <div>
+              <h2 className="text-lg font-semibold text-stone-800 mb-4">
+                Edit Items and Assign Members
+              </h2>
+              <ItemList
+                items={items}
+                members={visibleMembers} // Pass only visible members for UI
+                onItemsChange={handleItemsUpdate}
+              />
+            </div>
+
+            {finalSplits && (
+              <SplitSummary
+                data={finalSplits.data}
+                totalBill={finalSplits.totalBill}
+                itemizedSplits={finalSplits.itemizedSplits}
+              />
             )}
-            {isUpdateMode && (
-              <button
-                onClick={() => {
-                  setIsUpdateMode(false);
-                  setExpenseId("");
-                }}
-                className="bg-slate-500 hover:bg-slate-600 text-white py-2.5 px-5 rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-all duration-150 active:scale-95"
-              >
-                Cancel
-              </button>
-            )}
+
+            <ExpenseEditor onLoadExpense={handleLoadExpense} />
           </div>
         </div>
-
-        {finalSplits && (
-          <SplitSummary
-            data={finalSplits.data}
-            totalBill={finalSplits.totalBill}
-            itemizedSplits={finalSplits.itemizedSplits}
-          />
-        )}
-
-        <ExpenseEditor onLoadExpense={handleLoadExpense} />
       </main>
     </div>
   );

@@ -15,7 +15,7 @@ export default function Spinner({ size = 'md', className = '' }: SpinnerProps) {
       className={`
         ${sizes[size]}
         animate-spin rounded-full
-        border-slate-200 border-t-indigo-500
+        border-stone-200 border-t-amber-600
         ${className}
       `}
       role="status"

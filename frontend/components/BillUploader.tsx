@@ -148,14 +148,14 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
 
   return (
     <div className="space-y-4">
-      <div className="border-2 border-dashed border-slate-300 p-5 rounded-xl bg-slate-50 hover:border-slate-400 transition-colors duration-150">
+      <div className="border-2 border-dashed border-stone-300 p-5 rounded-xl bg-stone-50 hover:border-stone-400 transition-colors duration-150">
         <div className="flex flex-col items-center justify-center gap-3">
-          <svg className="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-10 h-10 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
           <div className="text-center">
             <label className="cursor-pointer">
-              <span className="text-indigo-500 hover:text-indigo-600 font-medium">Upload images</span>
+              <span className="text-amber-600 hover:text-amber-700 font-medium">Upload images</span>
               <input
                 type="file"
                 accept="image/*"
@@ -164,17 +164,17 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
                 className="hidden"
               />
             </label>
-            <span className="text-slate-500"> or drag and drop</span>
+            <span className="text-stone-500"> or drag and drop</span>
           </div>
-          <p className="text-xs text-slate-400">JPG, JPEG, PNG supported</p>
+          <p className="text-xs text-stone-400">JPG, JPEG, PNG supported</p>
         </div>
 
         <div
           onPaste={handlePaste}
-          className="border-2 border-dashed border-indigo-300 p-4 rounded-lg mt-4 bg-indigo-50 cursor-pointer hover:bg-indigo-100 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border-2 border-dashed border-amber-300 p-4 rounded-lg mt-4 bg-amber-50 cursor-pointer hover:bg-amber-100 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-amber-500"
           tabIndex={0}
         >
-          <p className="text-center text-indigo-600 text-sm font-medium">
+          <p className="text-center text-amber-700 text-sm font-medium">
             Click here and paste screenshot (Ctrl+V / Cmd+V)
           </p>
         </div>
@@ -196,7 +196,7 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
               <img
                 src={preview.url}
                 alt={`Bill ${index + 1}`}
-                className="w-full h-32 object-cover rounded-lg border border-slate-200"
+                className="w-full h-32 object-cover rounded-lg border border-stone-200"
               />
               <button
                 onClick={() => removeFile(index)}
@@ -216,8 +216,8 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
         onClick={analyzeBills}
         disabled={isAnalyzing || files.length === 0}
         className={`w-full py-3 px-4 rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 ${isAnalyzing || files.length === 0
-            ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
-            : 'bg-indigo-500 hover:bg-indigo-600 text-white focus:ring-indigo-500 active:scale-[0.98]'
+            ? 'bg-stone-300 text-stone-500 cursor-not-allowed'
+            : 'bg-amber-600 hover:bg-amber-700 text-white focus:ring-amber-500 active:scale-[0.98]'
           }`}
       >
         {isAnalyzing ? (

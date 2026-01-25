@@ -97,10 +97,10 @@ const typeStyles: Record<ToastType, { bg: string; border: string; icon: string; 
     text: 'text-amber-800',
   },
   info: {
-    bg: 'bg-indigo-50',
-    border: 'border-indigo-200',
-    icon: 'text-indigo-500',
-    text: 'text-indigo-800',
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
+    icon: 'text-amber-600',
+    text: 'text-amber-800',
   },
 };
 

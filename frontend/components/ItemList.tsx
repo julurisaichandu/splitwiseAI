@@ -105,33 +105,33 @@ const ItemList: React.FC<ItemListProps> = ({
       {items.map((item, index) => (
         <div
           key={index}
-          className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-200"
+          className="bg-amber-50/80 p-5 rounded-xl border border-stone-200 shadow-sm hover:shadow-md transition-shadow duration-200"
         >
           <div className="flex flex-wrap gap-4 mb-4">
             <div className="w-full md:w-auto flex-grow">
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-sm font-medium text-stone-700 mb-2">
                 Item Name
               </label>
               <input
                 type="text"
                 value={item.name}
                 onChange={(e) => handleItemNameChange(index, e.target.value)}
-                className="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-150"
+                className="w-full px-4 py-2.5 border border-stone-300 rounded-lg text-stone-900 placeholder:text-stone-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-all duration-150"
               />
             </div>
 
             <div className="w-full md:w-auto flex-grow">
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label className="block text-sm font-medium text-stone-700 mb-2">
                 Price
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">$</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-500">$</span>
                 <input
                   type="number"
                   step="0.01"
                   value={item.price || ""}
                   onChange={(e) => handleItemPriceChange(index, e.target.value)}
-                  className="w-full pl-7 pr-4 py-2.5 border border-slate-300 rounded-lg text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:outline-none transition-all duration-150"
+                  className="w-full pl-7 pr-4 py-2.5 border border-stone-300 rounded-lg text-stone-900 placeholder:text-stone-400 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 focus:outline-none transition-all duration-150"
                   placeholder="0.00"
                 />
               </div>
@@ -139,7 +139,7 @@ const ItemList: React.FC<ItemListProps> = ({
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-stone-700 mb-2">
               Split Between
             </label>
             <div className="flex flex-wrap gap-2">
@@ -151,8 +151,8 @@ const ItemList: React.FC<ItemListProps> = ({
                     px-4 py-2 rounded-full text-sm font-medium transition-all duration-150
                     focus:outline-none focus:ring-2 focus:ring-offset-2
                     ${item.members[member]
-                      ? "bg-indigo-500 text-white ring-2 ring-indigo-500 ring-offset-2 focus:ring-indigo-500"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200 focus:ring-slate-400"
+                      ? "bg-amber-600 text-white ring-2 ring-amber-500 ring-offset-2 focus:ring-amber-500 shadow-sm"
+                      : "bg-stone-100 text-stone-600 hover:bg-stone-200 focus:ring-stone-400 border border-stone-300 shadow-sm"
                     }
                   `}
                 >
@@ -191,8 +191,8 @@ const ItemList: React.FC<ItemListProps> = ({
                   px-4 py-2 rounded-full text-sm font-medium transition-all duration-150
                   focus:outline-none focus:ring-2 focus:ring-offset-2
                   ${allSelected(index)
-                    ? "bg-slate-500 text-white hover:bg-slate-600 focus:ring-slate-500"
-                    : "bg-emerald-500 text-white hover:bg-emerald-600 focus:ring-emerald-500"
+                    ? "bg-stone-500 text-white hover:bg-stone-600 focus:ring-stone-500"
+                    : "bg-lime-600 text-white hover:bg-lime-700 focus:ring-lime-500"
                   }
                 `}
               >
@@ -201,14 +201,14 @@ const ItemList: React.FC<ItemListProps> = ({
             </div>
           </div>
 
-          <div className="flex justify-between items-center pt-3 border-t border-slate-100">
+          <div className="flex justify-between items-center pt-3 border-t border-stone-100">
             <div className="text-sm">
               {Object.entries(item.members).filter(([_, selected]) => selected).length > 0 ? (
-                <span className="text-emerald-600 font-medium">
+                <span className="text-lime-700 font-medium">
                   Split: ${item.split_price.toFixed(2)} per person
                 </span>
               ) : (
-                <span className="text-slate-400">No members selected</span>
+                <span className="text-stone-400">No members selected</span>
               )}
             </div>
 
@@ -227,7 +227,7 @@ const ItemList: React.FC<ItemListProps> = ({
 
       <button
         onClick={addItem}
-        className="w-full py-3 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-700 font-medium flex items-center justify-center gap-2 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+        className="w-full py-3 bg-amber-100 hover:bg-amber-200 border border-amber-300 rounded-xl text-amber-800 font-medium flex items-center justify-center gap-2 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 shadow-sm"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

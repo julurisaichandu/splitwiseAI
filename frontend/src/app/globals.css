@@ -2,34 +2,34 @@
 
 :root {
   /* Base colors */
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --background: #faf7f2;
+  --foreground: #44403c;
 
-  /* Brand colors - Indigo + Emerald */
-  --primary: #6366f1;
-  --primary-hover: #4f46e5;
-  --primary-light: #e0e7ff;
-  --success: #10b981;
-  --success-hover: #059669;
-  --success-light: #d1fae5;
-  --warning: #f59e0b;
-  --warning-hover: #d97706;
+  /* Brand colors - Warm Amber + Sage */
+  --primary: #b45309;
+  --primary-hover: #92400e;
+  --primary-light: #fef3c7;
+  --success: #65a30d;
+  --success-hover: #4d7c0f;
+  --success-light: #ecfccb;
+  --warning: #d97706;
+  --warning-hover: #b45309;
   --warning-light: #fef3c7;
-  --danger: #ef4444;
-  --danger-hover: #dc2626;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
   --danger-light: #fee2e2;
 
   /* Surface colors */
-  --surface: #f8fafc;
-  --surface-hover: #f1f5f9;
-  --card: #ffffff;
-  --border: #e2e8f0;
-  --border-hover: #cbd5e1;
+  --surface: #faf7f2;
+  --surface-hover: #f5f0e8;
+  --card: #fefdfb;
+  --border: #e7e5e4;
+  --border-hover: #d6d3d1;
 
   /* Text colors */
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --text-primary: #44403c;
+  --text-secondary: #78716c;
+  --text-muted: #a8a29e;
 }
 
 @theme inline {
@@ -70,22 +70,12 @@
   }
 }
 
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
 body {
-  background: linear-gradient(-45deg, #e0e7ff, #ede9fe, #f3e8ff, #e0e7ff);
-  background-size: 400% 400%;
-  animation: gradient-shift 12s ease infinite;
+  background-color: #f5f0e8;
+  background-image: url("https://mdl.artvee.com/sftb/522541ld.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
@@ -93,9 +83,21 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background: linear-gradient(-45deg, #4f46e5, #7c3aed, #059669, #0891b2, #4f46e5);
-    background-size: 400% 400%;
-    animation: gradient-shift 12s ease infinite;
+    background-color: #1a1a1a;
+    filter: none;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://mdl.artvee.com/sftb/522541ld.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.4) saturate(0.8);
+    z-index: -1;
   }
 }
 
@@ -148,4 +150,18 @@ button, input, select, textarea, a {
 }
 .animate-slide-in {
   animation: slide-in 0.3s ease-out;
+}
+
+/* Handwriting stroke animation */
+@keyframes handwriting {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fillIn {
+  to {
+    fill: white;
+    stroke: transparent;
+  }
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Playwrite_CO } from "next/font/google";
 import "./globals.css";
 import Providers from "../../components/Providers";
 
@@ -13,8 +13,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const playwriteCO = Playwrite_CO({
+  variable: "--font-playwrite-co",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "SplitWise AI - Bill Splitter",
+  title: "Split Splitter - Bill Splitter",
   description: "Split bills with friends using AI-powered receipt analysis",
 };
 
@@ -26,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playwriteCO.variable} antialiased bg-slate-50`}
       >
         <Providers>{children}</Providers>
       </body>
