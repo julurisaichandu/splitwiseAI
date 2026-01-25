@@ -79,6 +79,58 @@ const SplitSummary: React.FC<SplitSummaryProps> = ({ data, totalBill,  itemizedS
       ))}
     </tbody>
   </table>
+  {/* New: Formatted Text Section */}
+<div className="mt-6">
+  <h4 className="text-md font-semibold mb-2">Formatted Text (Copy-friendly)</h4>
+  <textarea
+    readOnly
+    value={(() => {
+      let formattedText = "=== ITEMIZED BILL SPLITS ===\n\n";
+      formattedText += `Total Bill: $${totalBill.toFixed(2)}\n`;
+      formattedText += "─".repeat(50) + "\n\n";
+      
+      itemizedSplits.forEach((item, index) => {
+        formattedText += `${index + 1}. ${item.name}\n`;
+        formattedText += `   • Full Price: $${item.price.toFixed(2)}\n`;
+        formattedText += `   • Split Among: ${item.members.length} ${item.members.length === 1 ? 'person' : 'people'}\n`;
+        formattedText += `   • Price per Person: $${item.splitPrice.toFixed(2)}\n`;
+        formattedText += `   • Members: ${item.members.join(', ')}\n\n`;
+      });
+      
+      formattedText += "─".repeat(50) + "\n";
+      formattedText += "MEMBER SUMMARY:\n\n";
+      
+      // Calculate member totals
+      const memberTotals: { [key: string]: number } = {};
+      itemizedSplits.forEach(item => {
+        item.members.forEach(member => {
+          if (!memberTotals[member]) memberTotals[member] = 0;
+          memberTotals[member] += item.splitPrice;
+        });
+      });
+      
+      // Sort members alphabetically
+      Object.keys(memberTotals).sort().forEach(member => {
+        const memberItems = itemizedSplits
+          .filter(item => item.members.includes(member))
+          .map(item => `${item.name} ($${item.splitPrice.toFixed(2)})`);
+        
+        formattedText += `${member}: $${memberTotals[member].toFixed(2)}\n`;
+        formattedText += `   Items: ${memberItems.join(', ')}\n\n`;
+      });
+      
+      return formattedText;
+    })()}
+    className="w-full h-64 p-3 border border-gray-300 rounded-lg font-mono text-xs bg-gray-50 resize-none"
+    onClick={(e) => {
+      const target = e.target as HTMLTextAreaElement;
+      target.select();
+    }}
+  />
+  <p className="text-xs text-gray-500 mt-2">
+    Click the text area to select all, then copy (Ctrl+C / Cmd+C)
+  </p>
+</div>
 </div>
     </div>
   );

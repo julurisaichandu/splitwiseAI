@@ -172,9 +172,33 @@ export default function BillSplitter() {
     }
   };
 
-  const handleItemsUpdate = (newItems: Item[]) => {
-    setItems(newItems);
-  };
+const handleItemsUpdate = (newItems: Item[]) => {
+  // Ensure all members are in each item's members object
+  const normalizedItems = newItems.map(item => {
+    const normalizedMembers: { [key: string]: boolean } = {};
+    
+    // Initialize all members to false
+    allMembers.forEach(member => {
+      normalizedMembers[member] = false;
+    });
+    
+    // Copy over existing selections
+    Object.entries(item.members).forEach(([member, selected]) => {
+      if (allMembers.includes(member)) {
+        normalizedMembers[member] = selected;
+      }
+    });
+    
+    return {
+      ...item,
+      members: normalizedMembers
+    };
+  });
+  
+  setItems(normalizedItems);
+};
+
+
 
   const handleGroupChange = (group: string) => {
     setSelectedGroup(group);
@@ -225,11 +249,11 @@ export default function BillSplitter() {
       });
     });
 
-    const finalData = members.map((member) => ({
-      member,
-      itemSplits: splitsPerItem[member].replace(/,\s*$/, ""),
-      totalSplit: splits[member].toFixed(2),
-    }));
+const finalData = allMembers.map((member) => ({
+  member,
+  itemSplits: splitsPerItem[member].replace(/,\s*$/, ""),
+  totalSplit: splits[member].toFixed(2),
+}));
 
     setFinalSplits({
       data: finalData,

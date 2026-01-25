@@ -66,17 +66,34 @@ const ItemList: React.FC<ItemListProps> = ({
     onItemsChange(newItems);
   };
 
-  const addItem = () => {
-    onItemsChange([
-      ...items,
-      {
-        name: `Item ${items.length + 1}`,
-        price: 0,
-        split_price: 0,
-        members: Object.fromEntries(members.map((member) => [member, false])),
-      },
-    ]);
-  };
+const addItem = () => {
+  // Get all members from the parent component's state
+  const allMembersObj: { [key: string]: boolean } = {};
+  
+  // Initialize with all members that exist in other items
+  if (items.length > 0 && Object.keys(items[0].members).length > 0) {
+    Object.keys(items[0].members).forEach(member => {
+      allMembersObj[member] = false;
+    });
+  } else {
+    // Fallback to visible members
+    members.forEach(member => {
+      allMembersObj[member] = false;
+    });
+  }
+  
+  onItemsChange([
+    ...items,
+    {
+      name: `Item ${items.length + 1}`,
+      price: 0,
+      split_price: 0,
+      members: allMembersObj,
+    },
+  ]);
+};
+
+
 
   const removeItem = (index: number) => {
     onItemsChange(items.filter((_, i) => i !== index));
@@ -127,34 +144,40 @@ const ItemList: React.FC<ItemListProps> = ({
                   {member}
                 </button>
               ))}
-              {/*  Select All button */}
-              <button
-                onClick={() => {
-                  const newItems = [...items];
-                  const allSelected = Object.values(
-                    newItems[index].members
-                  ).every((value) => value);
 
-                  Object.keys(newItems[index].members).forEach(
-                    (member) => (newItems[index].members[member] = !allSelected)
-                  );
+{/*  Select All button */}
+<button
+  onClick={() => {
+    const newItems = [...items];
+    const allSelected = members.every(
+      (member) => newItems[index].members[member] === true
+    );
 
-                  const selectedMembersCount = Object.values(
-                    newItems[index].members
-                  ).filter(Boolean).length;
-                  newItems[index].split_price =
-                    selectedMembersCount > 0
-                      ? newItems[index].price / selectedMembersCount
-                      : 0;
+    members.forEach(
+      (member) => (newItems[index].members[member] = !allSelected)
+    );
 
-                  onItemsChange(newItems);
-                }}
-                className="px-3 py-1 rounded-full text-sm bg-green-500 text-white"
-              >
-                {Object.values(items[index].members).every((value) => value)
-                  ? "Deselect All"
-                  : "Select All"}
-              </button>
+    // MISSING: Recalculate split price
+    const selectedMembersCount = members.filter(
+      member => newItems[index].members[member]
+    ).length;
+    
+    newItems[index].split_price =
+      selectedMembersCount > 0
+        ? newItems[index].price / selectedMembersCount
+        : 0;
+
+    // MISSING: Update parent component
+    onItemsChange(newItems);
+  }}
+  className="px-3 py-1 rounded-full text-sm bg-green-500 text-white"  // MISSING: Styling
+>
+  {members.every((member) => items[index].members[member] === true)
+    ? "Deselect All"
+    : "Select All"}
+</button>
+
+
             </div>
           </div>
 

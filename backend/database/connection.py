@@ -3,6 +3,9 @@ import os
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from models.database import SplitData, PendingUpdate, MemberMapping
+from dotenv import load_dotenv
+# Load environment variables from .env file
+load_dotenv()
 
 # MongoDB connection settings
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
