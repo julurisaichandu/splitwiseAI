@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playwrite_CO } from "next/font/google";
+import { Geist, Geist_Mono, Playwrite_CO, Lexend } from "next/font/google";
 import "./globals.css";
 import Providers from "../../components/Providers";
 
@@ -15,7 +15,12 @@ const geistMono = Geist_Mono({
 
 const playwriteCO = Playwrite_CO({
   variable: "--font-playwrite-co",
+});
+
+const lexend = Lexend({
+  variable: "--font-lexend",
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -31,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playwriteCO.variable} antialiased bg-slate-50`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playwriteCO.variable} ${lexend.variable} antialiased bg-slate-50`}
       >
         <Providers>{children}</Providers>
       </body>

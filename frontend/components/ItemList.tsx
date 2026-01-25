@@ -192,7 +192,7 @@ const ItemList: React.FC<ItemListProps> = ({
                   focus:outline-none focus:ring-2 focus:ring-offset-2
                   ${allSelected(index)
                     ? "bg-stone-500 text-white hover:bg-stone-600 focus:ring-stone-500"
-                    : "bg-lime-600 text-white hover:bg-lime-700 focus:ring-lime-500"
+                    : "bg-green-800 text-white hover:bg-lime-700 focus:ring-lime-500"
                   }
                 `}
               >
