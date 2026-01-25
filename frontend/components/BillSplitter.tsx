@@ -8,7 +8,6 @@ import PDFUploader from "./PDFUploader";
 import SplitSummary from "./SplitSummary";
 
 import ExpenseEditor from "./ExpenseEditor";
-import VoiceRecorder from "./VoiceRecorder";
 
 interface ReceiptMetadata {
   store: string | null;
@@ -31,7 +30,6 @@ interface ApiKeys {
   SPLITWISE_SECRET_KEY: string;
   SPLITWISE_API_KEY: string;
   GEMINI_API_KEY: string;
-  GROQ_API_KEY: string; 
 }
 
 interface Member {
@@ -68,7 +66,6 @@ function getApiKeys(): ApiKeys {
     SPLITWISE_SECRET_KEY: process.env.NEXT_PUBLIC_SPLITWISE_SECRET_KEY || "",
     SPLITWISE_API_KEY: process.env.NEXT_PUBLIC_SPLITWISE_API_KEY || "",
     GEMINI_API_KEY: process.env.NEXT_PUBLIC_GEMINI_API_KEY || "",
-    GROQ_API_KEY: process.env.NEXT_PUBLIC_GROQ_API_KEY || "",
   };
 }
 
@@ -89,7 +86,7 @@ export default function BillSplitter() {
   const [expenseId, setExpenseId] = useState<string>("");
   const [allMembers, setAllMembers] = useState<string[]>([]);
   const [visibleMembers, setVisibleMembers] = useState<string[]>([]);
-  const [inputMode, setInputMode] = useState<'image' | 'pdf' | 'voice'>('image');
+  const [inputMode, setInputMode] = useState<'image' | 'pdf'>('image');
   const [receiptMetadata, setReceiptMetadata] = useState<ReceiptMetadata | null>(null);
   // useEffect(() => {
   //   const keys = getApiKeys();
@@ -521,59 +518,7 @@ const finalData = allMembers.map((member) => ({
     return hiddenWithSplits;
   };
 
-  // Inside BillSplitter component, add a handler function
-  const handleVoiceProcessedData = (voiceItems: any[]) => {
-    // Convert the voice-processed items to the format expected by our app
-    const newItems = voiceItems.map((item) => {
-      // Create a members object with all known members set to false initially
-      const memberObj: { [key: string]: boolean } = {};
-      allMembers.forEach((member) => {
-        memberObj[member] = false;
-      });
-
-      // Set members who are part of this item to true
-      item.members.forEach((memberName: string) => {
-        // Find closest matching member name (in case of slight mispronunciations)
-        const matchedMember = findBestMatchingMember(memberName, allMembers);
-        if (matchedMember) {
-          memberObj[matchedMember] = true;
-        }
-      });
-
-      return {
-        name: item.name,
-        price: parseFloat(item.price) || 0,
-        split_price:
-          (parseFloat(item.price) || 0) / Math.max(1, item.members.length),
-        members: memberObj,
-      };
-    });
-
-    // Add these new items to existing items
-    setItems([...items, ...newItems]);
-
-    // Make sure all members mentioned in the voice items are visible
-    const mentionedMembers = new Set<string>();
-    voiceItems.forEach((item) => {
-      item.members.forEach((memberName: string) => {
-        const matchedMember = findBestMatchingMember(memberName, allMembers);
-        if (matchedMember) {
-          mentionedMembers.add(matchedMember);
-        }
-      });
-    });
-
-    const updatedVisibleMembers = [...visibleMembers];
-    mentionedMembers.forEach((member) => {
-      if (!updatedVisibleMembers.includes(member)) {
-        updatedVisibleMembers.push(member);
-      }
-    });
-
-    setVisibleMembers(updatedVisibleMembers);
-  };
-
-  // Unified handler for items detected from any source (image, PDF, voice)
+  // Unified handler for items detected from any source (image, PDF)
   const handleItemsDetectedWithMetadata = (detectedItems: any[], metadata: ReceiptMetadata | null) => {
     // Convert items to the format expected by our app
     const newItems = detectedItems.map((item) => {
@@ -593,70 +538,6 @@ const finalData = allMembers.map((member) => ({
     // Set items and metadata
     setItems(newItems);
     setReceiptMetadata(metadata);
-  };
-
-  // Helper function to find best matching member name (handles speech recognition variations)
-  const findBestMatchingMember = (
-    spokenName: string,
-    membersList: string[]
-  ): string | null => {
-    spokenName = spokenName.toLowerCase().trim();
-
-    // First try exact match
-    const exactMatch = membersList.find((m) => m.toLowerCase() === spokenName);
-    if (exactMatch) return exactMatch;
-
-    // Then try if the spoken name contains the member name or vice versa
-    for (const member of membersList) {
-      if (
-        member.toLowerCase().includes(spokenName) ||
-        spokenName.includes(member.toLowerCase())
-      ) {
-        return member;
-      }
-    }
-
-    // Finally, check if spoken name is at least 70% similar to any member name
-    // (simple implementation - you may want a more sophisticated string similarity function)
-    for (const member of membersList) {
-      if (stringSimilarity(member.toLowerCase(), spokenName) > 0.7) {
-        return member;
-      }
-    }
-
-    return null;
-  };
-
-  // Simple string similarity function (Levenshtein distance based)
-  const stringSimilarity = (str1: string, str2: string): number => {
-    const len1 = str1.length;
-    const len2 = str2.length;
-
-    // Create a matrix of distances
-    const matrix: number[][] = Array(len1 + 1)
-      .fill(null)
-      .map(() => Array(len2 + 1).fill(0));
-
-    // Initialize first row and column
-    for (let i = 0; i <= len1; i++) matrix[i][0] = i;
-    for (let j = 0; j <= len2; j++) matrix[0][j] = j;
-
-    // Fill the matrix
-    for (let i = 1; i <= len1; i++) {
-      for (let j = 1; j <= len2; j++) {
-        const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j] + 1, // deletion
-          matrix[i][j - 1] + 1, // insertion
-          matrix[i - 1][j - 1] + cost // substitution
-        );
-      }
-    }
-
-    // Calculate the similarity (1 - normalized distance)
-    const distance = matrix[len1][len2];
-    const maxLength = Math.max(len1, len2);
-    return maxLength === 0 ? 1 : 1 - distance / maxLength;
   };
 
   return (
@@ -692,16 +573,6 @@ const finalData = allMembers.map((member) => ({
           {/* Input Mode Toggle */}
           <div className="flex gap-2 mb-4">
             <button
-              onClick={() => setInputMode('voice')}
-              className={`px-4 py-2 rounded ${
-                inputMode === 'voice'
-                  ? 'bg-purple-500 text-white'
-                  : 'bg-gray-200 hover:bg-gray-300'
-              }`}
-            >
-              🎤 Voice
-            </button>
-            <button
               onClick={() => setInputMode('image')}
               className={`px-4 py-2 rounded ${
                 inputMode === 'image'
@@ -724,10 +595,6 @@ const finalData = allMembers.map((member) => ({
           </div>
 
           {/* Conditional Input Components */}
-          {inputMode === 'voice' && (
-            <VoiceRecorder onProcessedData={handleVoiceProcessedData} />
-          )}
-
           {inputMode === 'image' && apiKeys && (
             <BillUploader
               apiKeys={apiKeys}

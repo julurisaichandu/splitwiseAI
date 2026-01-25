@@ -5,8 +5,6 @@ interface ApiKeys {
   SPLITWISE_SECRET_KEY: string;
   SPLITWISE_API_KEY: string;
   GEMINI_API_KEY: string;
-  GROQ_API_KEY: string; 
-
 }
 
 interface Preview {

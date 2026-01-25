@@ -7,7 +7,6 @@ google-genai
 pillow
 # dotenv
 python-multipart
-groq
 python_dotenv
 beanie
 motor
