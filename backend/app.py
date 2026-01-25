@@ -203,6 +203,127 @@ Items in image:"""
         raise HTTPException(status_code=400, detail=f"Failed to analyze bills: {str(e)}")
 
 
+@app.post("/api/analyze-pdf")
+async def analyze_pdf(
+    file: UploadFile = File(...),
+    gemini_key: str = Form(...)
+):
+    """Parse Instacart receipt PDF and extract items with metadata."""
+    try:
+        client = genai.Client(api_key=gemini_key)
+
+        # Read PDF bytes
+        pdf_bytes = await file.read()
+
+        prompt = """Extract ALL data from this Instacart receipt PDF.
+
+Instructions:
+1. Extract store_name (e.g. "ALDI")
+2. Extract delivery_date and delivery_time from the header
+3. Extract EVERY item with FULL product name including size/weight in parentheses
+4. For each item: name, quantity (as number), unit_price, final_price
+5. Mark refunded items (in ADJUSTMENTS section) with is_refunded=true
+6. Extract totals: items_subtotal, checkout_bag_fee, bag_fee_tax, service_fee, delivery_discount, total
+7. For items on sale, use the DISCOUNTED price (the lower green price) as final_price
+
+CRITICAL: Prices must match the PDF exactly. The sum of all non-refunded item final_prices should equal items_subtotal."""
+
+        # Define schema for structured output
+        item_schema = types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "name": types.Schema(type=types.Type.STRING, description="Full product name with size e.g. 'Season's Choice Shelled Edamame, Bag (16 oz)'"),
+                "quantity": types.Schema(type=types.Type.NUMBER, description="Quantity e.g. 1, 2, 5.0"),
+                "unit_price": types.Schema(type=types.Type.NUMBER, description="Price per unit e.g. 2.75"),
+                "final_price": types.Schema(type=types.Type.NUMBER, description="Total price for this line item"),
+                "is_refunded": types.Schema(type=types.Type.BOOLEAN, description="True if in ADJUSTMENTS/NOT CHARGED section"),
+            },
+            required=["name", "quantity", "unit_price", "final_price", "is_refunded"]
+        )
+
+        totals_schema = types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "items_subtotal": types.Schema(type=types.Type.NUMBER, description="Items Subtotal from ORDER TOTALS section e.g. 50.84"),
+                "checkout_bag_fee": types.Schema(type=types.Type.NUMBER, description="Checkout Bag Fee if present e.g. 0.36"),
+                "bag_fee_tax": types.Schema(type=types.Type.NUMBER, description="Checkout Bag Fee Tax if present e.g. 0.02"),
+                "service_fee": types.Schema(type=types.Type.NUMBER, description="Service Fee if present e.g. 2.96"),
+                "delivery_discount": types.Schema(type=types.Type.NUMBER, description="Scheduled delivery discount as positive number e.g. 2.00 even if shown as -$2.00"),
+                "total": types.Schema(type=types.Type.NUMBER, description="Final Total from ORDER TOTALS section e.g. 52.18"),
+            },
+            required=["items_subtotal", "total"]
+        )
+
+        receipt_schema = types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "store_name": types.Schema(type=types.Type.STRING),
+                "delivery_date": types.Schema(type=types.Type.STRING, description="e.g. January 19th, 2026"),
+                "delivery_time": types.Schema(type=types.Type.STRING, description="e.g. 6:17 PM"),
+                "items": types.Schema(type=types.Type.ARRAY, items=item_schema),
+                "totals": totals_schema,
+            },
+            required=["store_name", "delivery_date", "delivery_time", "items", "totals"]
+        )
+
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=[
+                types.Part.from_bytes(data=pdf_bytes, mime_type="application/pdf"),
+                types.Part.from_text(text=prompt)
+            ],
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=receipt_schema,
+                temperature=0.0
+            )
+        )
+
+        receipt = json.loads(response.text)
+
+        # Validate: sum of non-refunded items should equal subtotal
+        calculated_subtotal = sum(
+            item["final_price"] for item in receipt["items"]
+            if not item.get("is_refunded", False)
+        )
+        expected_subtotal = receipt["totals"]["items_subtotal"]
+        validation_passed = abs(calculated_subtotal - expected_subtotal) < 0.01
+
+        # Transform to frontend format (exclude refunded items)
+        items = []
+        for item in receipt["items"]:
+            if not item.get("is_refunded", False):
+                items.append({
+                    "name": item["name"],
+                    "price": item["final_price"],
+                    "members": []
+                })
+
+        return {
+            "items": items,
+            "metadata": {
+                "store": receipt["store_name"],
+                "delivery_date": receipt["delivery_date"],
+                "delivery_time": receipt["delivery_time"],
+                "subtotal": receipt["totals"]["items_subtotal"],
+                "fees": {
+                    "bag_fee": receipt["totals"].get("checkout_bag_fee", 0),
+                    "bag_fee_tax": receipt["totals"].get("bag_fee_tax", 0),
+                    "service_fee": receipt["totals"].get("service_fee", 0),
+                    "delivery_discount": receipt["totals"].get("delivery_discount", 0),
+                },
+                "total": receipt["totals"]["total"],
+                "validation_passed": validation_passed,
+                "calculated_subtotal": round(calculated_subtotal, 2)
+            }
+        }
+    except json.JSONDecodeError as e:
+        print(f"Failed to parse JSON from Gemini response")
+        raise HTTPException(status_code=400, detail="Failed to parse PDF response as JSON")
+    except Exception as e:
+        print(f"Error parsing PDF: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Failed to parse PDF: {str(e)}")
+
 
 @app.post("/api/create-expense")
 async def create_expense(expense_req: ExpenseRequest, consumer_key: str, secret_key: str, api_key: str):

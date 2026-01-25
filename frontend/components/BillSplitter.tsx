@@ -4,10 +4,27 @@ import Head from "next/head";
 import MemberSelection from "./MemberSelection";
 import ItemList from "./ItemList";
 import BillUploader from "./BillUploader";
+import PDFUploader from "./PDFUploader";
 import SplitSummary from "./SplitSummary";
 
 import ExpenseEditor from "./ExpenseEditor";
 import VoiceRecorder from "./VoiceRecorder";
+
+interface ReceiptMetadata {
+  store: string;
+  delivery_date: string;
+  delivery_time: string;
+  subtotal: number;
+  fees: {
+    bag_fee: number;
+    bag_fee_tax: number;
+    service_fee: number;
+    delivery_discount: number;
+  };
+  total: number;
+  validation_passed: boolean;
+  calculated_subtotal: number;
+}
 
 interface ApiKeys {
   SPLITWISE_CONSUMER_KEY: string;
@@ -72,6 +89,8 @@ export default function BillSplitter() {
   const [expenseId, setExpenseId] = useState<string>("");
   const [allMembers, setAllMembers] = useState<string[]>([]);
   const [visibleMembers, setVisibleMembers] = useState<string[]>([]);
+  const [inputMode, setInputMode] = useState<'image' | 'pdf' | 'voice'>('image');
+  const [receiptMetadata, setReceiptMetadata] = useState<ReceiptMetadata | null>(null);
   // useEffect(() => {
   //   const keys = getApiKeys();
   //   if (!keys.SPLITWISE_CONSUMER_KEY || !keys.SPLITWISE_SECRET_KEY || !keys.SPLITWISE_API_KEY || !keys.GEMINI_API_KEY) {
@@ -554,6 +573,28 @@ const finalData = allMembers.map((member) => ({
     setVisibleMembers(updatedVisibleMembers);
   };
 
+  // Handler for PDF-processed items with metadata
+  const handlePDFItemsDetected = (pdfItems: any[], metadata: ReceiptMetadata) => {
+    // Convert PDF items to the format expected by our app
+    const newItems = pdfItems.map((item) => {
+      const memberObj: { [key: string]: boolean } = {};
+      allMembers.forEach((member) => {
+        memberObj[member] = false;
+      });
+
+      return {
+        name: item.name,
+        price: parseFloat(item.price) || 0,
+        split_price: 0,
+        members: memberObj,
+      };
+    });
+
+    // Set items and metadata
+    setItems(newItems);
+    setReceiptMetadata(metadata);
+  };
+
   // Helper function to find best matching member name (handles speech recognition variations)
   const findBestMatchingMember = (
     spokenName: string,
@@ -645,20 +686,89 @@ const finalData = allMembers.map((member) => ({
 
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">
-            Step 2: Voice Entry or Upload Bills
+            Step 2: Add Items
           </h2>
 
-          {/* Voice Recorder Component */}
-          <VoiceRecorder onProcessedData={handleVoiceProcessedData} />
+          {/* Input Mode Toggle */}
+          <div className="flex gap-2 mb-4">
+            <button
+              onClick={() => setInputMode('voice')}
+              className={`px-4 py-2 rounded ${
+                inputMode === 'voice'
+                  ? 'bg-purple-500 text-white'
+                  : 'bg-gray-200 hover:bg-gray-300'
+              }`}
+            >
+              🎤 Voice
+            </button>
+            <button
+              onClick={() => setInputMode('image')}
+              className={`px-4 py-2 rounded ${
+                inputMode === 'image'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-200 hover:bg-gray-300'
+              }`}
+            >
+              📷 Image
+            </button>
+            <button
+              onClick={() => setInputMode('pdf')}
+              className={`px-4 py-2 rounded ${
+                inputMode === 'pdf'
+                  ? 'bg-green-500 text-white'
+                  : 'bg-gray-200 hover:bg-gray-300'
+              }`}
+            >
+              📄 PDF
+            </button>
+          </div>
 
-          <h2 className="text-xl font-semibold mb-4">
-            Step 2: Upload Bills (Optional)
-          </h2>
-          {apiKeys && (
+          {/* Conditional Input Components */}
+          {inputMode === 'voice' && (
+            <VoiceRecorder onProcessedData={handleVoiceProcessedData} />
+          )}
+
+          {inputMode === 'image' && apiKeys && (
             <BillUploader
               apiKeys={apiKeys}
               onItemsDetected={handleItemsUpdate}
             />
+          )}
+
+          {inputMode === 'pdf' && apiKeys && (
+            <PDFUploader
+              apiKeys={apiKeys}
+              onItemsDetected={handlePDFItemsDetected}
+            />
+          )}
+
+          {/* Receipt Metadata Display */}
+          {receiptMetadata && (
+            <div className="mt-4 p-4 bg-gray-50 border rounded-lg">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="font-semibold text-lg">{receiptMetadata.store}</p>
+                  <p className="text-gray-600">
+                    Delivered: {receiptMetadata.delivery_date} at {receiptMetadata.delivery_time}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-500">Subtotal: ${receiptMetadata.subtotal.toFixed(2)}</p>
+                  <p className="font-semibold">Total: ${receiptMetadata.total.toFixed(2)}</p>
+                </div>
+              </div>
+              {!receiptMetadata.validation_passed && (
+                <div className="mt-2 p-2 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded text-sm">
+                  ⚠️ Validation warning: Calculated subtotal (${receiptMetadata.calculated_subtotal.toFixed(2)})
+                  doesn't match expected (${receiptMetadata.subtotal.toFixed(2)})
+                </div>
+              )}
+              {receiptMetadata.validation_passed && (
+                <div className="mt-2 p-2 bg-green-100 border border-green-400 text-green-700 rounded text-sm">
+                  ✓ All items verified - totals match
+                </div>
+              )}
+            </div>
           )}
         </div>
 
