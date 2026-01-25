@@ -586,6 +586,27 @@ const finalData = allMembers.map((member) => ({
       };
     });
 
+    // Add Tax/Fees item if metadata has total information
+    if (metadata && metadata.total) {
+      const itemsSum = newItems.reduce((sum, item) => sum + item.price, 0);
+      const taxFeesAmount = Math.round((metadata.total - itemsSum) * 100) / 100;
+
+      // Only add if difference is meaningful (>= 1 cent)
+      if (Math.abs(taxFeesAmount) >= 0.01) {
+        const memberObj: { [key: string]: boolean } = {};
+        allMembers.forEach((member) => {
+          memberObj[member] = false;
+        });
+
+        newItems.push({
+          name: taxFeesAmount >= 0 ? "Tax & Fees" : "Discount",
+          price: taxFeesAmount,
+          split_price: 0,
+          members: memberObj,
+        });
+      }
+    }
+
     // Set items and metadata
     setItems(newItems);
     setReceiptMetadata(metadata);
