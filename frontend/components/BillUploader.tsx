@@ -21,9 +21,25 @@ interface Item {
   members: Record<string, boolean>;
 }
 
+interface ReceiptMetadata {
+  store: string | null;
+  delivery_date: string | null;
+  delivery_time: string | null;
+  subtotal: number;
+  fees: {
+    bag_fee: number;
+    bag_fee_tax: number;
+    service_fee: number;
+    delivery_discount: number;
+  };
+  total: number;
+  validation_passed: boolean;
+  calculated_subtotal: number;
+}
+
 interface BillUploaderProps {
   apiKeys: ApiKeys;
-  onItemsDetected: (items: Item[]) => void;
+  onItemsDetected: (items: Item[], metadata: ReceiptMetadata | null) => void;
 }
 
 const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected }) => {
@@ -116,7 +132,7 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
       const data = await response.json();
       
       if (data.items && data.items.length > 0) {
-        onItemsDetected(data.items);
+        onItemsDetected(data.items, data.metadata);
       } else {
         alert('No items detected in the bills');
       }

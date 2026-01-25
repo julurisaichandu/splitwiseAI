@@ -11,9 +11,9 @@ import ExpenseEditor from "./ExpenseEditor";
 import VoiceRecorder from "./VoiceRecorder";
 
 interface ReceiptMetadata {
-  store: string;
-  delivery_date: string;
-  delivery_time: string;
+  store: string | null;
+  delivery_date: string | null;
+  delivery_time: string | null;
   subtotal: number;
   fees: {
     bag_fee: number;
@@ -573,10 +573,10 @@ const finalData = allMembers.map((member) => ({
     setVisibleMembers(updatedVisibleMembers);
   };
 
-  // Handler for PDF-processed items with metadata
-  const handlePDFItemsDetected = (pdfItems: any[], metadata: ReceiptMetadata) => {
-    // Convert PDF items to the format expected by our app
-    const newItems = pdfItems.map((item) => {
+  // Unified handler for items detected from any source (image, PDF, voice)
+  const handleItemsDetectedWithMetadata = (detectedItems: any[], metadata: ReceiptMetadata | null) => {
+    // Convert items to the format expected by our app
+    const newItems = detectedItems.map((item) => {
       const memberObj: { [key: string]: boolean } = {};
       allMembers.forEach((member) => {
         memberObj[member] = false;
@@ -731,14 +731,14 @@ const finalData = allMembers.map((member) => ({
           {inputMode === 'image' && apiKeys && (
             <BillUploader
               apiKeys={apiKeys}
-              onItemsDetected={handleItemsUpdate}
+              onItemsDetected={handleItemsDetectedWithMetadata}
             />
           )}
 
           {inputMode === 'pdf' && apiKeys && (
             <PDFUploader
               apiKeys={apiKeys}
-              onItemsDetected={handlePDFItemsDetected}
+              onItemsDetected={handleItemsDetectedWithMetadata}
             />
           )}
 
@@ -747,10 +747,14 @@ const finalData = allMembers.map((member) => ({
             <div className="mt-4 p-4 bg-gray-50 border rounded-lg">
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="font-semibold text-lg">{receiptMetadata.store}</p>
-                  <p className="text-gray-600">
-                    Delivered: {receiptMetadata.delivery_date} at {receiptMetadata.delivery_time}
-                  </p>
+                  {receiptMetadata.store && (
+                    <p className="font-semibold text-lg">{receiptMetadata.store}</p>
+                  )}
+                  {receiptMetadata.delivery_date && receiptMetadata.delivery_time && (
+                    <p className="text-gray-600">
+                      Delivered: {receiptMetadata.delivery_date} at {receiptMetadata.delivery_time}
+                    </p>
+                  )}
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-gray-500">Subtotal: ${receiptMetadata.subtotal.toFixed(2)}</p>

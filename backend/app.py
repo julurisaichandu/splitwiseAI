@@ -194,10 +194,32 @@ Items in image:"""
         # Add empty members array to each item
         for item in items_json:
             item["members"] = []
-        return {"items": items_json}
+
+        # Calculate subtotal from items
+        calculated_subtotal = sum(item["price"] for item in items_json)
+
+        # Return unified format (matching PDF output)
+        return {
+            "items": items_json,
+            "metadata": {
+                "store": None,
+                "delivery_date": None,
+                "delivery_time": None,
+                "subtotal": round(calculated_subtotal, 2),
+                "fees": {
+                    "bag_fee": 0,
+                    "bag_fee_tax": 0,
+                    "service_fee": 0,
+                    "delivery_discount": 0,
+                },
+                "total": round(calculated_subtotal, 2),
+                "validation_passed": True,
+                "calculated_subtotal": round(calculated_subtotal, 2)
+            }
+        }
     except json.JSONDecodeError as e:
         print(f"Failed to parse JSON from response: {response.text}")
-        return {"items": []}
+        return {"items": [], "metadata": None}
     except Exception as e:
         print(f"Error details: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Failed to analyze bills: {str(e)}")
