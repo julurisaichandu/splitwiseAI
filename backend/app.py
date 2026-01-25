@@ -6,7 +6,8 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
 from splitwise import Splitwise
 from splitwise.expense import Expense, ExpenseUser
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 import json
 import PIL.Image
 from io import BytesIO
@@ -135,21 +136,20 @@ async def get_groups(consumer_key: str, secret_key: str, api_key: str):
 @app.post("/api/analyze-bills")
 async def analyze_bills(
     files: List[UploadFile] = File(...),
-    groq_key: str = Form(...)
+    gemini_key: str = Form(...)
 ):
     try:
-        client = Groq(api_key=os.environ.get("GROQ_API_KEY"))  # Use the passed key, not env variable
-        
-        images_base64 = []
+        client = genai.Client(api_key=gemini_key)
+
+        # Read image bytes
+        images_bytes = []
         for file in files:
             contents = await file.read()
-            import base64
-            img_base64 = base64.b64encode(contents).decode('utf-8')
-            images_base64.append(f"data:image/jpeg;base64,{img_base64}")
-        
-        # Simpler prompt for better results
+            images_bytes.append(contents)
+
+        # Prompt for extraction
         prompt = """Extract items and prices from this receipt. Return JSON array.
-        
+
 Rules:
 - Abbreviate item names to 10 chars max
 - Include price as number
@@ -157,46 +157,46 @@ Rules:
 
 Items in image:"""
 
-        response = client.chat.completions.create(
-            model="meta-llama/llama-4-scout-17b-16e-instruct",  # Correct Groq vision model
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": prompt},
-                        *[{"type": "image_url", "image_url": {"url": img}} for img in images_base64]
-                    ]
-                }
-            ],
-            temperature=0.1
-            # Remove response_format - Groq doesn't support it
+        # Define JSON schema for structured output
+        item_schema = types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "name": types.Schema(type=types.Type.STRING),
+                "price": types.Schema(type=types.Type.NUMBER),
+            },
+            required=["name", "price"]
         )
-        
-        # Extract JSON from response
-        response_text = response.choices[0].message.content
-        
-        # Try to extract JSON from the response
-        import re
-        json_match = re.search(r'\[.*\]', response_text, re.DOTALL)
-        if json_match:
-            items_json = json.loads(json_match.group())
-        else:
-            # Fallback: try to parse the entire response
-            items_json = json.loads(response_text)
-        
-        # For the image you showed, expected output would be:
-        # [
-        #   {"name": "towel", "price": 17.59},
-        #   {"name": "stvia", "price": 4.29},
-        #   {"name": "peppr", "price": 2.55},
-        #   {"name": "onion", "price": 2.65}
-        # ]
+
+        response_schema = types.Schema(
+            type=types.Type.ARRAY,
+            items=item_schema
+        )
+
+        # Build content parts
+        content_parts = [types.Part.from_text(text=prompt)]
+        for img_bytes in images_bytes:
+            content_parts.append(types.Part.from_bytes(data=img_bytes, mime_type="image/jpeg"))
+
+        # Call Gemini with structured output
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=content_parts,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=response_schema,
+                temperature=0.1
+            )
+        )
+
+        # Parse JSON directly (structured output guarantees valid JSON)
+        items_json = json.loads(response.text)
+
+        # Add empty members array to each item
         for item in items_json:
-            item["members"] = []  # Empty array for members
+            item["members"] = []
         return {"items": items_json}
-    except json.JSONDecodeError:
-        # If JSON parsing fails, return empty array
-        print(f"Failed to parse JSON from response: {response_text}")
+    except json.JSONDecodeError as e:
+        print(f"Failed to parse JSON from response: {response.text}")
         return {"items": []}
     except Exception as e:
         print(f"Error details: {str(e)}")

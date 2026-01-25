@@ -3,7 +3,7 @@ uvicorn
 pandas
 streamlit
 splitwise
-google-generativeai
+google-genai
 pillow
 # dotenv
 python-multipart

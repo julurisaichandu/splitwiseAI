@@ -101,7 +101,7 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
       files.forEach(file => {
         formData.append('files', file);
       });
-      formData.append('groq_key', apiKeys.GROQ_API_KEY); // Changed from gemini_key
+      formData.append('gemini_key', apiKeys.GEMINI_API_KEY);
       
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`+'/api/analyze-bills', {
         method: 'POST',
