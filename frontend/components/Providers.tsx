@@ -11,7 +11,7 @@ interface ProvidersProps {
 export default function Providers({ children }: ProvidersProps) {
   return (
     <ToastProvider>
-      {/* <ParticleBackground /> */}
+      <ParticleBackground />
       {children}
     </ToastProvider>
   );

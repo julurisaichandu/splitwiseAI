@@ -28,7 +28,7 @@ export default function ParticleBackground() {
         events: {
           onHover: {
             enable: true,
-            mode: 'grab',
+            mode: 'repulse',
           },
           onClick: {
             enable: true,
@@ -36,27 +36,22 @@ export default function ParticleBackground() {
           },
         },
         modes: {
-          grab: {
-            distance: 140,
-            links: {
-              opacity: 0.5,
-            },
+          repulse: {
+            distance: 150,
+            duration: 0.4,
+            speed: 1,
           },
           push: {
-            quantity: 2,
+            quantity: 5,
           },
         },
       },
       particles: {
         color: {
-          value: ['#6366f1', '#818cf8', '#a5b4fc', '#10b981', '#34d399'],
+          value: ['#b45309', '#d97706', '#65a30d', '#fef3c7', '#ecfccb', '#92400e'],
         },
         links: {
-          color: '#c7d2fe',
-          distance: 150,
-          enable: true,
-          opacity: 0.3,
-          width: 1,
+          enable: false,
         },
         move: {
           direction: 'none',
@@ -64,27 +59,22 @@ export default function ParticleBackground() {
           outModes: {
             default: 'bounce',
           },
-          random: false,
-          speed: { min: 4, max: 10 },
+          random: true,
+          speed: { min: 1, max: 3 },
           straight: false,
-          attract: {
-            enable: true,
-            rotateX: 600,
-            rotateY: 1200,
-          },
         },
         number: {
           density: {
             enable: true,
-            area: 600,
+            area: 10,
           },
-          value: 100,
+          value: 750,
         },
         opacity: {
-          value: { min: 0.5, max: 1 },
+          value: { min: 0.3, max: 0.8 },
           animation: {
             enable: true,
-            speed: 2,
+            speed: 1,
             sync: false,
           },
         },
@@ -92,11 +82,11 @@ export default function ParticleBackground() {
           type: 'circle',
         },
         size: {
-          value: { min: 3, max: 7 },
+          value: { min: 0.5, max: 2 },
           animation: {
             enable: true,
-            speed: 4,
-            sync: false,
+            speed: 1,
+            sync: true,
           },
         },
       },
@@ -113,7 +103,7 @@ export default function ParticleBackground() {
     <Particles
       id="tsparticles"
       options={options}
-      className="fixed inset-0 -z-10 pointer-events-none"
+      className="fixed inset-0 z-0"
     />
   );
 }
