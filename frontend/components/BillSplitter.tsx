@@ -88,6 +88,7 @@ export default function BillSplitter() {
   const [visibleMembers, setVisibleMembers] = useState<string[]>([]);
   const [inputMode, setInputMode] = useState<'image' | 'pdf'>('image');
   const [receiptMetadata, setReceiptMetadata] = useState<ReceiptMetadata | null>(null);
+  const [isDescriptionLocked, setIsDescriptionLocked] = useState<boolean>(false);
   // useEffect(() => {
   //   const keys = getApiKeys();
   //   if (!keys.SPLITWISE_CONSUMER_KEY || !keys.SPLITWISE_SECRET_KEY || !keys.SPLITWISE_API_KEY || !keys.GEMINI_API_KEY) {
@@ -277,6 +278,43 @@ const finalData = allMembers.map((member) => ({
       splits,
       itemizedSplits,
     });
+
+    // Generate formatted text for expense comment
+    let formattedText = "=== ITEMIZED BILL SPLITS ===\n\n";
+    formattedText += `Total Bill: $${totalBill.toFixed(2)}\n`;
+    formattedText += "─".repeat(50) + "\n\n";
+
+    itemizedSplits.forEach((item, index) => {
+      formattedText += `${index + 1}. ${item.name}\n`;
+      formattedText += `   • Full Price: $${item.price.toFixed(2)}\n`;
+      formattedText += `   • Split Among: ${item.members.length} ${item.members.length === 1 ? 'person' : 'people'}\n`;
+      formattedText += `   • Price per Person: $${item.splitPrice.toFixed(2)}\n`;
+      formattedText += `   • Members: ${item.members.join(', ')}\n\n`;
+    });
+
+    formattedText += "─".repeat(50) + "\n";
+    formattedText += "MEMBER SUMMARY:\n\n";
+
+    // Calculate member totals
+    const memberTotals: { [key: string]: number } = {};
+    itemizedSplits.forEach(item => {
+      item.members.forEach(member => {
+        if (!memberTotals[member]) memberTotals[member] = 0;
+        memberTotals[member] += item.splitPrice;
+      });
+    });
+
+    // Sort members alphabetically
+    Object.keys(memberTotals).sort().forEach(member => {
+      const memberItems = itemizedSplits
+        .filter(item => item.members.includes(member))
+        .map(item => `${item.name} ($${item.splitPrice.toFixed(2)})`);
+
+      formattedText += `${member}: $${memberTotals[member].toFixed(2)}\n`;
+      formattedText += `   Items: ${memberItems.join(', ')}\n\n`;
+    });
+
+    setExpenseComment(formattedText);
   };
 
   const createExpense = async () => {
@@ -518,6 +556,19 @@ const finalData = allMembers.map((member) => ({
     return hiddenWithSplits;
   };
 
+  // Validation: Get items that have no members selected
+  const getItemsWithoutMembers = () => {
+    return items.filter((item) => {
+      const selectedMembers = Object.values(item.members).filter(Boolean);
+      return selectedMembers.length === 0 ;
+    });
+  };
+
+  // Validation: Check if all items with price > 0 have at least one member selected
+  const hasValidMemberSelection = () => {
+    return getItemsWithoutMembers().length === 0;
+  };
+
   // Unified handler for items detected from any source (image, PDF)
   const handleItemsDetectedWithMetadata = (detectedItems: any[], metadata: ReceiptMetadata | null) => {
     // Convert items to the format expected by our app
@@ -538,6 +589,24 @@ const finalData = allMembers.map((member) => ({
     // Set items and metadata
     setItems(newItems);
     setReceiptMetadata(metadata);
+
+    // Auto-populate description from metadata
+    if (metadata) {
+      let description = "";
+      if (metadata.store) {
+        description = metadata.store;
+      }
+      if (metadata.delivery_date) {
+        description += description ? ` - ${metadata.delivery_date}` : metadata.delivery_date;
+      }
+      if (description) {
+        setExpenseDescription(description);
+        setIsDescriptionLocked(true);
+      }
+    }
+
+    // Clear expense comment - it will be populated when Calculate Splits is clicked
+    setExpenseComment("");
   };
 
   return (
@@ -706,13 +775,27 @@ const finalData = allMembers.map((member) => ({
           />
         </div>
         <div className="mb-4">
-          <input
-            type="text"
-            value={expenseDescription}
-            onChange={(e) => setExpenseDescription(e.target.value)}
-            placeholder="Enter expense title"
-            className="w-full p-2 border rounded"
-          />
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={expenseDescription}
+              onChange={(e) => setExpenseDescription(e.target.value)}
+              placeholder="Enter expense title"
+              className={`flex-1 p-2 border rounded ${
+                isDescriptionLocked ? 'bg-gray-100' : ''
+              }`}
+              readOnly={isDescriptionLocked}
+            />
+            {isDescriptionLocked && (
+              <button
+                onClick={() => setIsDescriptionLocked(false)}
+                className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+                title="Edit description"
+              >
+                Edit
+              </button>
+            )}
+          </div>
         </div>
         <div className="mb-4">
           <label htmlFor="expenseComment" className="block text-gray-700 mb-2">
@@ -732,10 +815,29 @@ const finalData = allMembers.map((member) => ({
           <h2 className="text-xl font-semibold mb-4">
             Step 4: Calculate and Submit
           </h2>
+
+          {/* Validation Error Display */}
+          {getItemsWithoutMembers().length > 0 && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+              <p className="font-semibold">Missing member selection:</p>
+              <ul className="list-disc pl-5 mt-1">
+                {getItemsWithoutMembers().map((item, idx) => (
+                  <li key={idx}>{item.name} (${item.price.toFixed(2)})</li>
+                ))}
+              </ul>
+              <p className="mt-2 text-sm">Please select at least one member for each item.</p>
+            </div>
+          )}
+
           <div className="flex space-x-4">
             <button
               onClick={calculateSplits}
-              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+              disabled={!hasValidMemberSelection()}
+              className={`${
+                hasValidMemberSelection()
+                  ? 'bg-blue-500 hover:bg-blue-600'
+                  : 'bg-gray-400 cursor-not-allowed'
+              } text-white py-2 px-4 rounded`}
             >
               Calculate Splits
             </button>
@@ -743,9 +845,9 @@ const finalData = allMembers.map((member) => ({
             {isUpdateMode ? (
               <button
                 onClick={updateExpense}
-                disabled={!finalSplits}
+                disabled={!finalSplits || !hasValidMemberSelection()}
                 className={`${
-                  finalSplits
+                  finalSplits && hasValidMemberSelection()
                     ? "bg-yellow-500 hover:bg-yellow-600"
                     : "bg-gray-400 cursor-not-allowed"
                 } text-white py-2 px-4 rounded`}
@@ -755,9 +857,9 @@ const finalData = allMembers.map((member) => ({
             ) : (
               <button
                 onClick={createExpense}
-                disabled={!finalSplits}
+                disabled={!finalSplits || !hasValidMemberSelection()}
                 className={`${
-                  finalSplits
+                  finalSplits && hasValidMemberSelection()
                     ? "bg-green-500 hover:bg-green-600"
                     : "bg-gray-400 cursor-not-allowed"
                 } text-white py-2 px-4 rounded`}
