@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import { ToastProvider } from './Toast';
+import { AuthProvider } from './AuthContext';
 import ParticleBackground from './ParticleBackground';
 
 interface ProvidersProps {
@@ -10,9 +11,11 @@ interface ProvidersProps {
 
 export default function Providers({ children }: ProvidersProps) {
   return (
-    <ToastProvider>
-      <ParticleBackground />
-      {children}
-    </ToastProvider>
+    <AuthProvider>
+      <ToastProvider>
+        <ParticleBackground />
+        {children}
+      </ToastProvider>
+    </AuthProvider>
   );
 }

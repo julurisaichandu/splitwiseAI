@@ -9,3 +9,4 @@ beanie
 motor
 pymongo
 rapidfuzz
+itsdangerous

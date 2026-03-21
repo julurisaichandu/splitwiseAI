@@ -44,7 +44,10 @@ interface ExpenseEditorProps {
             setLoading(true);
             setError('');
         
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-expense?expense_id=${expenseId}&consumer_key=${process.env.NEXT_PUBLIC_SPLITWISE_CONSUMER_KEY}&secret_key=${process.env.NEXT_PUBLIC_SPLITWISE_SECRET_KEY}&api_key=${process.env.NEXT_PUBLIC_SPLITWISE_API_KEY}`);
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/api/get-expense?expense_id=${expenseId}`,
+              { credentials: "include" }
+            );
         
             if (!response.ok) {
               throw new Error('Failed to fetch expense');
@@ -95,7 +98,11 @@ interface ExpenseEditorProps {
               const parts = expenseData.comment.split('---ITEMDATA---');
               if (parts.length > 1) {
                 comment = parts[0];
+              } else {
+                comment = expenseData.comment;
               }
+              // Strip the EXPENSE_ID: prefix line if present
+              comment = comment.replace(/^EXPENSE_ID:\d+\n?/, '').trim();
             }
           } catch (parseError) {
             console.error('Failed to parse item data', parseError);

@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import Spinner from './Spinner';
 
-interface ApiKeys {
-  SPLITWISE_CONSUMER_KEY: string;
-  SPLITWISE_SECRET_KEY: string;
-  SPLITWISE_API_KEY: string;
-  GEMINI_API_KEY: string;
-}
-
 interface Item {
   name: string;
   price: number;
@@ -32,11 +25,10 @@ interface ReceiptMetadata {
 }
 
 interface PDFUploaderProps {
-  apiKeys: ApiKeys;
   onItemsDetected: (items: Item[], metadata: ReceiptMetadata) => void;
 }
 
-const PDFUploader: React.FC<PDFUploaderProps> = ({ apiKeys, onItemsDetected }) => {
+const PDFUploader: React.FC<PDFUploaderProps> = ({ onItemsDetected }) => {
   const [file, setFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,12 +63,11 @@ const PDFUploader: React.FC<PDFUploaderProps> = ({ apiKeys, onItemsDetected }) =
     try {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('gemini_key', apiKeys.GEMINI_API_KEY);
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/analyze-pdf`,
         {
           method: 'POST',
+          credentials: 'include',
           body: formData,
         }
       );

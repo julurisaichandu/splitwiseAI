@@ -1,5 +1,6 @@
 # main.py
-from fastapi import FastAPI, UploadFile, File, HTTPException, Form
+from fastapi import FastAPI, UploadFile, File, HTTPException, Request
+from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
@@ -13,8 +14,10 @@ from io import BytesIO
 from pathlib import Path
 from dotenv import load_dotenv
 from rapidfuzz import fuzz
+import uuid
 
 from datetime import datetime
+from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
 # from database.connection import connect_to_mongo, close_mongo_connection
 # from models.database import SplitData, MemberMapping
 import json as json_lib
@@ -44,6 +47,47 @@ app.add_middleware(
 
 # Load environment variables
 # load_dotenv()
+
+# --- OAuth / Session infrastructure ---
+SPLITWISE_CONSUMER_KEY = os.getenv("SPLITWISE_CONSUMER_KEY", "")
+SPLITWISE_CONSUMER_SECRET = os.getenv("SPLITWISE_CONSUMER_SECRET", "")
+SESSION_SECRET = os.getenv("SESSION_SECRET", "change-me-to-a-random-32-char-secret")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+
+serializer = URLSafeTimedSerializer(SESSION_SECRET)
+# In-memory session store: session_id -> {access_token, user_name, user_id, created_at}
+sessions: dict[str, dict] = {}
+# Temporary OAuth state tracking
+oauth_states: dict[str, bool] = {}
+
+OAUTH_CALLBACK_URL = os.getenv(
+    "OAUTH_CALLBACK_URL",
+    "http://localhost:8001/api/auth/splitwise/callback",
+)
+
+
+def get_current_session(request: Request) -> dict:
+    """Read and validate the session cookie, return session data or raise 401."""
+    cookie = request.cookies.get("splitwise_session")
+    if not cookie:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    try:
+        session_id = serializer.loads(cookie, max_age=60 * 60 * 24 * 30)  # 30 days
+    except (BadSignature, SignatureExpired):
+        raise HTTPException(status_code=401, detail="Session expired or invalid")
+    session = sessions.get(session_id)
+    if not session:
+        raise HTTPException(status_code=401, detail="Session not found")
+    return session
+
+
+def get_splitwise_client(session: dict) -> Splitwise:
+    """Create a Splitwise client using the OAuth2 access token from the session."""
+    sObj = Splitwise(SPLITWISE_CONSUMER_KEY, SPLITWISE_CONSUMER_SECRET)
+    sObj.setOAuth2AccessToken({"access_token": session["access_token"]})
+    return sObj
+
 
 # Global member preferences for auto-split
 member_preferences: dict = {}
@@ -84,12 +128,6 @@ async def shutdown_event():
     pass
 
 
-class ApiKeys(BaseModel):
-    SPLITWISE_CONSUMER_KEY: str
-    SPLITWISE_SECRET_KEY: str
-    SPLITWISE_API_KEY: str
-    GEMINI_API_KEY: str
-
 class ItemMember(BaseModel):
     member_name: str
     selected: bool
@@ -112,65 +150,131 @@ class ExpenseRequest(BaseModel):
 def greet_json():
     return {"Hello": "World!"}
 
-@app.post("/api/initialize")
-async def initialize_apis(api_keys: ApiKeys):
+# --- OAuth Endpoints ---
+
+@app.get("/api/auth/splitwise/login")
+async def auth_login():
+    """Return the Splitwise OAuth2 authorization URL."""
+    sObj = Splitwise(SPLITWISE_CONSUMER_KEY, SPLITWISE_CONSUMER_SECRET)
+    state = str(uuid.uuid4())
+    oauth_states[state] = True
+    url, _ = sObj.getOAuth2AuthorizeURL(OAUTH_CALLBACK_URL, state=state)
+    return {"auth_url": url}
+
+
+@app.get("/api/auth/splitwise/callback")
+async def auth_callback(code: str, state: str):
+    """Exchange OAuth2 code for access token, create session, redirect to frontend."""
+    if state not in oauth_states:
+        raise HTTPException(status_code=400, detail="Invalid OAuth state")
+    del oauth_states[state]
+
+    sObj = Splitwise(SPLITWISE_CONSUMER_KEY, SPLITWISE_CONSUMER_SECRET)
+    access_token = sObj.getOAuth2AccessToken(code, OAUTH_CALLBACK_URL)
+    sObj.setOAuth2AccessToken(access_token)
+    user = sObj.getCurrentUser()
+
+    session_id = str(uuid.uuid4())
+    sessions[session_id] = {
+        "access_token": access_token["access_token"],
+        "user_name": user.first_name,
+        "user_id": user.id,
+        "created_at": datetime.utcnow().isoformat(),
+    }
+
+    signed = serializer.dumps(session_id)
+    response = RedirectResponse(url=FRONTEND_URL)
+    response.set_cookie(
+        key="splitwise_session",
+        value=signed,
+        httponly=True,
+        samesite="lax",
+        max_age=60 * 60 * 24 * 30,  # 30 days
+        path="/",
+    )
+    return response
+
+
+@app.get("/api/auth/status")
+async def auth_status(request: Request):
+    """Check if the current session is valid."""
     try:
-        # Initialize Splitwise
-        sObj = Splitwise(
-            api_keys.SPLITWISE_CONSUMER_KEY,
-            api_keys.SPLITWISE_SECRET_KEY,
-            api_key=api_keys.SPLITWISE_API_KEY
-        )
-        
-        # Test connection by getting current user
-        user = sObj.getCurrentUser()
-        
-        # Initialize Gemini
-        genai.configure(api_key=api_keys.GEMINI_API_KEY)
-        
-        return {"status": "success", "user": user.first_name}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Initialization failed: {str(e)}")
+        session = get_current_session(request)
+        return {"authenticated": True, "user_name": session["user_name"]}
+    except HTTPException:
+        return {"authenticated": False}
+
+
+@app.post("/api/auth/logout")
+async def auth_logout(request: Request):
+    """Clear the session and cookie."""
+    cookie = request.cookies.get("splitwise_session")
+    if cookie:
+        try:
+            session_id = serializer.loads(cookie, max_age=60 * 60 * 24 * 30)
+            sessions.pop(session_id, None)
+        except (BadSignature, SignatureExpired):
+            pass
+    response = JSONResponse(content={"status": "logged_out"})
+    response.delete_cookie("splitwise_session", path="/")
+    return response
+
+
+# --- Splitwise API Endpoints ---
 
 @app.get("/api/members")
-async def get_members(consumer_key: str, secret_key: str, api_key: str):
+async def get_members(request: Request, group_id: Optional[int] = None):
     try:
-        sObj = Splitwise(consumer_key, secret_key, api_key=api_key)
-        user = sObj.getCurrentUser()
-        friends = sObj.getFriends()
-        
+        session = get_current_session(request)
+        sObj = get_splitwise_client(session)
+
         mem_to_id = {}
-        mem_to_id[user.first_name] = user.id
-        
-        for friend in friends:
-            mem_to_id[friend.first_name] = friend.id
-            
+
+        if group_id:
+            # Return members of the specific group
+            group = sObj.getGroup(group_id)
+            for member in group.getMembers():
+                mem_to_id[member.getFirstName()] = member.getId()
+        else:
+            # Return all friends (fallback)
+            user = sObj.getCurrentUser()
+            friends = sObj.getFriends()
+            mem_to_id[user.first_name] = user.id
+            for friend in friends:
+                mem_to_id[friend.first_name] = friend.id
+
         return {"members": list(mem_to_id.keys()), "mem_to_id": mem_to_id}
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Failed to get members: {str(e)}")
 
 @app.get("/api/groups")
-async def get_groups(consumer_key: str, secret_key: str, api_key: str):
+async def get_groups(request: Request):
     try:
-        sObj = Splitwise(consumer_key, secret_key, api_key=api_key)
+        session = get_current_session(request)
+        sObj = get_splitwise_client(session)
         groups = sObj.getGroups()
-        
+
         groups_to_ids = {}
         for group in groups:
             groups_to_ids[group.name] = group.id
-            
+
         return {"groups": groups_to_ids}
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Failed to get groups: {str(e)}")
 
 
 @app.post("/api/analyze-bills")
 async def analyze_bills(
+    request: Request,
     files: List[UploadFile] = File(...),
-    gemini_key: str = Form(...)
 ):
+    get_current_session(request)  # require auth
     try:
-        client = genai.Client(api_key=gemini_key)
+        client = genai.Client(api_key=GEMINI_API_KEY)
 
         # Read image bytes
         images_bytes = []
@@ -258,12 +362,13 @@ Items in image:"""
 
 @app.post("/api/analyze-pdf")
 async def analyze_pdf(
+    request: Request,
     file: UploadFile = File(...),
-    gemini_key: str = Form(...)
 ):
     """Parse Instacart receipt PDF and extract items with metadata."""
+    get_current_session(request)  # require auth
     try:
-        client = genai.Client(api_key=gemini_key)
+        client = genai.Client(api_key=GEMINI_API_KEY)
 
         # Read PDF bytes
         pdf_bytes = await file.read()
@@ -379,9 +484,10 @@ CRITICAL: Prices must match the PDF exactly. The sum of all non-refunded item fi
 
 
 @app.post("/api/create-expense")
-async def create_expense(expense_req: ExpenseRequest, consumer_key: str, secret_key: str, api_key: str):
+async def create_expense(expense_req: ExpenseRequest, request: Request):
     try:
-        sObj = Splitwise(consumer_key, secret_key, api_key=api_key)
+        session = get_current_session(request)
+        sObj = get_splitwise_client(session)
         print(expense_req)
         # Get member IDs
         user = sObj.getCurrentUser()
@@ -515,7 +621,6 @@ class AutoSplitItem(BaseModel):
 class AutoSplitRequest(BaseModel):
     items: List[AutoSplitItem]
     members: List[str]
-    gemini_key: Optional[str] = None
 
 class AutoSplitResultItem(BaseModel):
     name: str
@@ -592,7 +697,6 @@ async def _gemini_auto_assign(
     items: List[dict],
     members: List[str],
     preferences: dict,
-    gemini_key: str,
 ) -> List[dict]:
     """Use Gemini to match receipt items to canonical names and assign members."""
     compact_prefs = _build_compact_preferences(preferences, members)
@@ -657,7 +761,7 @@ If you cannot match an item, return empty members list and confidence "unmatched
         ),
     )
 
-    client = genai.Client(api_key=gemini_key)
+    client = genai.Client(api_key=GEMINI_API_KEY)
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=[types.Part.from_text(text=prompt)],
@@ -672,8 +776,9 @@ If you cannot match an item, return empty members list and confidence "unmatched
 
 
 @app.post("/api/auto-split")
-async def auto_split(request: AutoSplitRequest):
+async def auto_split(request: Request, split_request: AutoSplitRequest):
     """Auto-assign members to items based on historical preferences."""
+    get_current_session(request)  # require auth
     try:
         results: List[AutoSplitResultItem] = []
         non_shared_items = []
@@ -682,12 +787,12 @@ async def auto_split(request: AutoSplitRequest):
         unmatched_count = 0
 
         # Step 1: Handle shared items
-        for item in request.items:
+        for item in split_request.items:
             if _is_shared_item(item.name):
                 results.append(AutoSplitResultItem(
                     name=item.name,
                     price=item.price,
-                    members=request.members,  # All members
+                    members=split_request.members,  # All members
                     confidence="shared",
                     matched_canonical="__SHARED__",
                 ))
@@ -704,10 +809,10 @@ async def auto_split(request: AutoSplitRequest):
                     # Look up members from preferences
                     pref_data = member_preferences[canonical]
                     item_members = pref_data.get("members", {})
-                    active_buyers = [m for m in request.members if m in item_members]
+                    active_buyers = [m for m in split_request.members if m in item_members]
 
-                    if len(active_buyers) == len(request.members) and len(request.members) > 1:
-                        assigned = list(request.members)
+                    if len(active_buyers) == len(split_request.members) and len(split_request.members) > 1:
+                        assigned = list(split_request.members)
                     else:
                         # Assign members who bought >30% of the time
                         total = pref_data.get("total_appearances", 1)
@@ -734,9 +839,8 @@ async def auto_split(request: AutoSplitRequest):
 
         # Step 3: Use Gemini for remaining unmatched items
         if gemini_items and member_preferences:
-            gemini_key = request.gemini_key
-            if not gemini_key:
-                # No Gemini key — return items unassigned
+            if not GEMINI_API_KEY:
+                # No Gemini key configured — return items unassigned
                 for item in gemini_items:
                     results.append(AutoSplitResultItem(
                         name=item["name"],
@@ -748,12 +852,12 @@ async def auto_split(request: AutoSplitRequest):
             else:
                 try:
                     gemini_results = await _gemini_auto_assign(
-                        gemini_items, request.members, member_preferences, gemini_key
+                        gemini_items, split_request.members, member_preferences
                     )
 
                     for gr in gemini_results:
                         # Filter members to only include those in the request
-                        valid_members = [m for m in gr.get("members", []) if m in request.members]
+                        valid_members = [m for m in gr.get("members", []) if m in split_request.members]
                         confidence = gr.get("confidence", "unmatched")
 
                         results.append(AutoSplitResultItem(
@@ -798,15 +902,18 @@ async def auto_split(request: AutoSplitRequest):
             unmatched=unmatched_count,
         )
 
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Auto-split error: {e}")
         raise HTTPException(status_code=400, detail=f"Auto-split failed: {str(e)}")
 
 
 @app.get("/api/get-expense")
-async def get_expense(expense_id: int, consumer_key: str, secret_key: str, api_key: str):
+async def get_expense(expense_id: int, request: Request):
     try:
-        sObj = Splitwise(consumer_key, secret_key, api_key=api_key)
+        session = get_current_session(request)
+        sObj = get_splitwise_client(session)
         exp_obj = sObj.getExpense(expense_id)
 
         # get group name from group id
@@ -852,10 +959,11 @@ class UpdateExpenseRequest(BaseModel):
     description: str
     comment: str
 
-@app.post("/api/update-expense")  
-async def update_expense(expense_req: UpdateExpenseRequest, consumer_key: str, secret_key: str, api_key: str):
+@app.post("/api/update-expense")
+async def update_expense(expense_req: UpdateExpenseRequest, request: Request):
     try:
-        sObj = Splitwise(consumer_key, secret_key, api_key=api_key)
+        session = get_current_session(request)
+        sObj = get_splitwise_client(session)
         print("Updating expense:", expense_req.expense_id)
         
         # Get member IDs

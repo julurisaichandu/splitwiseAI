@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import Spinner from './Spinner';
 
-interface ApiKeys {
-  SPLITWISE_CONSUMER_KEY: string;
-  SPLITWISE_SECRET_KEY: string;
-  SPLITWISE_API_KEY: string;
-  GEMINI_API_KEY: string;
-}
-
 interface Preview {
   file: File;
   url: string;
@@ -37,11 +30,10 @@ interface ReceiptMetadata {
 }
 
 interface BillUploaderProps {
-  apiKeys: ApiKeys;
   onItemsDetected: (items: Item[], metadata: ReceiptMetadata | null) => void;
 }
 
-const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected }) => {
+const BillUploader: React.FC<BillUploaderProps> = ({ onItemsDetected }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [previews, setPreviews] = useState<Preview[]>([]);
@@ -119,10 +111,9 @@ const BillUploader: React.FC<BillUploaderProps> = ({ apiKeys, onItemsDetected })
       files.forEach(file => {
         formData.append('files', file);
       });
-      formData.append('gemini_key', apiKeys.GEMINI_API_KEY);
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}` + '/api/analyze-bills', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/analyze-bills`, {
         method: 'POST',
+        credentials: 'include',
         body: formData
       });
 

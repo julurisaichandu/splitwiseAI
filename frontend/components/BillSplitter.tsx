@@ -9,7 +9,8 @@ import SplitSummary from "./SplitSummary";
 import ExpenseEditor from "./ExpenseEditor";
 import Spinner from "./Spinner";
 import { useToast } from "./Toast";
-import SettingsModal, { loadApiKeys, hasApiKeys } from "./SettingsModal";
+import SettingsModal from "./SettingsModal";
+import { useAuth } from "./AuthContext";
 
 interface ReceiptMetadata {
   store: string | null;
@@ -25,13 +26,6 @@ interface ReceiptMetadata {
   total: number;
   validation_passed: boolean;
   calculated_subtotal: number;
-}
-
-interface ApiKeys {
-  SPLITWISE_CONSUMER_KEY: string;
-  SPLITWISE_SECRET_KEY: string;
-  SPLITWISE_API_KEY: string;
-  GEMINI_API_KEY: string;
 }
 
 interface Member {
@@ -61,14 +55,10 @@ interface FinalSplits {
   }[];
 }
 
-function getApiKeys(): ApiKeys {
-  return loadApiKeys();
-}
-
 export default function BillSplitter() {
   // const router = useRouter();
   const { showToast } = useToast();
-  const [apiKeys, setApiKeys] = useState<ApiKeys | null>(null);
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [, setMemToId] = useState<{ [key: string]: string }>({});
   const [groups, setGroups] = useState<{ [key: string]: string }>({});
   const [selectedGroup, setSelectedGroup] = useState<string>("");
@@ -87,27 +77,7 @@ export default function BillSplitter() {
   const [isDescriptionLocked, setIsDescriptionLocked] = useState<boolean>(false);
   const [isAutoSplitting, setIsAutoSplitting] = useState<boolean>(false);
   const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
-  // useEffect(() => {
-  //   const keys = getApiKeys();
-  //   if (!keys.SPLITWISE_CONSUMER_KEY || !keys.SPLITWISE_SECRET_KEY || !keys.SPLITWISE_API_KEY || !keys.GEMINI_API_KEY) {
-  //     router.push('/');
-  //     return;
-  //   }
-
-  //   setApiKeys(keys);
-  //   setIsLoading(false);
-
-  //   setItems([
-  //     createDefaultItem(1),
-  //     createDefaultItem(2)
-  //   ]);
-  // }, [router]);
-
   useEffect(() => {
-    const keys = getApiKeys();
-    if (hasApiKeys()) {
-      setApiKeys(keys);
-    }
     setIsLoading(false);
     setItems([createDefaultItem(1), createDefaultItem(2)]);
 
@@ -117,18 +87,12 @@ export default function BillSplitter() {
       .catch(() => setBackendStatus('offline'));
   }, []);
 
-  const handleSettingsSave = (keys: ApiKeys) => {
-    setApiKeys(keys);
-  };
-
   useEffect(() => {
-    if (apiKeys) {
-      fetchMembers();
-      fetchGroups();
+    if (isAuthenticated) {
+      fetchGroups(); // fetchGroups will also fetch members for the selected group
     }
-    console.log(apiKeys);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiKeys]);
+  }, [isAuthenticated]);
 
   const createDefaultItem = (index: number): Item => ({
     name: `Item ${index}`,
@@ -137,18 +101,19 @@ export default function BillSplitter() {
     members: {},
   });
 
-  const fetchMembers = async () => {
+  const fetchMembers = async (groupId?: string) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/members?consumer_key=${apiKeys?.SPLITWISE_CONSUMER_KEY}&secret_key=${apiKeys?.SPLITWISE_SECRET_KEY}&api_key=${apiKeys?.SPLITWISE_API_KEY}`
-      );
+      const url = groupId
+        ? `${process.env.NEXT_PUBLIC_API_URL}/api/members?group_id=${groupId}`
+        : `${process.env.NEXT_PUBLIC_API_URL}/api/members`;
+      const response = await fetch(url, { credentials: "include" });
 
       if (!response.ok) throw new Error("Failed to fetch members");
 
       const data = await response.json();
       setAllMembers(data.members);
-      setVisibleMembers(data.members); // Initially all members are visible
+      setVisibleMembers(data.members);
       setMemToId(data.mem_to_id);
 
       if (data.members.length > 0) {
@@ -177,8 +142,8 @@ export default function BillSplitter() {
   const fetchGroups = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}` +
-          `/api/groups?consumer_key=${apiKeys?.SPLITWISE_CONSUMER_KEY}&secret_key=${apiKeys?.SPLITWISE_SECRET_KEY}&api_key=${apiKeys?.SPLITWISE_API_KEY}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/groups`,
+        { credentials: "include" }
       );
 
       if (!response.ok) throw new Error("Failed to fetch groups");
@@ -188,7 +153,10 @@ export default function BillSplitter() {
       setGroups(data.groups);
 
       if (Object.keys(data.groups).length > 0) {
-        setSelectedGroup(Object.keys(data.groups)[0]);
+        const firstGroup = Object.keys(data.groups)[0];
+        setSelectedGroup(firstGroup);
+        // Fetch members for the first group
+        fetchMembers(data.groups[firstGroup]);
       }
     } catch (error) {
       console.error(error);
@@ -228,7 +196,7 @@ const handleItemsUpdate = (newItems: Item[]) => {
 
 
   const autoSplitItems = async (currentItems: Item[]) => {
-    if (!apiKeys?.GEMINI_API_KEY || visibleMembers.length === 0) return;
+    if (!isAuthenticated || visibleMembers.length === 0) return;
 
     setIsAutoSplitting(true);
     try {
@@ -237,13 +205,13 @@ const handleItemsUpdate = (newItems: Item[]) => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({
             items: currentItems.map((item) => ({
               name: item.name,
               price: item.price,
             })),
             members: visibleMembers,
-            gemini_key: apiKeys.GEMINI_API_KEY,
           }),
         }
       );
@@ -287,6 +255,11 @@ const handleItemsUpdate = (newItems: Item[]) => {
 
   const handleGroupChange = (group: string) => {
     setSelectedGroup(group);
+    // Fetch members for the newly selected group
+    const groupId = groups[group];
+    if (groupId) {
+      fetchMembers(groupId);
+    }
   };
 
   const handlePaidUserChange = (user: string) => {
@@ -427,11 +400,11 @@ const finalData = allMembers.map((member) => ({
       };
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}` +
-          `/api/create-expense?consumer_key=${apiKeys?.SPLITWISE_CONSUMER_KEY}&secret_key=${apiKeys?.SPLITWISE_SECRET_KEY}&api_key=${apiKeys?.SPLITWISE_API_KEY}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/create-expense`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify(expenseData),
         }
       );
@@ -454,10 +427,10 @@ const finalData = allMembers.map((member) => ({
     }
   };
 
-  if (isLoading) {
+  if (isLoading || authLoading) {
     return (
       <div className="flex flex-col gap-4 justify-center items-center h-screen">
-        <SettingsModal onSave={handleSettingsSave} />
+        <SettingsModal />
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 flex flex-col items-center gap-4">
           <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
             <Spinner size="lg" />
@@ -592,10 +565,11 @@ const finalData = allMembers.map((member) => ({
       };
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/update-expense?consumer_key=${apiKeys?.SPLITWISE_CONSUMER_KEY}&secret_key=${apiKeys?.SPLITWISE_SECRET_KEY}&api_key=${apiKeys?.SPLITWISE_API_KEY}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/update-expense`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify(expenseData),
         }
       );
@@ -719,7 +693,7 @@ const finalData = allMembers.map((member) => ({
         <meta name="description" content="Split bills with friends" />
       </Head>
 
-      <SettingsModal onSave={handleSettingsSave} />
+      <SettingsModal />
 
       {/* Backend status indicator */}
       <div className="fixed top-4 left-4 z-50">
@@ -741,15 +715,15 @@ const finalData = allMembers.map((member) => ({
         </div>
       </div>
 
-      {/* Prompt to configure keys if not set */}
-      {!apiKeys?.SPLITWISE_CONSUMER_KEY && (
+      {/* Prompt to login if not authenticated */}
+      {!isAuthenticated && (
         <div className="max-w-md mx-auto mb-6 p-5 bg-amber-50/95 backdrop-blur-sm border border-amber-300 rounded-2xl shadow-lg text-center">
           <svg className="w-10 h-10 mx-auto mb-3 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
           </svg>
-          <h3 className="text-lg font-semibold text-stone-800 mb-1">Set up your API keys</h3>
+          <h3 className="text-lg font-semibold text-stone-800 mb-1">Login to get started</h3>
           <p className="text-sm text-stone-600">
-            Click the <span className="font-medium">settings icon</span> in the top-right corner to enter your Splitwise and Gemini API credentials.
+            Click <span className="font-medium">Login with Splitwise</span> in the top-right corner to connect your account.
           </p>
         </div>
       )}
@@ -829,16 +803,14 @@ const finalData = allMembers.map((member) => ({
           </div>
 
           {/* Conditional Input Components */}
-          {inputMode === 'image' && apiKeys && (
+          {inputMode === 'image' && isAuthenticated && (
             <BillUploader
-              apiKeys={apiKeys}
               onItemsDetected={handleItemsDetectedWithMetadata}
             />
           )}
 
-          {inputMode === 'pdf' && apiKeys && (
+          {inputMode === 'pdf' && isAuthenticated && (
             <PDFUploader
-              apiKeys={apiKeys}
               onItemsDetected={handleItemsDetectedWithMetadata}
             />
           )}
@@ -1028,7 +1000,7 @@ const finalData = allMembers.map((member) => ({
                     isAutoSplitting ||
                     items.length === 0 ||
                     !items.some((item) => item.name && item.name !== `Item ${items.indexOf(item) + 1}`) ||
-                    !apiKeys?.GEMINI_API_KEY
+                    !isAuthenticated
                   }
                   className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
                     bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-300
