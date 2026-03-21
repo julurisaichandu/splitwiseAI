@@ -17,3 +17,4 @@ __pycache__/
 *.vscode/
 *.vscode-test/
 *.vsix
+.vercel
