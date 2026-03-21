@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none">
+  <!-- Background -->
+  <rect width="180" height="180" rx="40" fill="#b45309"/>
+
+  <!-- Receipt/bill shape -->
+  <path d="M50 30h80c6 0 10 4 10 10v100c0 4-2 7-5 8l-12 8-12-8-12 8-12-8-12 8-12-8-5-3c-3-2-5-5-5-8V40c0-6 4-10 10-10z" fill="#fef3c7"/>
+
+  <!-- Split line -->
+  <line x1="90" y1="50" x2="90" y2="130" stroke="#b45309" stroke-width="4" stroke-dasharray="8 4"/>
+
+  <!-- Dollar signs -->
+  <text x="68" y="95" font-family="Arial" font-size="32" font-weight="bold" fill="#65a30d" text-anchor="middle">$</text>
+  <text x="112" y="95" font-family="Arial" font-size="32" font-weight="bold" fill="#65a30d" text-anchor="middle">$</text>
+
+  <!-- Lines -->
+  <rect x="55" y="55" width="25" height="6" rx="3" fill="#d97706"/>
+  <rect x="100" y="55" width="25" height="6" rx="3" fill="#d97706"/>
+  <rect x="55" y="110" width="25" height="6" rx="3" fill="#d97706"/>
+  <rect x="100" y="110" width="25" height="6" rx="3" fill="#d97706"/>
+</svg>

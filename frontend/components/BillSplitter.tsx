@@ -91,6 +91,7 @@ export default function BillSplitter() {
   const [inputMode, setInputMode] = useState<'image' | 'pdf'>('image');
   const [receiptMetadata, setReceiptMetadata] = useState<ReceiptMetadata | null>(null);
   const [isDescriptionLocked, setIsDescriptionLocked] = useState<boolean>(false);
+  const [isAutoSplitting, setIsAutoSplitting] = useState<boolean>(false);
   // useEffect(() => {
   //   const keys = getApiKeys();
   //   if (!keys.SPLITWISE_CONSUMER_KEY || !keys.SPLITWISE_SECRET_KEY || !keys.SPLITWISE_API_KEY || !keys.GEMINI_API_KEY) {
@@ -220,6 +221,64 @@ const handleItemsUpdate = (newItems: Item[]) => {
 };
 
 
+
+  const autoSplitItems = async (currentItems: Item[]) => {
+    if (!apiKeys?.GEMINI_API_KEY || visibleMembers.length === 0) return;
+
+    setIsAutoSplitting(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auto-split`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: currentItems.map((item) => ({
+              name: item.name,
+              price: item.price,
+            })),
+            members: visibleMembers,
+            gemini_key: apiKeys.GEMINI_API_KEY,
+          }),
+        }
+      );
+
+      if (!response.ok) throw new Error("Auto-split request failed");
+
+      const data = await response.json();
+
+      // Update items with auto-assigned members
+      setItems((prevItems) =>
+        prevItems.map((item) => {
+          const match = data.items.find(
+            (r: { name: string }) => r.name === item.name
+          );
+          if (!match || !match.members || match.members.length === 0) {
+            return item;
+          }
+
+          const updatedMembers = { ...item.members };
+          match.members.forEach((memberName: string) => {
+            if (memberName in updatedMembers) {
+              updatedMembers[memberName] = true;
+            }
+          });
+
+          return { ...item, members: updatedMembers };
+        })
+      );
+
+      showToast(
+        `Auto-assigned ${data.auto_assigned} items, ${data.shared} shared, ${data.unmatched} need manual assignment`,
+        "success"
+      );
+    } catch (error) {
+      console.error("Auto-split failed:", error);
+      showToast("Auto-split failed, please assign members manually", "warning");
+    } finally {
+      setIsAutoSplitting(false);
+    }
+  };
 
   const handleGroupChange = (group: string) => {
     setSelectedGroup(group);
@@ -642,6 +701,9 @@ const finalData = allMembers.map((member) => ({
 
     // Clear expense comment - it will be populated when Calculate Splits is clicked
     setExpenseComment("");
+
+    // Auto-split: assign members based on historical preferences
+    autoSplitItems(newItems);
   };
 
   return (
@@ -905,9 +967,46 @@ const finalData = allMembers.map((member) => ({
           {/* Right Column - Items and Results */}
           <div className="space-y-6 order-1 md:order-2">
             <div>
-              <h2 className="text-lg font-semibold text-stone-800 mb-4">
-                Edit Items and Assign Members
-              </h2>
+              <div className="flex items-center gap-3 mb-4">
+                <h2 className="text-lg font-semibold text-stone-800">
+                  Edit Items and Assign Members
+                </h2>
+                <button
+                  onClick={() => {
+                    // Reset all member selections before auto-splitting
+                    const resetItems = items.map((item) => ({
+                      ...item,
+                      members: Object.fromEntries(
+                        Object.keys(item.members).map((m) => [m, false])
+                      ),
+                    }));
+                    setItems(resetItems);
+                    autoSplitItems(resetItems);
+                  }}
+                  disabled={
+                    isAutoSplitting ||
+                    items.length === 0 ||
+                    !items.some((item) => item.name && item.name !== `Item ${items.indexOf(item) + 1}`) ||
+                    !apiKeys?.GEMINI_API_KEY
+                  }
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
+                    bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-300
+                    disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-amber-100
+                    transition-colors"
+                  title="Auto-assign members to items using AI"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.547a1 1 0 01.64 1.894l-1.04.355L18 10l-1.847 2.393 1.04.355a1 1 0 01-.64 1.894l-1.6-.547L11 15.677V17a1 1 0 11-2 0v-1.323l-3.954-1.582-1.599.547a1 1 0 01-.64-1.894l1.04-.355L2 10l1.847-2.393-1.04-.355a1 1 0 01.64-1.894l1.6.547L9 4.323V3a1 1 0 011-1zm0 4.618L6.382 8.399 5 10l1.382 1.601L10 13.382l3.618-1.781L15 10l-1.382-1.601L10 6.618z" />
+                  </svg>
+                  {isAutoSplitting ? "Auto-assigning..." : "Auto-split with AI"}
+                </button>
+                {isAutoSplitting && (
+                  <div className="flex items-center gap-2 text-amber-600 text-sm">
+                    <Spinner size="sm" />
+                    <span>Auto-assigning members...</span>
+                  </div>
+                )}
+              </div>
               <ItemList
                 items={items}
                 members={visibleMembers} // Pass only visible members for UI

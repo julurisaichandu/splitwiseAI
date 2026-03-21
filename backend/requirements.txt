@@ -11,3 +11,4 @@ python_dotenv
 beanie
 motor
 pymongo
+rapidfuzz

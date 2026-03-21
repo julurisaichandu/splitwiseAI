@@ -8,9 +8,12 @@ from splitwise.expense import Expense, ExpenseUser
 from google import genai
 from google.genai import types
 import json
+import os
 import PIL.Image
 from io import BytesIO
+from pathlib import Path
 from dotenv import load_dotenv
+from rapidfuzz import fuzz
 
 from datetime import datetime
 from database.connection import connect_to_mongo, close_mongo_connection
@@ -37,12 +40,38 @@ app.add_middleware(
 # Load environment variables
 # load_dotenv()
 
+# Global member preferences for auto-split
+member_preferences: dict = {}
+# Raw item name → canonical name mapping for fuzzy pre-pass
+item_name_mapping: dict = {}
+
+ALWAYS_SHARED_KEYWORDS = ["tax", "service fee", "delivery fee", "tip", "bag fee", "discount", "fees", "tax & fees"]
+
 # Models
 
 
 @app.on_event("startup")
 async def startup_event():
-    await connect_to_mongo()
+    global member_preferences, item_name_mapping
+    # await connect_to_mongo()
+
+    # Load member preferences
+    prefs_path = Path(__file__).resolve().parent / "data" / "member_preferences.json"
+    if prefs_path.exists():
+        with open(prefs_path) as f:
+            member_preferences = json.load(f)
+        print(f"Loaded member preferences: {len(member_preferences)} items")
+    else:
+        print(f"Warning: member_preferences.json not found at {prefs_path}")
+
+    # Load item name mapping for fuzzy matching pre-pass
+    mapping_path = Path(__file__).resolve().parent.parent / "analysis" / "data" / "item_name_mapping.json"
+    if mapping_path.exists():
+        with open(mapping_path) as f:
+            item_name_mapping = json.load(f)
+        print(f"Loaded item name mapping: {len(item_name_mapping)} entries")
+    else:
+        print(f"Warning: item_name_mapping.json not found at {mapping_path}")
 
 @app.on_event("shutdown")
 async def shutdown_event():
@@ -471,6 +500,303 @@ async def create_expense(expense_req: ExpenseRequest, consumer_key: str, secret_
         return {"status": "success", "expense": update_result}
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Failed to create expense: {str(e)}")
+
+
+# --- Auto-Split Models and Endpoint ---
+
+class AutoSplitItem(BaseModel):
+    name: str
+    price: float
+
+class AutoSplitRequest(BaseModel):
+    items: List[AutoSplitItem]
+    members: List[str]
+    gemini_key: Optional[str] = None
+
+class AutoSplitResultItem(BaseModel):
+    name: str
+    price: float
+    members: List[str]
+    confidence: str  # "high", "medium", "low", "unmatched", "shared"
+    matched_canonical: Optional[str] = None
+
+class AutoSplitResponse(BaseModel):
+    items: List[AutoSplitResultItem]
+    auto_assigned: int
+    shared: int
+    unmatched: int
+
+
+def _is_shared_item(name: str) -> bool:
+    """Check if an item name matches shared/fee keywords."""
+    lower = name.lower().strip()
+    for kw in ALWAYS_SHARED_KEYWORDS:
+        if kw in lower:
+            return True
+    return False
+
+
+def _fuzzy_match_item(name: str, mapping: dict, threshold: int = 50) -> str | None:
+    """Try to match a receipt item name to a canonical name using fuzzy matching.
+
+    Uses the same token_sort_ratio algorithm as normalize_app.py.
+    Returns the canonical name if best score >= threshold, else None.
+    """
+    lower_name = name.lower().strip()
+    best_score = 0
+    best_canonical = None
+
+    for raw_name, canonical in mapping.items():
+        if canonical == "__SHARED__":
+            continue
+        score = fuzz.token_sort_ratio(lower_name, raw_name.lower().strip())
+        if score > best_score:
+            best_score = score
+            best_canonical = canonical
+
+    if best_score >= threshold:
+        return best_canonical
+    return None
+
+
+def _build_compact_preferences(preferences: dict, active_members: List[str], top_n: int = 5) -> str:
+    """Build a compact string of preferences for the Gemini prompt.
+
+    Items where all active members have purchased are marked as ALL
+    to reduce prompt size and signal universal assignment.
+    """
+    num_active = len(active_members)
+    lines = []
+    for canonical, data in preferences.items():
+        if canonical == "__SHARED__":
+            continue
+        item_members = data["members"]
+        # Count how many of the active members appear in this item's history
+        active_buyers = sum(1 for m in active_members if m in item_members)
+
+        if num_active > 1 and active_buyers == num_active:
+            # All active members have bought this — mark as ALL
+            lines.append(f"- {canonical}: ALL [{data['total_appearances']}x]")
+        else:
+            top_members = list(item_members.items())[:top_n]
+            members_str = ", ".join(f"{m}({c})" for m, c in top_members)
+            lines.append(f"- {canonical}: {members_str} [{data['total_appearances']}x]")
+    return "\n".join(lines)
+
+
+async def _gemini_auto_assign(
+    items: List[dict],
+    members: List[str],
+    preferences: dict,
+    gemini_key: str,
+) -> List[dict]:
+    """Use Gemini to match receipt items to canonical names and assign members."""
+    compact_prefs = _build_compact_preferences(preferences, members)
+
+    items_list = "\n".join(f"- {item['name']} (${item['price']:.2f})" for item in items)
+
+    # Build member-count-aware instructions
+    all_members_str = ", ".join(members)
+    num_members = len(members)
+
+    if num_members > 7:
+        member_rule = (
+            "- If historical data shows 'ALL', assign ALL available members.\n"
+            "- For items that are clearly common/shared groceries (staples, produce, household), assign ALL available members.\n"
+            "- Only assign a subset when the item is clearly personal (snacks, specific dietary items, etc.)."
+        )
+    else:
+        member_rule = (
+            "- If historical data shows 'ALL', assign ALL available members.\n"
+            "- Otherwise assign members who appear in more than 30% of that product's purchase history."
+        )
+
+    prompt = f"""You are matching receipt items to known product names from historical grocery data.
+
+RECEIPT ITEMS TO MATCH:
+{items_list}
+
+AVAILABLE MEMBERS ({num_members}): {all_members_str}
+
+HISTORICAL PRODUCT DATA (canonical_name: member(times_bought) or ALL [total_purchases]):
+{compact_prefs}
+
+TASK:
+For each receipt item, find the closest matching canonical product name from the historical data.
+Consider abbreviations, typos, brand names, size variations, and truncated names.
+Then assign members based on these rules:
+{member_rule}
+
+For each item return:
+- "name": the original receipt item name
+- "matched_canonical": the matched canonical product name, or null if no match
+- "members": list of member names to assign (from AVAILABLE MEMBERS only)
+- "confidence": "high" if exact/very close match, "medium" if reasonable match, "low" if uncertain, "unmatched" if no match found
+
+If you cannot match an item, return empty members list and confidence "unmatched"."""
+
+    # Schema for structured output
+    result_schema = types.Schema(
+        type=types.Type.ARRAY,
+        items=types.Schema(
+            type=types.Type.OBJECT,
+            properties={
+                "name": types.Schema(type=types.Type.STRING),
+                "matched_canonical": types.Schema(type=types.Type.STRING, nullable=True),
+                "members": types.Schema(
+                    type=types.Type.ARRAY,
+                    items=types.Schema(type=types.Type.STRING),
+                ),
+                "confidence": types.Schema(type=types.Type.STRING),
+            },
+            required=["name", "matched_canonical", "members", "confidence"],
+        ),
+    )
+
+    client = genai.Client(api_key=gemini_key)
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=[types.Part.from_text(text=prompt)],
+        config=types.GenerateContentConfig(
+            response_mime_type="application/json",
+            response_schema=result_schema,
+            temperature=0.1,
+        ),
+    )
+
+    return json.loads(response.text)
+
+
+@app.post("/api/auto-split")
+async def auto_split(request: AutoSplitRequest):
+    """Auto-assign members to items based on historical preferences."""
+    try:
+        results: List[AutoSplitResultItem] = []
+        non_shared_items = []
+        auto_assigned = 0
+        shared_count = 0
+        unmatched_count = 0
+
+        # Step 1: Handle shared items
+        for item in request.items:
+            if _is_shared_item(item.name):
+                results.append(AutoSplitResultItem(
+                    name=item.name,
+                    price=item.price,
+                    members=request.members,  # All members
+                    confidence="shared",
+                    matched_canonical="__SHARED__",
+                ))
+                shared_count += 1
+            else:
+                non_shared_items.append({"name": item.name, "price": item.price})
+
+        # Step 2: Fuzzy matching pre-pass using item_name_mapping
+        gemini_items = []
+        if non_shared_items and member_preferences and item_name_mapping:
+            for item in non_shared_items:
+                canonical = _fuzzy_match_item(item["name"], item_name_mapping)
+                if canonical and canonical in member_preferences:
+                    # Look up members from preferences
+                    pref_data = member_preferences[canonical]
+                    item_members = pref_data.get("members", {})
+                    active_buyers = [m for m in request.members if m in item_members]
+
+                    if len(active_buyers) == len(request.members) and len(request.members) > 1:
+                        assigned = list(request.members)
+                    else:
+                        # Assign members who bought >30% of the time
+                        total = pref_data.get("total_appearances", 1)
+                        assigned = [
+                            m for m in active_buyers
+                            if item_members[m] / total > 0.3
+                        ]
+
+                    if assigned:
+                        results.append(AutoSplitResultItem(
+                            name=item["name"],
+                            price=item["price"],
+                            members=assigned,
+                            confidence="fuzzy_match",
+                            matched_canonical=canonical,
+                        ))
+                        auto_assigned += 1
+                    else:
+                        gemini_items.append(item)
+                else:
+                    gemini_items.append(item)
+        else:
+            gemini_items = non_shared_items
+
+        # Step 3: Use Gemini for remaining unmatched items
+        if gemini_items and member_preferences:
+            gemini_key = request.gemini_key or os.getenv("GEMINI_API_KEY")
+            if not gemini_key:
+                # No Gemini key — return items unassigned
+                for item in gemini_items:
+                    results.append(AutoSplitResultItem(
+                        name=item["name"],
+                        price=item["price"],
+                        members=[],
+                        confidence="unmatched",
+                    ))
+                    unmatched_count += 1
+            else:
+                try:
+                    gemini_results = await _gemini_auto_assign(
+                        gemini_items, request.members, member_preferences, gemini_key
+                    )
+
+                    for gr in gemini_results:
+                        # Filter members to only include those in the request
+                        valid_members = [m for m in gr.get("members", []) if m in request.members]
+                        confidence = gr.get("confidence", "unmatched")
+
+                        results.append(AutoSplitResultItem(
+                            name=gr["name"],
+                            price=next((i["price"] for i in gemini_items if i["name"] == gr["name"]), 0),
+                            members=valid_members,
+                            confidence=confidence,
+                            matched_canonical=gr.get("matched_canonical"),
+                        ))
+
+                        if confidence in ("high", "medium", "low") and valid_members:
+                            auto_assigned += 1
+                        else:
+                            unmatched_count += 1
+
+                except Exception as e:
+                    print(f"Gemini auto-assign failed: {e}")
+                    # Fallback: return items unassigned
+                    for item in gemini_items:
+                        results.append(AutoSplitResultItem(
+                            name=item["name"],
+                            price=item["price"],
+                            members=[],
+                            confidence="unmatched",
+                        ))
+                        unmatched_count += 1
+        elif gemini_items:
+            # No preferences loaded — return items unassigned
+            for item in gemini_items:
+                results.append(AutoSplitResultItem(
+                    name=item["name"],
+                    price=item["price"],
+                    members=[],
+                    confidence="unmatched",
+                ))
+                unmatched_count += 1
+
+        return AutoSplitResponse(
+            items=results,
+            auto_assigned=auto_assigned,
+            shared=shared_count,
+            unmatched=unmatched_count,
+        )
+
+    except Exception as e:
+        print(f"Auto-split error: {e}")
+        raise HTTPException(status_code=400, detail=f"Auto-split failed: {str(e)}")
 
 
 @app.get("/api/get-expense")

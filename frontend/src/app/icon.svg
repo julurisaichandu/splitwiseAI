@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="30" fill="#b45309"/>
+
+  <!-- Receipt/bill shape -->
+  <path d="M20 12h24c2 0 3 1 3 3v34c0 1-0.5 2-1.5 2.5l-4 2.5-4-2.5-4 2.5-4-2.5-4 2.5-4-2.5-1.5-1c-1-0.5-1.5-1.5-1.5-2.5V15c0-2 1-3 3-3z" fill="#fef3c7"/>
+
+  <!-- Split line down the middle -->
+  <line x1="32" y1="18" x2="32" y2="46" stroke="#b45309" stroke-width="2" stroke-dasharray="4 2"/>
+
+  <!-- Dollar signs on each side -->
+  <text x="24" y="32" font-family="Arial" font-size="12" font-weight="bold" fill="#65a30d" text-anchor="middle">$</text>
+  <text x="40" y="32" font-family="Arial" font-size="12" font-weight="bold" fill="#65a30d" text-anchor="middle">$</text>
+
+  <!-- Lines representing text on receipt -->
+  <rect x="22" y="20" width="8" height="2" rx="1" fill="#d97706"/>
+  <rect x="34" y="20" width="8" height="2" rx="1" fill="#d97706"/>
+  <rect x="22" y="38" width="8" height="2" rx="1" fill="#d97706"/>
+  <rect x="34" y="38" width="8" height="2" rx="1" fill="#d97706"/>
+</svg>

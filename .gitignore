@@ -164,3 +164,9 @@ cython_debug/
 #.idea/
 
 demo.py
+
+# Analysis output data
+analysis/data/
+
+# Backend data (generated preference files)
+backend/data/
