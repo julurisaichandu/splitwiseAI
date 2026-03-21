@@ -32,7 +32,7 @@ app = FastAPI()
 
 # Configure CORS
 import os
-_frontend_url = os.getenv("FRONTEND_URL", "")
+_frontend_url = os.getenv("FRONTEND_URL", "").rstrip("/")
 _allowed_origins = ["http://localhost:3000"]
 if _frontend_url:
     _allowed_origins.append(_frontend_url)
@@ -52,7 +52,7 @@ app.add_middleware(
 SPLITWISE_CONSUMER_KEY = os.getenv("SPLITWISE_CONSUMER_KEY", "")
 SPLITWISE_CONSUMER_SECRET = os.getenv("SPLITWISE_CONSUMER_SECRET", "")
 SESSION_SECRET = os.getenv("SESSION_SECRET", "change-me-to-a-random-32-char-secret")
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000").rstrip("/")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
 serializer = URLSafeTimedSerializer(SESSION_SECRET)
