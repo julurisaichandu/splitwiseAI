@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Spinner from './Spinner';
+import { useAuth } from './AuthContext';
 
 interface Item {
   name: string;
@@ -29,6 +30,7 @@ interface PDFUploaderProps {
 }
 
 const PDFUploader: React.FC<PDFUploaderProps> = ({ onItemsDetected }) => {
+  const { authFetch } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,11 +65,10 @@ const PDFUploader: React.FC<PDFUploaderProps> = ({ onItemsDetected }) => {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const response = await fetch(
+      const response = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/analyze-pdf`,
         {
           method: 'POST',
-          credentials: 'include',
           body: formData,
         }
       );

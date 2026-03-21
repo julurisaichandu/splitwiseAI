@@ -58,7 +58,7 @@ interface FinalSplits {
 export default function BillSplitter() {
   // const router = useRouter();
   const { showToast } = useToast();
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { isAuthenticated, isLoading: authLoading, authFetch } = useAuth();
   const [, setMemToId] = useState<{ [key: string]: string }>({});
   const [groups, setGroups] = useState<{ [key: string]: string }>({});
   const [selectedGroup, setSelectedGroup] = useState<string>("");
@@ -107,7 +107,7 @@ export default function BillSplitter() {
       const url = groupId
         ? `${process.env.NEXT_PUBLIC_API_URL}/api/members?group_id=${groupId}`
         : `${process.env.NEXT_PUBLIC_API_URL}/api/members`;
-      const response = await fetch(url, { credentials: "include" });
+      const response = await authFetch(url);
 
       if (!response.ok) throw new Error("Failed to fetch members");
 
@@ -141,9 +141,8 @@ export default function BillSplitter() {
 
   const fetchGroups = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/groups`,
-        { credentials: "include" }
+      const response = await authFetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/groups`
       );
 
       if (!response.ok) throw new Error("Failed to fetch groups");
@@ -200,12 +199,11 @@ const handleItemsUpdate = (newItems: Item[]) => {
 
     setIsAutoSplitting(true);
     try {
-      const response = await fetch(
+      const response = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/auto-split`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          credentials: "include",
           body: JSON.stringify({
             items: currentItems.map((item) => ({
               name: item.name,
@@ -399,12 +397,11 @@ const finalData = allMembers.map((member) => ({
         comment: fullComment,
       };
 
-      const response = await fetch(
+      const response = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/create-expense`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          credentials: "include",
           body: JSON.stringify(expenseData),
         }
       );
@@ -564,12 +561,11 @@ const finalData = allMembers.map((member) => ({
         comment: fullComment,
       };
 
-      const response = await fetch(
+      const response = await authFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/update-expense`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          credentials: "include",
           body: JSON.stringify(expenseData),
         }
       );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "./AuthContext";
 
 interface ExpenseItem {
     name: string;
@@ -33,6 +34,7 @@ interface ExpenseEditorProps {
   }
   
   export default function ExpenseEditor({ onLoadExpense }: ExpenseEditorProps) {
+      const { authFetch } = useAuth();
       const [expenseId, setExpenseId] = useState<string>('');
       const [expenseData, setExpenseData] = useState<ExpenseData | null>(null);
       const [loading, setLoading] = useState<boolean>(false);
@@ -44,9 +46,8 @@ interface ExpenseEditorProps {
             setLoading(true);
             setError('');
         
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_API_URL}/api/get-expense?expense_id=${expenseId}`,
-              { credentials: "include" }
+            const response = await authFetch(
+              `${process.env.NEXT_PUBLIC_API_URL}/api/get-expense?expense_id=${expenseId}`
             );
         
             if (!response.ok) {

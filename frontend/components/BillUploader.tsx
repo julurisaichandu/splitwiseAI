@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Spinner from './Spinner';
+import { useAuth } from './AuthContext';
 
 interface Preview {
   file: File;
@@ -34,6 +35,7 @@ interface BillUploaderProps {
 }
 
 const BillUploader: React.FC<BillUploaderProps> = ({ onItemsDetected }) => {
+  const { authFetch } = useAuth();
   const [files, setFiles] = useState<File[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [previews, setPreviews] = useState<Preview[]>([]);
@@ -111,9 +113,8 @@ const BillUploader: React.FC<BillUploaderProps> = ({ onItemsDetected }) => {
       files.forEach(file => {
         formData.append('files', file);
       });
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/analyze-bills`, {
+      const response = await authFetch(`${process.env.NEXT_PUBLIC_API_URL}/api/analyze-bills`, {
         method: 'POST',
-        credentials: 'include',
         body: formData
       });
 

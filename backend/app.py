@@ -1,6 +1,6 @@
 # main.py
 from fastapi import FastAPI, UploadFile, File, HTTPException, Request
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
@@ -68,12 +68,19 @@ OAUTH_CALLBACK_URL = os.getenv(
 
 
 def get_current_session(request: Request) -> dict:
-    """Read and validate the session cookie, return session data or raise 401."""
-    cookie = request.cookies.get("splitwise_session")
-    if not cookie:
+    """Read session from Authorization header or cookie, return session data or raise 401."""
+    token = None
+    # Check Authorization header first
+    auth_header = request.headers.get("authorization", "")
+    if auth_header.startswith("Bearer "):
+        token = auth_header[7:]
+    # Fall back to cookie
+    if not token:
+        token = request.cookies.get("splitwise_session")
+    if not token:
         raise HTTPException(status_code=401, detail="Not authenticated")
     try:
-        session_id = serializer.loads(cookie, max_age=60 * 60 * 24 * 30)  # 30 days
+        session_id = serializer.loads(token, max_age=60 * 60 * 24 * 30)  # 30 days
     except (BadSignature, SignatureExpired):
         raise HTTPException(status_code=401, detail="Session expired or invalid")
     session = sessions.get(session_id)
@@ -183,16 +190,9 @@ async def auth_callback(code: str, state: str):
     }
 
     signed = serializer.dumps(session_id)
-    response = RedirectResponse(url=FRONTEND_URL)
-    response.set_cookie(
-        key="splitwise_session",
-        value=signed,
-        httponly=True,
-        samesite="lax",
-        max_age=60 * 60 * 24 * 30,  # 30 days
-        path="/",
-    )
-    return response
+    # Pass token via URL query param — frontend stores it in localStorage
+    redirect_url = f"{FRONTEND_URL}?session_token={signed}"
+    return RedirectResponse(url=redirect_url)
 
 
 @app.get("/api/auth/status")
@@ -207,17 +207,16 @@ async def auth_status(request: Request):
 
 @app.post("/api/auth/logout")
 async def auth_logout(request: Request):
-    """Clear the session and cookie."""
-    cookie = request.cookies.get("splitwise_session")
-    if cookie:
-        try:
-            session_id = serializer.loads(cookie, max_age=60 * 60 * 24 * 30)
-            sessions.pop(session_id, None)
-        except (BadSignature, SignatureExpired):
-            pass
-    response = JSONResponse(content={"status": "logged_out"})
-    response.delete_cookie("splitwise_session", path="/")
-    return response
+    """Clear the session."""
+    try:
+        session = get_current_session(request)
+        # Find and remove the session by matching access_token
+        to_remove = [sid for sid, s in sessions.items() if s["access_token"] == session["access_token"]]
+        for sid in to_remove:
+            sessions.pop(sid, None)
+    except HTTPException:
+        pass
+    return {"status": "logged_out"}
 
 
 # --- Splitwise API Endpoints ---
