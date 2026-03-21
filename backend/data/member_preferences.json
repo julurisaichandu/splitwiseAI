@@ -1,0 +1,5063 @@
+{
+  "__SHARED__": {
+    "members": {
+      "Saichandu": 55,
+      "Akula": 52,
+      "Satwik": 52,
+      "Puneet": 51,
+      "Bharadwaj": 51,
+      "Yadalla": 49,
+      "Pranav": 48,
+      "Saidheeraj": 47,
+      "Vamsi": 37,
+      "Mayank": 25
+    },
+    "total_appearances": 58,
+    "avg_price": 2.05
+  },
+  "milk": {
+    "members": {
+      "Saichandu": 34,
+      "Pranav": 31,
+      "Mayank": 20,
+      "Vamsi": 19,
+      "Puneet": 7,
+      "Saidheeraj": 7,
+      "Akula": 7,
+      "Satwik": 7,
+      "Bharadwaj": 7,
+      "Yadalla": 1
+    },
+    "total_appearances": 35,
+    "avg_price": 6.08
+  },
+  "onions": {
+    "members": {
+      "Akula": 21,
+      "Satwik": 21,
+      "Bharadwaj": 21,
+      "Saichandu": 20,
+      "Puneet": 20,
+      "Saidheeraj": 20,
+      "Pranav": 18,
+      "Vamsi": 16,
+      "Yadalla": 15,
+      "Mayank": 11
+    },
+    "total_appearances": 21,
+    "avg_price": 34.0
+  },
+  "curry leaves": {
+    "members": {
+      "Saichandu": 20,
+      "Puneet": 20,
+      "Akula": 20,
+      "Satwik": 20,
+      "Bharadwaj": 20,
+      "Saidheeraj": 19,
+      "Pranav": 19,
+      "Yadalla": 14,
+      "Vamsi": 12,
+      "Mayank": 11
+    },
+    "total_appearances": 20,
+    "avg_price": 2.0
+  },
+  "bananas": {
+    "members": {
+      "Puneet": 16,
+      "Akula": 13,
+      "Satwik": 12,
+      "Saichandu": 12,
+      "Mayank": 10,
+      "Saidheeraj": 8,
+      "Yadalla": 7,
+      "Bharadwaj": 7,
+      "Vamsi": 6,
+      "Pranav": 6
+    },
+    "total_appearances": 19,
+    "avg_price": 2.28
+  },
+  "cilantro": {
+    "members": {
+      "Saichandu": 18,
+      "Puneet": 18,
+      "Saidheeraj": 18,
+      "Akula": 18,
+      "Satwik": 18,
+      "Bharadwaj": 18,
+      "Pranav": 17,
+      "Vamsi": 15,
+      "Yadalla": 14,
+      "Mayank": 12
+    },
+    "total_appearances": 18,
+    "avg_price": 7.17
+  },
+  "paneer": {
+    "members": {
+      "Akula": 16,
+      "Satwik": 16,
+      "Bharadwaj": 16,
+      "Saichandu": 15,
+      "Puneet": 15,
+      "Saidheeraj": 15,
+      "Yadalla": 14,
+      "Pranav": 13,
+      "Vamsi": 10,
+      "Mayank": 9
+    },
+    "total_appearances": 16,
+    "avg_price": 28.47
+  },
+  "garlic": {
+    "members": {
+      "Saichandu": 15,
+      "Puneet": 15,
+      "Satwik": 15,
+      "Bharadwaj": 15,
+      "Saidheeraj": 14,
+      "Akula": 14,
+      "Pranav": 14,
+      "Yadalla": 12,
+      "Mayank": 12,
+      "Vamsi": 11
+    },
+    "total_appearances": 15,
+    "avg_price": 5.84
+  },
+  "service fee": {
+    "members": {
+      "Saichandu": 14,
+      "Puneet": 14,
+      "Saidheeraj": 14,
+      "Akula": 14,
+      "Satwik": 14,
+      "Bharadwaj": 14,
+      "Pranav": 13,
+      "Vamsi": 12,
+      "Mayank": 9,
+      "Yadalla": 1
+    },
+    "total_appearances": 14,
+    "avg_price": 3.16
+  },
+  "cashews": {
+    "members": {
+      "Saichandu": 13,
+      "Puneet": 13,
+      "Akula": 13,
+      "Satwik": 13,
+      "Bharadwaj": 13,
+      "Yadalla": 11,
+      "Saidheeraj": 11,
+      "Pranav": 11,
+      "Vamsi": 8,
+      "Mayank": 7
+    },
+    "total_appearances": 13,
+    "avg_price": 16.53
+  },
+  "green peppers": {
+    "members": {
+      "Puneet": 13,
+      "Akula": 13,
+      "Bharadwaj": 13,
+      "Saichandu": 12,
+      "Saidheeraj": 12,
+      "Satwik": 12,
+      "Vamsi": 11,
+      "Pranav": 11,
+      "Mayank": 9,
+      "Yadalla": 8
+    },
+    "total_appearances": 13,
+    "avg_price": 2.53
+  },
+  "cauliflower": {
+    "members": {
+      "Saichandu": 12,
+      "Puneet": 12,
+      "Saidheeraj": 12,
+      "Akula": 12,
+      "Satwik": 12,
+      "Pranav": 12,
+      "Bharadwaj": 12,
+      "Vamsi": 11,
+      "Yadalla": 7,
+      "Mayank": 6
+    },
+    "total_appearances": 12,
+    "avg_price": 4.05
+  },
+  "green chilli": {
+    "members": {
+      "Saichandu": 12,
+      "Puneet": 12,
+      "Akula": 12,
+      "Satwik": 12,
+      "Bharadwaj": 12,
+      "Saidheeraj": 11,
+      "Pranav": 11,
+      "Yadalla": 9,
+      "Mayank": 8,
+      "Vamsi": 8
+    },
+    "total_appearances": 12,
+    "avg_price": 5.31
+  },
+  "tomatoes": {
+    "members": {
+      "Saichandu": 10,
+      "Puneet": 10,
+      "Saidheeraj": 10,
+      "Akula": 10,
+      "Satwik": 10,
+      "Bharadwaj": 10,
+      "Pranav": 9,
+      "Yadalla": 8,
+      "Vamsi": 8,
+      "Mayank": 5
+    },
+    "total_appearances": 11,
+    "avg_price": 15.51
+  },
+  "chilli powder": {
+    "members": {
+      "Saichandu": 9,
+      "Puneet": 9,
+      "Saidheeraj": 9,
+      "Akula": 9,
+      "Satwik": 9,
+      "Vamsi": 9,
+      "Pranav": 9,
+      "Bharadwaj": 9,
+      "Mayank": 7,
+      "Yadalla": 5
+    },
+    "total_appearances": 9,
+    "avg_price": 6.82
+  },
+  "mint": {
+    "members": {
+      "Saichandu": 9,
+      "Puneet": 9,
+      "Akula": 9,
+      "Satwik": 9,
+      "Bharadwaj": 9,
+      "Saidheeraj": 8,
+      "Pranav": 8,
+      "Yadalla": 7,
+      "Vamsi": 7,
+      "Mayank": 4
+    },
+    "total_appearances": 9,
+    "avg_price": 3.8
+  },
+  "tindora": {
+    "members": {
+      "Saichandu": 8,
+      "Puneet": 8,
+      "Saidheeraj": 8,
+      "Satwik": 8,
+      "Bharadwaj": 8,
+      "Akula": 7,
+      "Pranav": 7,
+      "Vamsi": 5,
+      "Mayank": 4,
+      "Yadalla": 3
+    },
+    "total_appearances": 9,
+    "avg_price": 4.74
+  },
+  "carrots": {
+    "members": {
+      "Saichandu": 8,
+      "Puneet": 8,
+      "Saidheeraj": 8,
+      "Akula": 8,
+      "Satwik": 8,
+      "Bharadwaj": 8,
+      "Pranav": 7,
+      "Vamsi": 6,
+      "Mayank": 5,
+      "Yadalla": 4
+    },
+    "total_appearances": 8,
+    "avg_price": 2.1
+  },
+  "curd": {
+    "members": {
+      "Saichandu": 8,
+      "Saidheeraj": 8,
+      "Akula": 8,
+      "Satwik": 8,
+      "Bharadwaj": 8,
+      "Puneet": 7,
+      "Pranav": 7,
+      "Mayank": 7,
+      "Vamsi": 6,
+      "Yadalla": 2
+    },
+    "total_appearances": 8,
+    "avg_price": 7.11
+  },
+  "dahi yogurt": {
+    "members": {
+      "Saichandu": 8,
+      "Puneet": 8,
+      "Yadalla": 8,
+      "Saidheeraj": 8,
+      "Akula": 8,
+      "Satwik": 8,
+      "Vamsi": 8,
+      "Pranav": 8,
+      "Bharadwaj": 8,
+      "Mayank": 6
+    },
+    "total_appearances": 8,
+    "avg_price": 7.14
+  },
+  "eggs": {
+    "members": {
+      "Puneet": 8,
+      "Saidheeraj": 8,
+      "Akula": 8,
+      "Satwik": 8,
+      "Mayank": 7,
+      "Saichandu": 5,
+      "Vamsi": 5,
+      "Yadalla": 2
+    },
+    "total_appearances": 8,
+    "avg_price": 12.19
+  },
+  "greek yogurt": {
+    "members": {
+      "Saichandu": 6,
+      "Puneet": 3,
+      "Vamsi": 2,
+      "Mayank": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 8,
+    "avg_price": 5.43
+  },
+  "peanuts": {
+    "members": {
+      "Saichandu": 7,
+      "Vamsi": 6,
+      "Puneet": 6,
+      "Saidheeraj": 6,
+      "Akula": 6,
+      "Satwik": 6,
+      "Bharadwaj": 6,
+      "Pranav": 5,
+      "Mayank": 4,
+      "Yadalla": 4
+    },
+    "total_appearances": 8,
+    "avg_price": 8.82
+  },
+  "broccoli": {
+    "members": {
+      "Saichandu": 4,
+      "Akula": 2,
+      "Saidheeraj": 1,
+      "Puneet": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 7,
+    "avg_price": 3.06
+  },
+  "cabbage": {
+    "members": {
+      "Saichandu": 7,
+      "Puneet": 7,
+      "Saidheeraj": 7,
+      "Akula": 7,
+      "Satwik": 7,
+      "Pranav": 7,
+      "Bharadwaj": 7,
+      "Vamsi": 6,
+      "Yadalla": 5,
+      "Mayank": 4
+    },
+    "total_appearances": 7,
+    "avg_price": 2.84
+  },
+  "cucumber": {
+    "members": {
+      "Satwik": 5,
+      "Vamsi": 4,
+      "Yadalla": 3,
+      "Puneet": 3,
+      "Akula": 3,
+      "Mayank": 2,
+      "Saidheeraj": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Saichandu": 1
+    },
+    "total_appearances": 7,
+    "avg_price": 2.33
+  },
+  "italian bread": {
+    "members": {
+      "Vamsi": 6,
+      "Puneet": 5,
+      "Akula": 5,
+      "Satwik": 5,
+      "Yadalla": 4,
+      "Bharadwaj": 4,
+      "Saichandu": 4,
+      "Mayank": 4,
+      "Saidheeraj": 4,
+      "Pranav": 4
+    },
+    "total_appearances": 7,
+    "avg_price": 10.24
+  },
+  "kirkland eggs": {
+    "members": {
+      "Puneet": 7,
+      "Saidheeraj": 7,
+      "Akula": 7,
+      "Vamsi": 7,
+      "Saichandu": 6,
+      "Mayank": 6,
+      "Yadalla": 5,
+      "Satwik": 4
+    },
+    "total_appearances": 7,
+    "avg_price": 14.82
+  },
+  "spinach": {
+    "members": {
+      "Saichandu": 7,
+      "Puneet": 7,
+      "Akula": 7,
+      "Satwik": 7,
+      "Bharadwaj": 7,
+      "Saidheeraj": 6,
+      "Pranav": 5,
+      "Mayank": 4,
+      "Vamsi": 4,
+      "Yadalla": 3
+    },
+    "total_appearances": 7,
+    "avg_price": 4.09
+  },
+  "basmati rice": {
+    "members": {
+      "Puneet": 6,
+      "Akula": 6,
+      "Satwik": 6,
+      "Bharadwaj": 6,
+      "Yadalla": 5,
+      "Saidheeraj": 5,
+      "Pranav": 5,
+      "Mayank": 3,
+      "Vamsi": 3,
+      "Saichandu": 3
+    },
+    "total_appearances": 6,
+    "avg_price": 19.49
+  },
+  "besan": {
+    "members": {
+      "Saichandu": 6,
+      "Puneet": 6,
+      "Akula": 6,
+      "Satwik": 6,
+      "Bharadwaj": 6,
+      "Yadalla": 5,
+      "Saidheeraj": 5,
+      "Pranav": 5,
+      "Vamsi": 4,
+      "Mayank": 3
+    },
+    "total_appearances": 6,
+    "avg_price": 4.01
+  },
+  "garbanzo beans": {
+    "members": {
+      "Saichandu": 6,
+      "Vamsi": 1
+    },
+    "total_appearances": 6,
+    "avg_price": 2.27
+  },
+  "gold potatoes": {
+    "members": {
+      "Saichandu": 6,
+      "Puneet": 6,
+      "Akula": 6,
+      "Satwik": 6,
+      "Pranav": 6,
+      "Bharadwaj": 6,
+      "Yadalla": 5,
+      "Saidheeraj": 5,
+      "Vamsi": 5,
+      "Mayank": 2
+    },
+    "total_appearances": 6,
+    "avg_price": 7.3
+  },
+  "ice cream": {
+    "members": {
+      "Puneet": 6,
+      "Akula": 6,
+      "Satwik": 6,
+      "Saidheeraj": 5,
+      "Pranav": 5,
+      "Bharadwaj": 5,
+      "Vamsi": 3,
+      "Mayank": 3,
+      "Yadalla": 2,
+      "Saichandu": 1
+    },
+    "total_appearances": 6,
+    "avg_price": 3.25
+  },
+  "paratha": {
+    "members": {
+      "Saichandu": 6,
+      "Saidheeraj": 6,
+      "Puneet": 5,
+      "Mayank": 3,
+      "Akula": 2,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 6,
+    "avg_price": 13.08
+  },
+  "toor dal": {
+    "members": {
+      "Saichandu": 6,
+      "Puneet": 6,
+      "Saidheeraj": 6,
+      "Akula": 6,
+      "Satwik": 6,
+      "Pranav": 6,
+      "Bharadwaj": 6,
+      "Yadalla": 5,
+      "Vamsi": 5,
+      "Mayank": 4
+    },
+    "total_appearances": 6,
+    "avg_price": 17.28
+  },
+  "whip cream": {
+    "members": {
+      "Saichandu": 6,
+      "Puneet": 6,
+      "Saidheeraj": 6,
+      "Akula": 6,
+      "Satwik": 6,
+      "Pranav": 6,
+      "Bharadwaj": 6,
+      "Yadalla": 4,
+      "Vamsi": 4,
+      "Mayank": 3
+    },
+    "total_appearances": 6,
+    "avg_price": 5.45
+  },
+  "chicken": {
+    "members": {
+      "Satwik": 4,
+      "Yadalla": 4,
+      "Saidheeraj": 4,
+      "Akula": 4,
+      "Puneet": 2
+    },
+    "total_appearances": 5,
+    "avg_price": 14.53
+  },
+  "coriander cumin powder": {
+    "members": {
+      "Saichandu": 5,
+      "Puneet": 5,
+      "Yadalla": 5,
+      "Saidheeraj": 5,
+      "Akula": 5,
+      "Satwik": 5,
+      "Bharadwaj": 5,
+      "Pranav": 4,
+      "Mayank": 3,
+      "Vamsi": 3
+    },
+    "total_appearances": 5,
+    "avg_price": 3.79
+  },
+  "ginger": {
+    "members": {
+      "Saichandu": 5,
+      "Puneet": 5,
+      "Saidheeraj": 5,
+      "Akula": 5,
+      "Satwik": 5,
+      "Bharadwaj": 5,
+      "Pranav": 4,
+      "Yadalla": 3,
+      "Vamsi": 3,
+      "Mayank": 2
+    },
+    "total_appearances": 5,
+    "avg_price": 2.13
+  },
+  "lime juice": {
+    "members": {
+      "Saichandu": 5,
+      "Puneet": 5,
+      "Yadalla": 5,
+      "Saidheeraj": 5,
+      "Akula": 5,
+      "Satwik": 5,
+      "Pranav": 5,
+      "Bharadwaj": 5,
+      "Mayank": 4,
+      "Vamsi": 3
+    },
+    "total_appearances": 5,
+    "avg_price": 2.74
+  },
+  "limes": {
+    "members": {
+      "Saichandu": 5,
+      "Puneet": 5,
+      "Yadalla": 5,
+      "Saidheeraj": 5,
+      "Akula": 5,
+      "Satwik": 5,
+      "Bharadwaj": 5,
+      "Vamsi": 4,
+      "Pranav": 4,
+      "Mayank": 3
+    },
+    "total_appearances": 5,
+    "avg_price": 1.78
+  },
+  "potatoes": {
+    "members": {
+      "Saichandu": 5,
+      "Puneet": 5,
+      "Saidheeraj": 5,
+      "Akula": 5,
+      "Satwik": 5,
+      "Bharadwaj": 5,
+      "Mayank": 4,
+      "Pranav": 4,
+      "Vamsi": 4,
+      "Yadalla": 2
+    },
+    "total_appearances": 5,
+    "avg_price": 6.1
+  },
+  "pulka roti": {
+    "members": {
+      "Saichandu": 3,
+      "Saidheeraj": 3,
+      "Yadalla": 2,
+      "Puneet": 2,
+      "Satwik": 2,
+      "Mayank": 1,
+      "Akula": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 5,
+    "avg_price": 6.49
+  },
+  "rice": {
+    "members": {
+      "Saichandu": 5,
+      "Puneet": 5,
+      "Saidheeraj": 5,
+      "Akula": 5,
+      "Satwik": 5,
+      "Bharadwaj": 5,
+      "Mayank": 4,
+      "Pranav": 3,
+      "Yadalla": 2,
+      "Vamsi": 2
+    },
+    "total_appearances": 5,
+    "avg_price": 20.77
+  },
+  "shred lettuce": {
+    "members": {
+      "Saichandu": 5,
+      "Satwik": 3
+    },
+    "total_appearances": 5,
+    "avg_price": 4.18
+  },
+  "bhindi": {
+    "members": {
+      "Saichandu": 4,
+      "Puneet": 4,
+      "Saidheeraj": 4,
+      "Akula": 4,
+      "Satwik": 4,
+      "Vamsi": 4,
+      "Pranav": 4,
+      "Bharadwaj": 4,
+      "Mayank": 2,
+      "Yadalla": 2
+    },
+    "total_appearances": 4,
+    "avg_price": 7.38
+  },
+  "cheese singles": {
+    "members": {
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Bharadwaj": 2,
+      "Mayank": 2,
+      "Akula": 2,
+      "Saichandu": 1,
+      "Yadalla": 1,
+      "Pranav": 1,
+      "Satwik": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 4,
+    "avg_price": 2.92
+  },
+  "colored peppers": {
+    "members": {
+      "Puneet": 4,
+      "Akula": 4,
+      "Bharadwaj": 4,
+      "Saidheeraj": 3,
+      "Vamsi": 3,
+      "Pranav": 3,
+      "Saichandu": 3,
+      "Satwik": 3,
+      "Mayank": 2,
+      "Yadalla": 2
+    },
+    "total_appearances": 4,
+    "avg_price": 2.87
+  },
+  "cookies and cream ice cream": {
+    "members": {
+      "Yadalla": 4,
+      "Akula": 4,
+      "Satwik": 4,
+      "Bharadwaj": 4,
+      "Mayank": 3,
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Vamsi": 3,
+      "Pranav": 3,
+      "Saichandu": 3
+    },
+    "total_appearances": 4,
+    "avg_price": 4.06
+  },
+  "corn": {
+    "members": {
+      "Satwik": 4,
+      "Saichandu": 3,
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Bharadwaj": 3,
+      "Mayank": 2,
+      "Yadalla": 2,
+      "Vamsi": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 4,
+    "avg_price": 1.66
+  },
+  "corn oil": {
+    "members": {
+      "Saichandu": 4,
+      "Puneet": 4,
+      "Saidheeraj": 4,
+      "Akula": 4,
+      "Satwik": 4,
+      "Pranav": 4,
+      "Bharadwaj": 4,
+      "Mayank": 3,
+      "Yadalla": 3,
+      "Vamsi": 3
+    },
+    "total_appearances": 4,
+    "avg_price": 32.12
+  },
+  "garam masala": {
+    "members": {
+      "Saichandu": 4,
+      "Puneet": 4,
+      "Saidheeraj": 4,
+      "Akula": 4,
+      "Satwik": 4,
+      "Pranav": 4,
+      "Bharadwaj": 4,
+      "Mayank": 3,
+      "Yadalla": 3,
+      "Vamsi": 3
+    },
+    "total_appearances": 4,
+    "avg_price": 5.22
+  },
+  "ketchup": {
+    "members": {
+      "Puneet": 4,
+      "Saidheeraj": 4,
+      "Akula": 4,
+      "Satwik": 4,
+      "Bharadwaj": 4,
+      "Yadalla": 3,
+      "Vamsi": 3,
+      "Pranav": 3,
+      "Saichandu": 3,
+      "Mayank": 2
+    },
+    "total_appearances": 4,
+    "avg_price": 1.68
+  },
+  "lettuce": {
+    "members": {
+      "Puneet": 4,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Saichandu": 1,
+      "Yadalla": 1
+    },
+    "total_appearances": 4,
+    "avg_price": 2.06
+  },
+  "mushrooms": {
+    "members": {
+      "Vamsi": 4,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Saichandu": 2,
+      "Yadalla": 1,
+      "Mayank": 1,
+      "Puneet": 1
+    },
+    "total_appearances": 4,
+    "avg_price": 3.51
+  },
+  "paper towel": {
+    "members": {
+      "Saichandu": 4,
+      "Puneet": 4,
+      "Saidheeraj": 4,
+      "Akula": 4,
+      "Satwik": 4,
+      "Vamsi": 4,
+      "Pranav": 4,
+      "Bharadwaj": 4,
+      "Mayank": 2,
+      "Yadalla": 1
+    },
+    "total_appearances": 4,
+    "avg_price": 10.34
+  },
+  "spring water": {
+    "members": {
+      "Bharadwaj": 4
+    },
+    "total_appearances": 4,
+    "avg_price": 9.53
+  },
+  "sweet corn": {
+    "members": {
+      "Saichandu": 4,
+      "Puneet": 4,
+      "Akula": 4,
+      "Satwik": 4,
+      "Pranav": 4,
+      "Bharadwaj": 4,
+      "Yadalla": 3,
+      "Saidheeraj": 3,
+      "Mayank": 2,
+      "Vamsi": 2
+    },
+    "total_appearances": 4,
+    "avg_price": 1.91
+  },
+  "thums up": {
+    "members": {
+      "Saidheeraj": 2,
+      "Satwik": 1,
+      "Bharadwaj": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 4,
+    "avg_price": 2.99
+  },
+  "tortilla": {
+    "members": {
+      "Saichandu": 3,
+      "Akula": 2,
+      "Vamsi": 1
+    },
+    "total_appearances": 4,
+    "avg_price": 10.68
+  },
+  "unsalted butter": {
+    "members": {
+      "Saichandu": 4,
+      "Puneet": 4,
+      "Yadalla": 4,
+      "Akula": 4,
+      "Satwik": 4,
+      "Vamsi": 4,
+      "Pranav": 4,
+      "Bharadwaj": 4,
+      "Saidheeraj": 2,
+      "Mayank": 1
+    },
+    "total_appearances": 4,
+    "avg_price": 13.74
+  },
+  "aluminum foil": {
+    "members": {
+      "Saichandu": 3,
+      "Puneet": 3,
+      "Yadalla": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Vamsi": 3,
+      "Pranav": 3,
+      "Bharadwaj": 3,
+      "Mayank": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 2.92
+  },
+  "bread": {
+    "members": {
+      "Puneet": 3,
+      "Saichandu": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 3.66
+  },
+  "butter": {
+    "members": {
+      "Saichandu": 3,
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Bharadwaj": 3,
+      "Mayank": 2,
+      "Yadalla": 1,
+      "Vamsi": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 19.11
+  },
+  "cream cheese": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Bharadwaj": 2,
+      "Vamsi": 2,
+      "Mayank": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 2.53
+  },
+  "dosa batter": {
+    "members": {
+      "Yadalla": 2,
+      "Satwik": 2,
+      "Saidheeraj": 1,
+      "Akula": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 5.33
+  },
+  "ginger paste": {
+    "members": {
+      "Saichandu": 3,
+      "Mayank": 3,
+      "Puneet": 3,
+      "Yadalla": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Pranav": 3,
+      "Bharadwaj": 3,
+      "Vamsi": 2
+    },
+    "total_appearances": 3,
+    "avg_price": 9.25
+  },
+  "green grapes": {
+    "members": {
+      "Saichandu": 3
+    },
+    "total_appearances": 3,
+    "avg_price": 3.29
+  },
+  "horlicks": {
+    "members": {
+      "Puneet": 3
+    },
+    "total_appearances": 3,
+    "avg_price": 7.33
+  },
+  "kasuri methi": {
+    "members": {
+      "Saichandu": 3,
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Pranav": 3,
+      "Bharadwaj": 3,
+      "Yadalla": 2,
+      "Vamsi": 2,
+      "Mayank": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 3.65
+  },
+  "large eggs": {
+    "members": {
+      "Puneet": 3,
+      "Yadalla": 3,
+      "Akula": 3,
+      "Vamsi": 3,
+      "Saichandu": 2,
+      "Saidheeraj": 2,
+      "Satwik": 2,
+      "Mayank": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 16.38
+  },
+  "laundry detergent": {
+    "members": {
+      "Saichandu": 3,
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Bharadwaj": 3,
+      "Mayank": 2,
+      "Yadalla": 2,
+      "Vamsi": 2,
+      "Pranav": 2
+    },
+    "total_appearances": 3,
+    "avg_price": 17.12
+  },
+  "red chilli": {
+    "members": {
+      "Saichandu": 3,
+      "Mayank": 3,
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Vamsi": 3,
+      "Pranav": 3,
+      "Bharadwaj": 3,
+      "Yadalla": 2
+    },
+    "total_appearances": 3,
+    "avg_price": 5.65
+  },
+  "red chilli sauce": {
+    "members": {
+      "Saichandu": 3,
+      "Mayank": 3,
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Pranav": 3,
+      "Bharadwaj": 3,
+      "Vamsi": 2,
+      "Yadalla": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 3.29
+  },
+  "roma tomat": {
+    "members": {
+      "Saichandu": 3,
+      "Puneet": 3,
+      "Yadalla": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Vamsi": 3,
+      "Pranav": 3,
+      "Bharadwaj": 3,
+      "Mayank": 2
+    },
+    "total_appearances": 3,
+    "avg_price": 3.69
+  },
+  "sona moosori": {
+    "members": {
+      "Yadalla": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Bharadwaj": 3,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Saichandu": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 28.29
+  },
+  "stevia": {
+    "members": {
+      "Pranav": 3
+    },
+    "total_appearances": 3,
+    "avg_price": 4.22
+  },
+  "strawberries": {
+    "members": {
+      "Saichandu": 2,
+      "Vamsi": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 3.03
+  },
+  "sweet peas": {
+    "members": {
+      "Saichandu": 3,
+      "Puneet": 3,
+      "Saidheeraj": 3,
+      "Akula": 3,
+      "Satwik": 3,
+      "Vamsi": 3,
+      "Pranav": 3,
+      "Bharadwaj": 3,
+      "Yadalla": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 2.72
+  },
+  "wheat bread": {
+    "members": {
+      "Saichandu": 2,
+      "Akula": 2,
+      "Yadalla": 1,
+      "Puneet": 1,
+      "Mayank": 1,
+      "Saidheeraj": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 3,
+    "avg_price": 2.18
+  },
+  "1% milk": {
+    "members": {
+      "Saichandu": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 3.55
+  },
+  "12 grain bread": {
+    "members": {
+      "Puneet": 2,
+      "Mayank": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 3.9
+  },
+  "all purpose flour": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 3.68
+  },
+  "almond milk": {
+    "members": {
+      "Vamsi": 2,
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 3.15
+  },
+  "aluminium pans": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Vamsi": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 9.24
+  },
+  "appadam": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 3.29
+  },
+  "badam milk": {
+    "members": {
+      "Saichandu": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 5.9
+  },
+  "bar garden salad": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 2.27
+  },
+  "bengay": {
+    "members": {
+      "Saidheeraj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 17.31
+  },
+  "bev fee": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 0.05
+  },
+  "blackberries": {
+    "members": {
+      "Saichandu": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 3.7
+  },
+  "cheese crisps": {
+    "members": {
+      "Vamsi": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 5.2
+  },
+  "corn starch": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Mayank": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 1.89
+  },
+  "cumin": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Bharadwaj": 2,
+      "Mayank": 1,
+      "Vamsi": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 5.98
+  },
+  "dawn": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 13.85
+  },
+  "deep paratha": {
+    "members": {
+      "Saichandu": 2,
+      "Akula": 2,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 11.52
+  },
+  "edamame": {
+    "members": {
+      "Saichandu": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 2.75
+  },
+  "eggplant": {
+    "members": {
+      "Satwik": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 3.94
+  },
+  "everest tandoori": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 2.99
+  },
+  "fatafat candy": {
+    "members": {
+      "Yadalla": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 0.5
+  },
+  "ginger garlic": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Yadalla": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 7.6
+  },
+  "ginger garlic paste": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Yadalla": 1,
+      "Mayank": 1,
+      "Saidheeraj": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 15.57
+  },
+  "haldiram paratha": {
+    "members": {
+      "Saichandu": 2,
+      "Akula": 2,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 7.89
+  },
+  "item 7": {
+    "members": {},
+    "total_appearances": 2,
+    "avg_price": 0.0
+  },
+  "kitchen king": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Yadalla": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 2.79
+  },
+  "krackjack": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 3.3
+  },
+  "kurkur chilli": {
+    "members": {
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 0.99
+  },
+  "kx bhindi cut": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 2.99
+  },
+  "maggie": {
+    "members": {
+      "Saichandu": 1,
+      "Bharadwaj": 1,
+      "Yadalla": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 5.0
+  },
+  "mini cucumbers": {
+    "members": {
+      "Satwik": 1,
+      "Puneet": 1,
+      "Akula": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 1.99
+  },
+  "mozzarella cheese": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 3.95
+  },
+  "noodles": {
+    "members": {
+      "Saichandu": 2,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 9.9
+  },
+  "oil": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Bharadwaj": 2,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 31.9
+  },
+  "okra": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Bharadwaj": 2,
+      "Yadalla": 1,
+      "Mayank": 1,
+      "Vamsi": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 4.99
+  },
+  "oreo": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Akula": 2,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 5.8
+  },
+  "organic romaine hearts": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 4.34
+  },
+  "paper plates": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Mayank": 1,
+      "Saidheeraj": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 12.3
+  },
+  "parotta": {
+    "members": {
+      "Yadalla": 2,
+      "Akula": 2,
+      "Puneet": 1,
+      "Saidheeraj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 8.52
+  },
+  "pepper powder": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Yadalla": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 5.59
+  },
+  "pepsi diet": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 1.75
+  },
+  "pineapple": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Bharadwaj": 2,
+      "Pranav": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 2.58
+  },
+  "plum tomato": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2,
+      "Mayank": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 9.91
+  },
+  "recycle bag": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 0.75
+  },
+  "red onion": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 16.98
+  },
+  "rice flour": {
+    "members": {
+      "Saichandu": 2,
+      "Mayank": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 2.54
+  },
+  "roti": {
+    "members": {
+      "Satwik": 2,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 22.64
+  },
+  "schezwan": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 11.49
+  },
+  "soya chunks": {
+    "members": {
+      "Saichandu": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 2.83
+  },
+  "spicy wheat roll": {
+    "members": {
+      "Saichandu": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 4.78
+  },
+  "strawberry yogurt": {
+    "members": {
+      "Saichandu": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 3.55
+  },
+  "sugar": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Bharadwaj": 2,
+      "Yadalla": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 3.65
+  },
+  "swad moong": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Yadalla": 2,
+      "Saidheeraj": 2,
+      "Akula": 2,
+      "Satwik": 2,
+      "Pranav": 2,
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 7.99
+  },
+  "t vix": {
+    "members": {
+      "Yadalla": 2,
+      "Akula": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 1.25
+  },
+  "tea powder": {
+    "members": {
+      "Saichandu": 2,
+      "Vamsi": 2,
+      "Pranav": 2,
+      "Mayank": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 10.24
+  },
+  "thumpsup pranav": {
+    "members": {
+      "Pranav": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 1.5
+  },
+  "water bottles": {
+    "members": {
+      "Bharadwaj": 2
+    },
+    "total_appearances": 2,
+    "avg_price": 8.68
+  },
+  "water melon": {
+    "members": {
+      "Saichandu": 2,
+      "Puneet": 2,
+      "Akula": 2,
+      "Bharadwaj": 2,
+      "Mayank": 1,
+      "Saidheeraj": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 4.0
+  },
+  "zucchini": {
+    "members": {
+      "Saichandu": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 2,
+    "avg_price": 2.68
+  },
+  "aachi biryani": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.99
+  },
+  "aara sooji": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.49
+  },
+  "alkaline batteries": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.25
+  },
+  "aloo paratha": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.99
+  },
+  "aluminium foils": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.0
+  },
+  "amla": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.0
+  },
+  "angle broom": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.5
+  },
+  "apples": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.29
+  },
+  "avocado oil": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 28.59
+  },
+  "baby spinach": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.69
+  },
+  "baker's crnr all purpose flour": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.45
+  },
+  "baking coco": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.95
+  },
+  "banana chips": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.79
+  },
+  "basmathi": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 31.98
+  },
+  "batteries": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.29
+  },
+  "bawarchi chkn": {
+    "members": {
+      "Saidheeraj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 16.99
+  },
+  "bay leaves": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.59
+  },
+  "beet": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.79
+  },
+  "beet root": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.49
+  },
+  "beetroot + limca": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.18
+  },
+  "bentons oreo cookies": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.05
+  },
+  "besan flour": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.99
+  },
+  "beyond burger": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 17.04
+  },
+  "beyond patties": {
+    "members": {
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 12.64
+  },
+  "bhindi okra": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.45
+  },
+  "bi-color": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.77
+  },
+  "biryani mix": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.27
+  },
+  "biscuits": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.16
+  },
+  "biscuits goodday -1": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 0.69
+  },
+  "black hangers": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.75
+  },
+  "bombay mix": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.78
+  },
+  "boulder cups": {
+    "members": {
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.5
+  },
+  "bowl brush": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.5
+  },
+  "bp custard powde": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.99
+  },
+  "broccoli crowns": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.65
+  },
+  "brown sugar": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.09
+  },
+  "bucees snacks and water": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "varun": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 25.1
+  },
+  "burger patties": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 17.04
+  },
+  "cane sugar": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.45
+  },
+  "cantalope": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.3
+  },
+  "car rent": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 112.67
+  },
+  "cardamom": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.99
+  },
+  "cardomom powder": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.99
+  },
+  "cashew clusters": {
+    "members": {
+      "Saidheeraj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 11.0
+  },
+  "cauliflower rice": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.89
+  },
+  "chana daal": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.29
+  },
+  "chat masala": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.0
+  },
+  "chcochip": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.77
+  },
+  "cheese": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.0
+  },
+  "cheese popopcorn": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.15
+  },
+  "chicken breast -1.23lb": {
+    "members": {
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.37
+  },
+  "chicken breast-1.36lb": {
+    "members": {
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.15
+  },
+  "chicken brsts": {
+    "members": {
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 13.3
+  },
+  "chicken masala": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.5
+  },
+  "chicken spice mix": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.09
+  },
+  "chickn dum bir": {
+    "members": {
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 31.98
+  },
+  "chill flakes": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.36
+  },
+  "chilles": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.95
+  },
+  "chips": {
+    "members": {
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.8
+  },
+  "choco chips": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.95
+  },
+  "chocolates": {
+    "members": {
+      "Saidheeraj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 26.39
+  },
+  "cinnamon sticks": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.29
+  },
+  "coconut macaroons": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.85
+  },
+  "coffee": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.95
+  },
+  "coke zero cokes": {
+    "members": {
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 21.66
+  },
+  "condensed milk": {
+    "members": {
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.89
+  },
+  "containers": {
+    "members": {
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 12.09
+  },
+  "cookie assortment": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.75
+  },
+  "cookies chocolate": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.05
+  },
+  "coriander": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 62.94
+  },
+  "corn flour": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.0
+  },
+  "cream": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.85
+  },
+  "crispy oats": {
+    "members": {
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.85
+  },
+  "cut mango pickle": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.0
+  },
+  "dakota's pride garbanzo beans": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.7
+  },
+  "damascus": {
+    "members": {
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 12.52
+  },
+  "dark fantasy": {
+    "members": {
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.5
+  },
+  "dawn dishwasher": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 13.19
+  },
+  "dawn soap": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 13.85
+  },
+  "dec 11th 2 medium pizzas": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 15.0
+  },
+  "dhanush birdthday cake": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 24.49
+  },
+  "dhokla": {
+    "members": {
+      "Saichandu": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.0
+  },
+  "dish soap": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 10.55
+  },
+  "dosa": {
+    "members": {
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.76
+  },
+  "dosa mix": {
+    "members": {
+      "Yadalla": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.99
+  },
+  "dry roast": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.65
+  },
+  "dunkin": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 17.24
+  },
+  "elbow macoroni": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.09
+  },
+  "evap milk": {
+    "members": {
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.05
+  },
+  "everest chat": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.99
+  },
+  "everest masala": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.99
+  },
+  "everest shahi biryani": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.99
+  },
+  "extra cash": {
+    "members": {
+      "Saichandu": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.0
+  },
+  "fancy cshw": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 17.59
+  },
+  "fee": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.6
+  },
+  "fiber mop": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.5
+  },
+  "fish oil": {
+    "members": {
+      "Saichandu": 1,
+      "Saidheeraj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 17.37
+  },
+  "flour tortilas": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.74
+  },
+  "fr. fryer chckn": {
+    "members": {
+      "Yadalla": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 31.52
+  },
+  "fresh cilantro": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.0
+  },
+  "fresh corn": {
+    "members": {
+      "Saichandu": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.0
+  },
+  "fuel": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 70.0
+  },
+  "gala apples": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.39
+  },
+  "gobi": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.98
+  },
+  "gongura pickle": {
+    "members": {
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.0
+  },
+  "googday - 3": {
+    "members": {
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.07
+  },
+  "grain bread": {
+    "members": {
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.5
+  },
+  "grapes": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.03
+  },
+  "green mangos": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.0
+  },
+  "green onion": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 0.5
+  },
+  "green onions spring + curry leaves": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.5
+  },
+  "green peas": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.58
+  },
+  "guava": {
+    "members": {
+      "Saichandu": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.19
+  },
+  "handwash - kitchen use": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.09
+  },
+  "heavy whippy cream": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.85
+  },
+  "honey roasted peanuts": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.55
+  },
+  "honey wheat bread": {
+    "members": {
+      "Saichandu": 1,
+      "Yadalla": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.1
+  },
+  "iceberg lettuce": {
+    "members": {
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.0
+  },
+  "instacart plus": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 10.0
+  },
+  "iodzd tbl slt": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.95
+  },
+  "jalapeno": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.09
+  },
+  "jalapeno peppers": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.55
+  },
+  "jeera": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.99
+  },
+  "karepak": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 0.96
+  },
+  "kashmiri mirchi": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.29
+  },
+  "khakra": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.73
+  },
+  "kirkland kitchen towels": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 22.54
+  },
+  "krachjack puneeth": {
+    "members": {
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.0
+  },
+  "kurkure": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.19
+  },
+  "l'oven fresh plain bagels": {
+    "members": {
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.38
+  },
+  "laxmi drum": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.29
+  },
+  "laxmi poha": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.98
+  },
+  "laxmi toor dal": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 19.18
+  },
+  "lay's chips": {
+    "members": {
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.56
+  },
+  "lays": {
+    "members": {
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.94
+  },
+  "lays magic masala": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 0.99
+  },
+  "leaf spinach": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.25
+  },
+  "limca 4": {
+    "members": {
+      "Puneet": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.0
+  },
+  "lime flavoured sparkling water": {
+    "members": {
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 0.85
+  },
+  "limes 5 ct": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 0.88
+  },
+  "linguine pasta": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.75
+  },
+  "lot choco pie": {
+    "members": {
+      "Yadalla": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.49
+  },
+  "low-fat ice cream": {
+    "members": {
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.0
+  },
+  "lttl salad bar spinach": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.96
+  },
+  "lysol toilet cleaner": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.79
+  },
+  "mandarins": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.69
+  },
+  "mango cut": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.09
+  },
+  "mangoes": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.3
+  },
+  "marigold biscuit": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.18
+  },
+  "masala boondi": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.99
+  },
+  "masala curry": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.98
+  },
+  "masala noodles": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.69
+  },
+  "maska chaska": {
+    "members": {
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.49
+  },
+  "mayank split": {
+    "members": {
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 10.0
+  },
+  "mayoneese": {
+    "members": {
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 10.92
+  },
+  "methi + red chillies": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.08
+  },
+  "methi frozen": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.79
+  },
+  "methi seed": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.99
+  },
+  "milk bikies": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.5
+  },
+  "misc": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.25
+  },
+  "monk fruit sugar": {
+    "members": {
+      "Yadalla": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.89
+  },
+  "monkfruit": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.89
+  },
+  "moong dal": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.0
+  },
+  "mozzr slices": {
+    "members": {
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.34
+  },
+  "murmura": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.59
+  },
+  "mustard": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.09
+  },
+  "mustard seeds": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.18
+  },
+  "mystery candy": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.25
+  },
+  "nutri biscuits": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.79
+  },
+  "nuts": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.98
+  },
+  "oats": {
+    "members": {
+      "Yadalla": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.63
+  },
+  "oikos yogurt": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 15.39
+  },
+  "okra * 3": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.97
+  },
+  "orange": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.99
+  },
+  "oregano": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.04
+  },
+  "oregano and garlic powder": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.5
+  },
+  "p st deli veg cream cheese": {
+    "members": {
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.3
+  },
+  "packing tape": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.5
+  },
+  "pan bread": {
+    "members": {
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.85
+  },
+  "paneer and chillies": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 32.47
+  },
+  "paneer and cilantro": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 28.47
+  },
+  "paneer and tomatoes": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 35.45
+  },
+  "paneer cheese": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 22.99
+  },
+  "parchmament paper": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.25
+  },
+  "parle nutricrunch biscuits": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.95
+  },
+  "pasta sauce": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.85
+  },
+  "patties": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 12.64
+  },
+  "peanut butter": {
+    "members": {
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.46
+  },
+  "peas": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.09
+  },
+  "peas and corn": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.39
+  },
+  "peppers": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.86
+  },
+  "pepsi and sprite": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.6
+  },
+  "peri peri": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.99
+  },
+  "pickles": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.0
+  },
+  "plain curd": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.43
+  },
+  "plastic containers": {
+    "members": {
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 12.09
+  },
+  "plastic plates": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.16
+  },
+  "plastic spn": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 14.29
+  },
+  "poha": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.99
+  },
+  "poland spring": {
+    "members": {
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.99
+  },
+  "poppy seeds": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.69
+  },
+  "porotta bread": {
+    "members": {
+      "Yadalla": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.34
+  },
+  "potato wafers": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.35
+  },
+  "potatos": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.77
+  },
+  "puffed rice": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.59
+  },
+  "puraqua water": {
+    "members": {
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 13.16
+  },
+  "purif wtr 40ct": {
+    "members": {
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.39
+  },
+  "quinoa": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.38
+  },
+  "rasgulla": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.18
+  },
+  "raw peanuts": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.29
+  },
+  "red chilli pickle": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.0
+  },
+  "reggano": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.18
+  },
+  "reggiano rotini": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.18
+  },
+  "roasted sooji": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 5.99
+  },
+  "roll ups": {
+    "members": {
+      "Yadalla": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.26
+  },
+  "romaine": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.29
+  },
+  "roti uncooked": {
+    "members": {
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 11.32
+  },
+  "roundtable aluminium foil": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.75
+  },
+  "royal sonaa masoor": {
+    "members": {
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 23.75
+  },
+  "sabji masala": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.09
+  },
+  "saffron mango pulp": {
+    "members": {
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.98
+  },
+  "salsa": {
+    "members": {
+      "Mayank": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.75
+  },
+  "salt": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.0
+  },
+  "salted peanuts": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.09
+  },
+  "sambar powdr": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.98
+  },
+  "schezwan chut": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.29
+  },
+  "schezwan masala": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.46
+  },
+  "semi sweet chocolate chips": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 8.78
+  },
+  "serrano peppers": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 14.99
+  },
+  "shredded cheese": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 16.82
+  },
+  "shredded lt": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.09
+  },
+  "silver glue": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.5
+  },
+  "snickers": {
+    "members": {
+      "Yadalla": 1,
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.5
+  },
+  "snickers ice cream": {
+    "members": {
+      "Saichandu": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.25
+  },
+  "soft grip scissors": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.25
+  },
+  "sooji": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.0
+  },
+  "sourdough round": {
+    "members": {
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.65
+  },
+  "soya * 2": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.18
+  },
+  "spring onions": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 0.49
+  },
+  "springs ticket": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 60.0
+  },
+  "star aneese": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.29
+  },
+  "stevia sweetener": {
+    "members": {
+      "Pranav": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.29
+  },
+  "stonemill ground black pepper": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.05
+  },
+  "sundae shopp ice cream": {
+    "members": {
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.25
+  },
+  "swad besan india": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.99
+  },
+  "swad kabuli chana": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 6.99
+  },
+  "swad kala chana": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.99
+  },
+  "swad kidney beans": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.79
+  },
+  "swad shah zeera": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.99
+  },
+  "swad white vatana": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.99
+  },
+  "sweet potatoes": {
+    "members": {
+      "Saichandu": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.95
+  },
+  "tandoori mix": {
+    "members": {
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 19.99
+  },
+  "thai coconut": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 25.76
+  },
+  "thumps up dheeraj": {
+    "members": {
+      "Saidheeraj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.95
+  },
+  "thumps up satwik": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.0
+  },
+  "thumpsup dheeraj": {
+    "members": {
+      "Saidheeraj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.0
+  },
+  "toilet rolls": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 23.24
+  },
+  "tomato pkl": {
+    "members": {
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.0
+  },
+  "tomatoes and onions": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 22.46
+  },
+  "tortilla chips": {
+    "members": {
+      "Akula": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.75
+  },
+  "towel": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 22.52
+  },
+  "trop mang": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 1.25
+  },
+  "urad dal": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 7.0
+  },
+  "vanilla yogurt": {
+    "members": {
+      "Puneet": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.55
+  },
+  "veg manchur": {
+    "members": {
+      "Pranav": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 13.99
+  },
+  "veniger": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 2.09
+  },
+  "vermicelli": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 3.49
+  },
+  "waffle cones": {
+    "members": {
+      "Saichandu": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 0.87
+  },
+  "wagh bakri": {
+    "members": {
+      "Saichandu": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 9.99
+  },
+  "waghbakri loose tea": {
+    "members": {
+      "Saichandu": 1,
+      "Pranav": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 12.99
+  },
+  "washcloths": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.5
+  },
+  "watermelon": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.88
+  },
+  "whole mlk greek yogurt": {
+    "members": {
+      "Vamsi": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.09
+  },
+  "whole wheat": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 20.99
+  },
+  "yellow potatoes": {
+    "members": {
+      "Saichandu": 1,
+      "Mayank": 1,
+      "Puneet": 1,
+      "Yadalla": 1,
+      "Saidheeraj": 1,
+      "Akula": 1,
+      "Satwik": 1,
+      "Vamsi": 1,
+      "Pranav": 1,
+      "Bharadwaj": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 4.09
+  },
+  "yogurt": {
+    "members": {
+      "Satwik": 1
+    },
+    "total_appearances": 1,
+    "avg_price": 14.09
+  }
+}

@@ -1,11 +1,8 @@
 fastapi
 uvicorn
-pandas
-streamlit
 splitwise
 google-genai
 pillow
-# dotenv
 python-multipart
 python_dotenv
 beanie
