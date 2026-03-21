@@ -56,10 +56,6 @@ FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000").rstrip("/")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
 serializer = URLSafeTimedSerializer(SESSION_SECRET)
-# In-memory session store: session_id -> {access_token, user_name, user_id, created_at}
-sessions: dict[str, dict] = {}
-# Temporary OAuth state tracking
-oauth_states: dict[str, bool] = {}
 
 OAUTH_CALLBACK_URL = os.getenv(
     "OAUTH_CALLBACK_URL",
@@ -80,12 +76,11 @@ def get_current_session(request: Request) -> dict:
     if not token:
         raise HTTPException(status_code=401, detail="Not authenticated")
     try:
-        session_id = serializer.loads(token, max_age=60 * 60 * 24 * 30)  # 30 days
+        session = serializer.loads(token, max_age=60 * 60 * 24 * 30)  # 30 days
     except (BadSignature, SignatureExpired):
         raise HTTPException(status_code=401, detail="Session expired or invalid")
-    session = sessions.get(session_id)
-    if not session:
-        raise HTTPException(status_code=401, detail="Session not found")
+    if not isinstance(session, dict) or "access_token" not in session:
+        raise HTTPException(status_code=401, detail="Invalid session token")
     return session
 
 
@@ -163,8 +158,8 @@ def greet_json():
 async def auth_login():
     """Return the Splitwise OAuth2 authorization URL."""
     sObj = Splitwise(SPLITWISE_CONSUMER_KEY, SPLITWISE_CONSUMER_SECRET)
-    state = str(uuid.uuid4())
-    oauth_states[state] = True
+    # Use a signed state token instead of in-memory dict
+    state = serializer.dumps(str(uuid.uuid4()))
     url, _ = sObj.getOAuth2AuthorizeURL(OAUTH_CALLBACK_URL, state=state)
     return {"auth_url": url}
 
@@ -172,24 +167,26 @@ async def auth_login():
 @app.get("/api/auth/splitwise/callback")
 async def auth_callback(code: str, state: str):
     """Exchange OAuth2 code for access token, create session, redirect to frontend."""
-    if state not in oauth_states:
-        raise HTTPException(status_code=400, detail="Invalid OAuth state")
-    del oauth_states[state]
+    # Verify the state token is valid and not expired (5 min)
+    try:
+        serializer.loads(state, max_age=300)
+    except (BadSignature, SignatureExpired):
+        raise HTTPException(status_code=400, detail="Invalid or expired OAuth state")
 
     sObj = Splitwise(SPLITWISE_CONSUMER_KEY, SPLITWISE_CONSUMER_SECRET)
     access_token = sObj.getOAuth2AccessToken(code, OAUTH_CALLBACK_URL)
     sObj.setOAuth2AccessToken(access_token)
     user = sObj.getCurrentUser()
 
-    session_id = str(uuid.uuid4())
-    sessions[session_id] = {
+    # Sign the session data directly into the token (stateless)
+    session_data = {
         "access_token": access_token["access_token"],
         "user_name": user.first_name,
         "user_id": user.id,
         "created_at": datetime.utcnow().isoformat(),
     }
 
-    signed = serializer.dumps(session_id)
+    signed = serializer.dumps(session_data)
     # Pass token via URL query param — frontend stores it in localStorage
     redirect_url = f"{FRONTEND_URL}?session_token={signed}"
     return RedirectResponse(url=redirect_url)
@@ -206,16 +203,8 @@ async def auth_status(request: Request):
 
 
 @app.post("/api/auth/logout")
-async def auth_logout(request: Request):
-    """Clear the session."""
-    try:
-        session = get_current_session(request)
-        # Find and remove the session by matching access_token
-        to_remove = [sid for sid, s in sessions.items() if s["access_token"] == session["access_token"]]
-        for sid in to_remove:
-            sessions.pop(sid, None)
-    except HTTPException:
-        pass
+async def auth_logout():
+    """Logout is handled client-side by clearing the token. This endpoint is a no-op."""
     return {"status": "logged_out"}
 
 

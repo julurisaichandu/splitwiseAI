@@ -155,7 +155,7 @@ export default function BillSplitter() {
         const firstGroup = Object.keys(data.groups)[0];
         setSelectedGroup(firstGroup);
         // Fetch members for the first group
-        fetchMembers(data.groups[firstGroup]);
+        await fetchMembers(data.groups[firstGroup]);
       }
     } catch (error) {
       console.error(error);
