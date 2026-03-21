@@ -37,7 +37,7 @@ const ItemList: React.FC<ItemListProps> = ({
 
       // Recalculate split price
       const selectedMembers = Object.entries(newItems[index].members)
-        .filter(([_, selected]) => selected)
+        .filter(([, selected]) => selected)
         .map(([name]) => name);
 
       newItems[index].split_price =
@@ -57,7 +57,7 @@ const ItemList: React.FC<ItemListProps> = ({
 
     // Calculate split price
     const selectedMembers = Object.entries(newItems[itemIndex].members)
-      .filter(([_, selected]) => selected)
+      .filter(([, selected]) => selected)
       .map(([name]) => name);
 
     newItems[itemIndex].split_price =
@@ -203,7 +203,7 @@ const ItemList: React.FC<ItemListProps> = ({
 
           <div className="flex justify-between items-center pt-3 border-t border-stone-100">
             <div className="text-sm">
-              {Object.entries(item.members).filter(([_, selected]) => selected).length > 0 ? (
+              {Object.entries(item.members).filter(([, selected]) => selected).length > 0 ? (
                 <span className="text-lime-700 font-medium">
                   Split: ${item.split_price.toFixed(2)} per person
                 </span>

@@ -28,9 +28,15 @@ app = FastAPI()
 # command to run server in port 8001 # uvicorn main:app --reload --port 8001
 
 # Configure CORS
+import os
+_frontend_url = os.getenv("FRONTEND_URL", "")
+_allowed_origins = ["http://localhost:3000"]
+if _frontend_url:
+    _allowed_origins.append(_frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Frontend URL
+    allow_origins=_allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -64,7 +70,7 @@ async def startup_event():
         print(f"Warning: member_preferences.json not found at {prefs_path}")
 
     # Load item name mapping for fuzzy matching pre-pass
-    mapping_path = Path(__file__).resolve().parent.parent / "analysis" / "data" / "item_name_mapping.json"
+    mapping_path = Path(__file__).resolve().parent / "data" / "item_name_mapping.json"
     if mapping_path.exists():
         with open(mapping_path) as f:
             item_name_mapping = json.load(f)

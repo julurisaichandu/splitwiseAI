@@ -69,8 +69,7 @@ export default function BillSplitter() {
   // const router = useRouter();
   const { showToast } = useToast();
   const [apiKeys, setApiKeys] = useState<ApiKeys | null>(null);
-  const [members, setMembers] = useState<string[]>([]);
-  const [memToId, setMemToId] = useState<{ [key: string]: string }>({});
+  const [, setMemToId] = useState<{ [key: string]: string }>({});
   const [groups, setGroups] = useState<{ [key: string]: string }>({});
   const [selectedGroup, setSelectedGroup] = useState<string>("");
   const [paidUser, setPaidUser] = useState<string>("");
@@ -122,6 +121,7 @@ export default function BillSplitter() {
       fetchGroups();
     }
     console.log(apiKeys);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKeys]);
 
   const createDefaultItem = (index: number): Item => ({
@@ -308,7 +308,7 @@ const handleItemsUpdate = (newItems: Item[]) => {
 
     items.forEach((item) => {
       const selectedMembers = Object.entries(item.members)
-        .filter(([_, selected]) => selected)
+        .filter(([, selected]) => selected)
         .map(([name]) => name);
 
       const splitPrice = item.price / Math.max(1, selectedMembers.length);
@@ -397,7 +397,7 @@ const finalData = allMembers.map((member) => ({
         name: item.name,
         price: item.price,
         members: Object.entries(item.members)
-          .filter(([_, selected]) => selected)
+          .filter(([, selected]) => selected)
           .map(([name]) => name),
       }));
 
@@ -467,7 +467,7 @@ const finalData = allMembers.map((member) => ({
 
   // Add a new function to handle loading expense data
   const handleLoadExpense = (data: {
-    items: any[];
+    items: { name: string; price: number | string; members: string[] }[];
     members: string[];
     paidUser: string;
     description: string;
@@ -527,11 +527,11 @@ const finalData = allMembers.map((member) => ({
           }
         });
 
+        const price = typeof item.price === 'string' ? parseFloat(item.price) : item.price;
         return {
           name: item.name,
-          price: parseFloat(item.price),
-          split_price:
-            parseFloat(item.price) / Math.max(1, item.members.length),
+          price,
+          split_price: price / Math.max(1, item.members.length),
           members: memberObj,
         };
       });
@@ -563,7 +563,7 @@ const finalData = allMembers.map((member) => ({
         name: item.name,
         price: item.price,
         members: Object.entries(item.members)
-          .filter(([_, selected]) => selected)
+          .filter(([, selected]) => selected)
           .map(([name]) => name),
       }));
 
@@ -643,7 +643,7 @@ const finalData = allMembers.map((member) => ({
   };
 
   // Unified handler for items detected from any source (image, PDF)
-  const handleItemsDetectedWithMetadata = (detectedItems: any[], metadata: ReceiptMetadata | null) => {
+  const handleItemsDetectedWithMetadata = (detectedItems: { name: string; price: number | string }[], metadata: ReceiptMetadata | null) => {
     // Convert items to the format expected by our app
     const newItems = detectedItems.map((item) => {
       const memberObj: { [key: string]: boolean } = {};
@@ -653,7 +653,7 @@ const finalData = allMembers.map((member) => ({
 
       return {
         name: item.name,
-        price: parseFloat(item.price) || 0,
+        price: (typeof item.price === 'string' ? parseFloat(item.price) : item.price) || 0,
         split_price: 0,
         members: memberObj,
       };

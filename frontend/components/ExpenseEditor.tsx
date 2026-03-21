@@ -1,8 +1,28 @@
 import { useState } from "react";
 
+interface ExpenseItem {
+    name: string;
+    price: number;
+    members: string[];
+}
+
+interface ExpenseUser {
+    first_name: string;
+    owed_share: string;
+    paid_share: string;
+}
+
+interface ExpenseData {
+    description: string;
+    cost: string;
+    comment: string;
+    group_name: string;
+    users: ExpenseUser[];
+}
+
 interface ExpenseEditorProps {
     onLoadExpense?: (data: {
-      items: any[],
+      items: ExpenseItem[],
       members: string[],
       paidUser: string,
       description: string,
@@ -14,10 +34,10 @@ interface ExpenseEditorProps {
   
   export default function ExpenseEditor({ onLoadExpense }: ExpenseEditorProps) {
       const [expenseId, setExpenseId] = useState<string>('');
-      const [expenseData, setExpenseData] = useState<any>(null);
+      const [expenseData, setExpenseData] = useState<ExpenseData | null>(null);
       const [loading, setLoading] = useState<boolean>(false);
       const [error, setError] = useState<string>('');
-      const [parsedItems, setParsedItems] = useState<any[]>([]);
+      const [parsedItems, setParsedItems] = useState<ExpenseItem[]>([]);
       
       const fetchExpense = async () => {
           try {
@@ -58,21 +78,14 @@ interface ExpenseEditorProps {
           setExpenseId(e.target.value);
       };
       
-      const resetExpenseEditor = () => {
-          setExpenseId('');
-          setExpenseData(null);
-          setParsedItems([]);
-          setError('');
-      };
-      
       const loadIntoForm = () => {
           if (!expenseData || !onLoadExpense) return;
                     
           // Get all member names from the expense
-          const members = expenseData.users.map((user: any) => user.first_name);
+          const members = expenseData.users.map((user: ExpenseUser) => user.first_name);
           
           // Find who paid (the one with non-zero paid_share)
-          const paidUser = expenseData.users.find((user: any) => 
+          const paidUser = expenseData.users.find((user: ExpenseUser) =>
               parseFloat(user.paid_share) > 0
           )?.first_name || '';
           
@@ -81,7 +94,6 @@ interface ExpenseEditorProps {
             if (expenseData.comment) {
               const parts = expenseData.comment.split('---ITEMDATA---');
               if (parts.length > 1) {
-                const itemData = parts[0];
                 comment = parts[0];
               }
             }
@@ -137,7 +149,7 @@ interface ExpenseEditorProps {
         
               <h4 className="text-lg font-semibold mt-4">Users:</h4>
               <ul>
-                {expenseData.users.map((user: any, idx: number) => (
+                {expenseData.users.map((user: ExpenseUser, idx: number) => (
                   <li key={idx}>
                     {user.first_name} - Owed: ${user.owed_share} - Paid: ${user.paid_share}
                   </li>
@@ -148,7 +160,7 @@ interface ExpenseEditorProps {
                 <div className="mt-4">
                   <h4 className="text-lg font-semibold">Itemized Splits:</h4>
                   <ul>
-                    {parsedItems.map((item:any, idx:any) => (
+                    {parsedItems.map((item: ExpenseItem, idx: number) => (
                       <li key={idx}>
                         <p><strong>{item.name}</strong> - ${item.price}</p>
                         <p>Split between: {item.members.join(', ')}</p>

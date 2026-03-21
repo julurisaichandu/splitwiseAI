@@ -4,7 +4,7 @@ import React from 'react';
 interface MemberSelectionProps {
   allMembers: string[];     // All available members
   visibleMembers: string[]; // Only the members selected to be shown
-  groups: Record<string, any>;
+  groups: Record<string, string>;
   selectedGroup: string;
   paidUser: string;
   hiddenMembersWithSplits?: string[]; // Hidden members that have items assigned

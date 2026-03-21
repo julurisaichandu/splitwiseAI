@@ -168,5 +168,6 @@ demo.py
 # Analysis output data
 analysis/data/
 
-# Backend data (generated preference files)
-backend/data/
+# Backend data (generated preference files, but keep JSON for deployment)
+backend/data/*
+!backend/data/*.json
