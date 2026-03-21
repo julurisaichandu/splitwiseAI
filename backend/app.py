@@ -8,7 +8,6 @@ from splitwise.expense import Expense, ExpenseUser
 from google import genai
 from google.genai import types
 import json
-import os
 import PIL.Image
 from io import BytesIO
 from pathlib import Path
@@ -16,8 +15,8 @@ from dotenv import load_dotenv
 from rapidfuzz import fuzz
 
 from datetime import datetime
-from database.connection import connect_to_mongo, close_mongo_connection
-from models.database import SplitData, MemberMapping
+# from database.connection import connect_to_mongo, close_mongo_connection
+# from models.database import SplitData, MemberMapping
 import json as json_lib
 
 # Load environment variables
@@ -75,7 +74,8 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    await close_mongo_connection()
+    # await close_mongo_connection()
+    pass
 
 
 class ApiKeys(BaseModel):
@@ -469,25 +469,23 @@ async def create_expense(expense_req: ExpenseRequest, consumer_key: str, secret_
         # Parse the item data from comment
         item_data = parse_expense_comment(expense_req.comment)
         
-        if item_data:
-            # Save to MongoDB
-            split_doc = SplitData(
-                splitwise_id=str(expense_id),  # expense_id from your existing code
-                group_id=str(groups_to_ids[expense_req.group_id]),
-                group_name=expense_req.group_id,
-                description=expense_req.description,
-                total_amount=float(expense_req.total_amt),
-                paid_by=expense_req.paid_user,
-                created_by=user.first_name,  # Current user
-                items=item_data,
-                member_splits=expense_req.splits,
-                created_at=datetime.utcnow(),
-                updated_at=datetime.utcnow()
-            )
-            
-            # Save to database
-            await split_doc.insert()
-            print(f"Saved split data to MongoDB with ID: {split_doc.id}")
+        # if item_data:
+        #     # Save to MongoDB
+        #     split_doc = SplitData(
+        #         splitwise_id=str(expense_id),
+        #         group_id=str(groups_to_ids[expense_req.group_id]),
+        #         group_name=expense_req.group_id,
+        #         description=expense_req.description,
+        #         total_amount=float(expense_req.total_amt),
+        #         paid_by=expense_req.paid_user,
+        #         created_by=user.first_name,
+        #         items=item_data,
+        #         member_splits=expense_req.splits,
+        #         created_at=datetime.utcnow(),
+        #         updated_at=datetime.utcnow()
+        #     )
+        #     await split_doc.insert()
+        #     print(f"Saved split data to MongoDB with ID: {split_doc.id}")
 
 
 
@@ -730,7 +728,7 @@ async def auto_split(request: AutoSplitRequest):
 
         # Step 3: Use Gemini for remaining unmatched items
         if gemini_items and member_preferences:
-            gemini_key = request.gemini_key or os.getenv("GEMINI_API_KEY")
+            gemini_key = request.gemini_key
             if not gemini_key:
                 # No Gemini key — return items unassigned
                 for item in gemini_items:

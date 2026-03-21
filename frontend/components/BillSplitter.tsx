@@ -9,6 +9,7 @@ import SplitSummary from "./SplitSummary";
 import ExpenseEditor from "./ExpenseEditor";
 import Spinner from "./Spinner";
 import { useToast } from "./Toast";
+import SettingsModal, { loadApiKeys, hasApiKeys } from "./SettingsModal";
 
 interface ReceiptMetadata {
   store: string | null;
@@ -61,13 +62,7 @@ interface FinalSplits {
 }
 
 function getApiKeys(): ApiKeys {
-  return {
-    SPLITWISE_CONSUMER_KEY:
-      process.env.NEXT_PUBLIC_SPLITWISE_CONSUMER_KEY || "",
-    SPLITWISE_SECRET_KEY: process.env.NEXT_PUBLIC_SPLITWISE_SECRET_KEY || "",
-    SPLITWISE_API_KEY: process.env.NEXT_PUBLIC_SPLITWISE_API_KEY || "",
-    GEMINI_API_KEY: process.env.NEXT_PUBLIC_GEMINI_API_KEY || "",
-  };
+  return loadApiKeys();
 }
 
 export default function BillSplitter() {
@@ -110,12 +105,16 @@ export default function BillSplitter() {
 
   useEffect(() => {
     const keys = getApiKeys();
-
-    setApiKeys(keys);
+    if (hasApiKeys()) {
+      setApiKeys(keys);
+    }
     setIsLoading(false);
-
     setItems([createDefaultItem(1), createDefaultItem(2)]);
   }, []);
+
+  const handleSettingsSave = (keys: ApiKeys) => {
+    setApiKeys(keys);
+  };
 
   useEffect(() => {
     if (apiKeys) {
@@ -452,6 +451,7 @@ const finalData = allMembers.map((member) => ({
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4 justify-center items-center h-screen">
+        <SettingsModal onSave={handleSettingsSave} />
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 flex flex-col items-center gap-4">
           <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center">
             <Spinner size="lg" />
@@ -712,6 +712,21 @@ const finalData = allMembers.map((member) => ({
         <title>Bill Splitter</title>
         <meta name="description" content="Split bills with friends" />
       </Head>
+
+      <SettingsModal onSave={handleSettingsSave} />
+
+      {/* Prompt to configure keys if not set */}
+      {!apiKeys?.SPLITWISE_CONSUMER_KEY && (
+        <div className="max-w-md mx-auto mb-6 p-5 bg-amber-50/95 backdrop-blur-sm border border-amber-300 rounded-2xl shadow-lg text-center">
+          <svg className="w-10 h-10 mx-auto mb-3 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+          </svg>
+          <h3 className="text-lg font-semibold text-stone-800 mb-1">Set up your API keys</h3>
+          <p className="text-sm text-stone-600">
+            Click the <span className="font-medium">settings icon</span> in the top-right corner to enter your Splitwise and Gemini API credentials.
+          </p>
+        </div>
+      )}
 
       {/* Header - Outside main card, on the background */}
       <div className="text-center mb-8">
