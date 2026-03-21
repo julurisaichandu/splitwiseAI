@@ -86,6 +86,7 @@ export default function BillSplitter() {
   const [receiptMetadata, setReceiptMetadata] = useState<ReceiptMetadata | null>(null);
   const [isDescriptionLocked, setIsDescriptionLocked] = useState<boolean>(false);
   const [isAutoSplitting, setIsAutoSplitting] = useState<boolean>(false);
+  const [backendStatus, setBackendStatus] = useState<'checking' | 'online' | 'offline'>('checking');
   // useEffect(() => {
   //   const keys = getApiKeys();
   //   if (!keys.SPLITWISE_CONSUMER_KEY || !keys.SPLITWISE_SECRET_KEY || !keys.SPLITWISE_API_KEY || !keys.GEMINI_API_KEY) {
@@ -109,6 +110,11 @@ export default function BillSplitter() {
     }
     setIsLoading(false);
     setItems([createDefaultItem(1), createDefaultItem(2)]);
+
+    // Check backend connectivity
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/`)
+      .then((res) => setBackendStatus(res.ok ? 'online' : 'offline'))
+      .catch(() => setBackendStatus('offline'));
   }, []);
 
   const handleSettingsSave = (keys: ApiKeys) => {
@@ -714,6 +720,26 @@ const finalData = allMembers.map((member) => ({
       </Head>
 
       <SettingsModal onSave={handleSettingsSave} />
+
+      {/* Backend status indicator */}
+      <div className="fixed top-4 left-4 z-50">
+        <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium shadow-sm border backdrop-blur-sm ${
+          backendStatus === 'online'
+            ? 'bg-emerald-50/90 text-emerald-700 border-emerald-200'
+            : backendStatus === 'offline'
+            ? 'bg-red-50/90 text-red-700 border-red-200'
+            : 'bg-stone-50/90 text-stone-500 border-stone-200'
+        }`}>
+          <span className={`w-2 h-2 rounded-full ${
+            backendStatus === 'online'
+              ? 'bg-emerald-500 animate-pulse'
+              : backendStatus === 'offline'
+              ? 'bg-red-500'
+              : 'bg-stone-400 animate-pulse'
+          }`} />
+          {backendStatus === 'online' ? 'API Online' : backendStatus === 'offline' ? 'API Offline' : 'Checking...'}
+        </div>
+      </div>
 
       {/* Prompt to configure keys if not set */}
       {!apiKeys?.SPLITWISE_CONSUMER_KEY && (
