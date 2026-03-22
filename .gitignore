@@ -171,3 +171,4 @@ analysis/data/
 # Backend data (generated preference files, but keep JSON for deployment)
 backend/data/*
 !backend/data/*.json
+.vercel

@@ -948,6 +948,86 @@ async def get_expense(expense_id: int, request: Request):
         raise HTTPException(status_code=400, detail=f"Failed to get expense: {str(e)}")
 
 
+@app.get("/api/list-expenses")
+async def list_expenses(request: Request, count: int = 20, offset: int = 0, group_id: Optional[int] = None):
+    """List recent expenses created by this app (containing ---ITEMDATA--- in details)."""
+    try:
+        session = get_current_session(request)
+        sObj = get_splitwise_client(session)
+
+        # Build group id-to-name map
+        groups = sObj.getGroups()
+        group_map = {g.id: g.name for g in groups}
+
+        count = min(count, 50)
+        matched = []
+        current_offset = offset
+        max_batches = 5
+        has_more = True
+
+        for _ in range(max_batches):
+            kwargs = {"offset": current_offset, "limit": 50}
+            if group_id is not None:
+                kwargs["group_id"] = group_id
+
+            expenses = sObj.getExpenses(**kwargs)
+            if not expenses:
+                has_more = False
+                break
+
+            current_offset += len(expenses)
+
+            for exp in expenses:
+                if exp.getDeletedAt() or exp.getPayment():
+                    continue
+                details = exp.getDetails() or ""
+                if "---ITEMDATA---" not in details:
+                    continue
+
+                # Parse item count
+                num_items = 0
+                try:
+                    parts = details.split("---ITEMDATA---")
+                    if len(parts) > 1:
+                        item_data = json_lib.loads(parts[1].strip())
+                        num_items = len(item_data) if isinstance(item_data, list) else 0
+                except Exception:
+                    pass
+
+                # Find payer
+                payer = ""
+                for u in exp.getUsers():
+                    if float(u.getPaidShare()) > 0:
+                        payer = u.getFirstName()
+                        break
+
+                matched.append({
+                    "id": exp.getId(),
+                    "description": exp.getDescription(),
+                    "cost": exp.getCost(),
+                    "date": exp.getDate(),
+                    "group_name": group_map.get(exp.getGroupId(), "Unknown"),
+                    "payer": payer,
+                    "num_items": num_items,
+                })
+
+                if len(matched) >= count:
+                    break
+
+            if len(matched) >= count:
+                break
+
+        return {
+            "expenses": matched,
+            "next_offset": current_offset,
+            "has_more": has_more and len(matched) >= count,
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to list expenses: {str(e)}")
+
 
 class UpdateExpenseRequest(BaseModel):
     expense_id: str

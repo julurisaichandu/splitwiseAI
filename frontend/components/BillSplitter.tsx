@@ -1031,7 +1031,7 @@ const finalData = allMembers.map((member) => ({
               />
             )}
 
-            <ExpenseEditor onLoadExpense={handleLoadExpense} />
+            <ExpenseEditor onLoadExpense={handleLoadExpense} groupId={groups[selectedGroup]} groupName={selectedGroup} />
           </div>
         </div>
       </main>
