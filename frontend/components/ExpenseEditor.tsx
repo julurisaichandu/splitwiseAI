@@ -46,7 +46,7 @@ interface ExpenseEditorProps {
 }
 
 export default function ExpenseEditor({ onLoadExpense, groupId, groupName }: ExpenseEditorProps) {
-    const { authFetch } = useAuth();
+    const { authFetch, isAuthenticated } = useAuth();
     const [mode, setMode] = useState<'browse' | 'manual'>('browse');
 
     // Browse mode state
@@ -94,13 +94,13 @@ export default function ExpenseEditor({ onLoadExpense, groupId, groupName }: Exp
 
     // Fetch on mount and when group changes
     useEffect(() => {
-        if (mode === 'browse') {
+        if (mode === 'browse' && isAuthenticated) {
             setRecentExpenses([]);
             setNextOffset(0);
             setHasMore(true);
             fetchRecentExpenses(true);
         }
-    }, [mode, groupId]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [mode, groupId, isAuthenticated]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const loadExpenseById = async (id: number) => {
         try {
